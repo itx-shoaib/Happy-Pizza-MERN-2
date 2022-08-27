@@ -1,10 +1,46 @@
-import React from "react";
+import React, { useState, useEffect} from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 import "../Css/Signin.css";
 
 function SigninPage() {
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
+
+  async function Login(e) {
+    e.preventDefault()
+    const user = {
+      email,
+      password,
+    }
+  
+      try {
+        // setloading(true)
+        const result = (await axios.post('http://localhost:5000/api/user/login', user));
+        console.log(result)
+        if (result) {
+          toast.success("Login Successfull")
+          window.location.href = '/' 
+        }
+        // toast.success("Login Successfull")
+        // setloading(false)
+
+        setemail('');
+        setpassword('');
+
+      }
+     catch (error) {
+        console.log(error);
+        toast.warn("Invalid credentials")
+        // setloading(false)
+      }
+
+  }
   return (
     <>
+        <ToastContainer />
       <div className="scrolling-off">
         <div className="row justify-content-center">
           <div className="col-md-4 text-center mt-2 responsiveness">
@@ -15,20 +51,26 @@ function SigninPage() {
               />
             </Link>
             <h3 className="boldtext my-3">WELCOME BACK</h3>
-            <form action="/" method="get">
+            <form>
               <div className="my-5 ms-5 me-2 text-start centeredItems">
                 <label for="emailad">Email Address</label>
                 <input
                   id="emailad"
+                  type="email"
                   className="form-control mb-4"
                   placeholder="Email"
+                  value={email} 
+              onChange={(e) => { setemail(e.target.value) }}
                   required
                 />
                 <label for="password">Password</label>
                 <input
                   id="password"
+                  type="password"
                   className="form-control mb-4"
                   placeholder="Password"
+                  value={password} 
+              onChange={(e) => { setpassword(e.target.value) }}
                   required
                 />
                 <div class="form-check mt-5">
@@ -46,8 +88,7 @@ function SigninPage() {
               <div className="mb-5">
                 <button
                   className="btn btn-primary signinbtn"
-                  type="submit"
-                  formmethod="post"
+                  onClick={Login}
                 >
                   SIGN IN
                 </button>
