@@ -20,11 +20,10 @@ function SigninPage() {
         // setloading(true)
         const result = (await axios.post('http://localhost:5000/api/user/login', user));
         console.log(result)
-        if (result) {
-          toast.success("Login Successfull")
-          window.location.href = '/' 
-        }
-        // toast.success("Login Successfull")
+        toast.success("Login Successfull")
+        setInterval(() => {
+          window.location.href = "/"
+        }, 2000);
         // setloading(false)
 
         setemail('');

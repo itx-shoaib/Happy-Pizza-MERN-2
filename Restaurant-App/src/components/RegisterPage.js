@@ -30,7 +30,9 @@ function RegisterPage() {
             console.log(result)
             toast.success("Registration Successfull")
             // setloading(true)
-            window.location.href = '/login'
+            setInterval(() => {
+              window.location.href = "/login"
+            }, 2000);
 
             
 
