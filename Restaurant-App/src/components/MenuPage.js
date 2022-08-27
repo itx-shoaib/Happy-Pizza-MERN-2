@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Footer from "./Footer";
+import  Items from './Items';
 import { Link } from "react-router-dom";
 import "../Css/MenuPage.css";
 import Navbar from "./Navbar";
 
 function MenuPage() {
+  const [show, setShow] = useState(false);
   let [num, setNum] = useState(1);
   const [category, setcategory] = useState(
     []
@@ -23,6 +27,8 @@ function MenuPage() {
     setNum(e.target.value);
   };
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -52,64 +58,64 @@ function MenuPage() {
     fetchData();
   }, [])
 
-  function showmodal(item) {
-    console.log(item.title);
-    <div
-      className="modal fade"
-      id="addtocart"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              {item.title}
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="modal-body">
-            <label for="quantity">Quantity</label>
-            <div id="quantity">
-              <button
-                className="btn btn-light w-100"
-                type="button"
-                onClick={decNum}
-              >
-                -
-              </button>
-              <input
-                type="text"
-                className="form-control text-center"
-                value={num}
-                onChange={handleChange}
-              />
-              <button
-                className="btn btn-light w-100"
-                type="button"
-                onClick={incNum}
-              >
-                +
-              </button>
-            </div>
-          </div>
-          <div className="modal-footer justify-content-center">
-            {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button> */}
+  // function showmodal(item) {
+  //   console.log(item.title);
+  //   <div
+  //     className="modal fade"
+  //     id="addtocart"
+  //     tabindex="-1"
+  //     aria-labelledby="exampleModalLabel"
+  //     aria-hidden="true"
+  //   >
+  //     <div className="modal-dialog">
+  //       <div className="modal-content">
+  //         <div className="modal-header">
+  //           <h5 className="modal-title" id="exampleModalLabel">
+  //             {item.title}
+  //           </h5>
+  //           <button
+  //             type="button"
+  //             className="btn-close"
+  //             data-bs-dismiss="modal"
+  //             aria-label="Close"
+  //           ></button>
+  //         </div>
+  //         <div className="modal-body">
+  //           <label for="quantity">Quantity</label>
+  //           <div id="quantity">
+  //             <button
+  //               className="btn btn-light w-100"
+  //               type="button"
+  //               onClick={decNum}
+  //             >
+  //               -
+  //             </button>
+  //             <input
+  //               type="text"
+  //               className="form-control text-center"
+  //               value={num}
+  //               onChange={handleChange}
+  //             />
+  //             <button
+  //               className="btn btn-light w-100"
+  //               type="button"
+  //               onClick={incNum}
+  //             >
+  //               +
+  //             </button>
+  //           </div>
+  //         </div>
+  //         <div className="modal-footer justify-content-center">
+  //           {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button> */}
 
-            <button type="button" className="btn btn-primary w-100">
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>;
-  }
+  //           <button type="button" className="btn btn-primary w-100">
+  //             Add to Cart
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>;
+  // }
 
   var drink = [
     {
@@ -217,9 +223,9 @@ function MenuPage() {
       <div
         className="row productcard bs"
         type="button"
-        onClick={() => {
-          showmodal(item);
-        }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
         // data-bs-toggle="modal"
         // data-bs-target="#addtocart"
       >
@@ -312,9 +318,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -406,9 +412,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -533,9 +539,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -579,9 +585,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -954,9 +960,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -999,9 +1005,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1028,9 +1034,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1056,9 +1062,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1111,9 +1117,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1160,9 +1166,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1221,9 +1227,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1297,9 +1303,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1373,9 +1379,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1406,9 +1412,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1438,9 +1444,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1497,9 +1503,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1618,9 +1624,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1828,9 +1834,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -1876,9 +1882,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -2207,9 +2213,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -2329,9 +2335,9 @@ function MenuPage() {
     <div
       className="row productcard bs"
       type="button"
-      onClick={() => {
-        showmodal(item);
-      }}
+        // onClick={() => {
+        //   showmodal(item);
+        // }}
       // data-bs-toggle="modal"
       // data-bs-target="#addtocart"
     >
@@ -2486,6 +2492,12 @@ function MenuPage() {
 }))}
 </ul>
 
+{/* <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button> */}
+
+
+
 {category && (category.map(categorys => {
           return <>
             {/*  */}
@@ -2497,12 +2509,25 @@ function MenuPage() {
                     return <>
 
 
-                      <div
+                    <Items items={items} categorys={categorys} />
+                      
+
+                    </>
+                  }))}
+
+                </div>
+              </div>
+
+            </div>
+          </>
+        }))}
+{/* <div
                         className="row productcard bs"
                         type="button"
                       // onClick={() => {
                       //   showmodal(item);
                       // }}
+                      onClick={handleShow}
                       // data-bs-toggle="modal"
                       // data-bs-target="#addtocart"
                       >
@@ -2516,20 +2541,37 @@ function MenuPage() {
                           <div className="col-xl-5">
                             <img className="productimg" src={items.Image} alt=".." />
                           </div>
-                          </>
+                          {/* <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{items.Title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal> */}
+                          {/* </>
                         )}
-                      </div>
-
-
-                    </>
-                  }))}
-
-                </div>
-              </div>
-
-            </div>
-          </>
-        }))}
+                      </div> */}
+{/* <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>modal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal> */}
 
         <div className="row productrow" id="drinks">
           <div className="col-xl-12 responsiveness">
