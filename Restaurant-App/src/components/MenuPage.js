@@ -23,6 +23,35 @@ function MenuPage() {
     setNum(e.target.value);
   };
 
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await (await axios.get('http://localhost:5000/api/admin/getallmenu')).data
+        setcategory(data.data);
+        console.log(category)
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await (await axios.get('http://localhost:5000/api/admin/getallitems')).data
+        setItem(data.data);
+        console.log(item)
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
+
   function showmodal(item) {
     console.log(item.title);
     <div
@@ -2331,7 +2360,7 @@ function MenuPage() {
           </div>
         </div>
 
-        <ul className="nav nav-pills nav-fill sticky-top flex-column">
+        {/* <ul className="nav nav-pills nav-fill sticky-top flex-column">
           <li className="nav-item">
             <a className="nav-link active" aria-current="page" href="#drinks">
               Drinks
@@ -2442,7 +2471,65 @@ function MenuPage() {
               Chicken Fillet Burgers
             </a>
           </li>
-        </ul>
+        </ul> */}
+
+<ul className="nav nav-pills nav-fill sticky-top flex-column">
+
+{category && (category.map(categorys => {
+  return <>
+    <li className="nav-item">
+      <a className="nav-link" aria-current="page" href={`#${categorys.Name}`}>
+        {categorys.Name}
+      </a>
+    </li>
+  </>
+}))}
+</ul>
+
+{category && (category.map(categorys => {
+          return <>
+            {/*  */}
+            <div className="row productrow" id={`${categorys.Name}`}>
+              <div className="col-xl-12 responsiveness">
+                <h3 className="boldtext ms-2 mt-5 nomargin">{categorys.Name}</h3>
+                <div className="row centeritems">
+                  {item && (item.map(items => {
+                    return <>
+
+
+                      <div
+                        className="row productcard bs"
+                        type="button"
+                      // onClick={() => {
+                      //   showmodal(item);
+                      // }}
+                      // data-bs-toggle="modal"
+                      // data-bs-target="#addtocart"
+                      >
+                        {items.category_id === categorys.ID && (<>
+                          <div className="col-xl-7">
+                            <h5 className="boldtext">{items.Title}</h5>
+                            {items.Description !== "undefined" ? (<p>{items.Description}</p>) : (<></>)}
+                            {items.Price !== "undefined" ? (<h5>$ {items.Price}</h5>) : (<></>)}
+
+                          </div>
+                          <div className="col-xl-5">
+                            <img className="productimg" src={items.Image} alt=".." />
+                          </div>
+                          </>
+                        )}
+                      </div>
+
+
+                    </>
+                  }))}
+
+                </div>
+              </div>
+
+            </div>
+          </>
+        }))}
 
         <div className="row productrow" id="drinks">
           <div className="col-xl-12 responsiveness">
