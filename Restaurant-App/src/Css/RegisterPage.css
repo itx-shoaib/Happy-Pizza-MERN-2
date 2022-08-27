@@ -1,0 +1,19 @@
+@media (max-width:468px){
+    .scrolling-disable{
+        overflow-x: hidden;
+    }
+    .centeredRegItems{
+        margin-bottom: 0 !important;
+        margin-left: 0 !important;
+        padding: 10px;
+    }
+    .registerbtn{
+        margin-left: 0;
+        width: 90%;
+        margin: 10px;
+    }
+    .disablediv{
+        display: none;
+    }
+
+}

@@ -1,0 +1,34 @@
+@media (max-width:468px){
+.hidescroll{
+    overflow-x: hidden;
+}
+.textresponsive{
+    margin-top: 30px;
+    font-size: 20px;
+}
+.desctextresponsive{
+    font-size: 16px;
+}
+.carouseladjust{
+    height: 40vh;
+}
+.img-responsive{
+    height: 40vh;
+}
+.text-responsive{
+    font-size: 20px;
+}
+.bottom-left{
+    position: absolute;
+    left: 0;
+    top: 20%;
+    padding: 30px;
+
+}
+.homebtn{
+    width: 80%;
+}
+.homecards{
+    border-bottom: 1px solid silver;
+}
+}

@@ -1,0 +1,11 @@
+@media (max-width: 468px){
+    .btn-responsive{
+        width: 80% !important;
+    }
+
+    .input-responsive{
+        margin: 10px auto;
+        width: 80%;
+        text-align: center;
+    }
+}

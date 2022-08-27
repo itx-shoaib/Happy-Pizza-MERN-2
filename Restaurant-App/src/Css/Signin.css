@@ -1,0 +1,14 @@
+@media (max-width:468px){
+    .scrolling-off{
+        overflow-x: hidden;
+    }
+    .centeredItems{
+        margin-left: 0 !important;
+        padding: 10px;
+    }
+    .signinbtn{
+        margin-left: 0;
+        width: 90%;
+        margin: 10px;
+    }
+}
