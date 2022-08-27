@@ -1,9 +1,60 @@
-import React from "react";
+import React,{ useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 import { Link } from "react-router-dom";
-import "../Css/RegisterPage.css";
+import "../Css/RegisterPage.css"
+import 'react-toastify/dist/ReactToastify.css';
 function RegisterPage() {
+  const [name, setname] = useState('');
+  const [email, setemail] = useState('');
+  const [number, setnumber] = useState('');
+  const [password, setpassword] = useState('');
+  const [cpassword, setcpassword] = useState('');
+
+  async function register(){
+    if (password === cpassword) {
+        const user = {
+            name,
+            email,
+            number,
+            password,
+            cpassword
+        };
+
+        console.log(user)
+
+        try {
+
+            // setloading(true)
+            const result = await axios.post("http://localhost:5000/api/user/register",user).data;
+            console.log(result)
+            toast.success("Registration Successfull")
+            // setloading(true)
+            window.location.href = '/login'
+
+            
+
+
+            setname('')
+            setemail('')
+            setnumber('')
+            setpassword('')
+            setcpassword('')
+
+        } catch (error) {
+            console.log(error);
+            toast.warn("Something went wrong!")
+            // setloading(true)
+        }
+    }
+    else{
+        alert("Password is not matched");
+    }
+}
+
   return (
     <>
+     <ToastContainer />
       <div className="scrolling-disable">
         <div className="row justify-content-center">
           <div className="col-md-4 text-center mt-2 responsiveness">
@@ -14,41 +65,56 @@ function RegisterPage() {
               />
             </Link>
             <h3 className="boldtext my-3">SIGN UP</h3>
-            <form action="/" method="get">
+            <form>
               <div className="my-5 ms-5 me-2 text-start centeredRegItems">
                 <label for="namee">Name</label>
                 <input
                   id="namee"
+                  type="text"
                   className="form-control mb-4"
                   placeholder="Name"
+                  value={name} 
+                  onChange={(e) => { setname(e.target.value) }}
                   required
                 />
                 <label for="emailad">Email Address</label>
                 <input
                   id="emailad"
+                  type="email"
                   className="form-control mb-4"
                   placeholder="Email"
+                  value={email} 
+              onChange={(e) => { setemail(e.target.value) }}
                   required
                 />
                 <label for="phoneno">Phone</label>
                 <input
                   id="phoneno"
+                  type="tel"
                   className="form-control mb-4"
                   placeholder="Phone"
+                  value={number} 
+              onChange={(e) => { setnumber(e.target.value) }}
                   required
                 />
                 <label for="password">Password</label>
                 <input
                   id="password"
+                  type="password"
                   className="form-control mb-4"
                   placeholder="Password"
+                  value={password} 
+                  onChange={(e) => { setpassword(e.target.value) }}
                   required
                 />
                 <label for="cpassword">Confirm Password</label>
                 <input
                   id="cpassword"
+                  type="password"
                   className="form-control mb-4"
                   placeholder="Confirm Password"
+                  value={cpassword} 
+                  onChange={(e) => { setcpassword(e.target.value) }}
                   required
                 />
                 <div className="disablediv">
@@ -69,8 +135,9 @@ function RegisterPage() {
               <div className="mb-5">
                 <button
                   className="btn btn-primary registerbtn"
-                  type="submit"
-                  formmethod="post"
+                  // type="submit"
+                  // formmethod="post"
+                  onClick={register}
                 >
                   SIGN IN
                 </button>
