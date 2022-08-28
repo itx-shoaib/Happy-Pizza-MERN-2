@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
+  const user = JSON.parse(localStorage.getItem("currentuser"))[0];
+  function logout() {
+    localStorage.removeItem('currentuser');
+    window.location.href="/login";
+  }
   return (
     <>
       <nav className="navbar-light justify-content-center mainnavbar">
@@ -88,7 +93,7 @@ function Navbar() {
               <img
                 className="menuimg"
                 src="https://www.happyspizzaburger.co.uk/uploads/restorants/198031cc-1875-4d54-8945-8135a96f353a_large.jpg"
-              />
+              alt=".." />
             </Link>
           </div>
 
@@ -96,12 +101,8 @@ function Navbar() {
             <Link to="/menu">
               <button className="btn btn-primary">Order Now</button>
             </Link>
-            <Link to="/login">
-              <button className="btn btn-light">
-                <i className="fa-solid fa-user btnicon"></i>Sign in
-              </button>
-            </Link>
-            <div className="dropdown">
+            {user ? (<>
+              <div className="dropdown">
               <button
                 className="btn btn-light dropdown-toggle"
                 type="button"
@@ -112,7 +113,7 @@ function Navbar() {
                 <i className="fa-solid fa-user"></i>
               </button>
               <ul className="dropdown-menu userddmenu" aria-labelledby="dropdownMenuButton1">
-              <li className="dropdown-item"><p className="dropdown-item text-center userdditem boldtext">USER NAME</p></li>
+              <li className="dropdown-item"><p className="dropdown-item text-center userdditem boldtext">{user.name}</p></li>
               <li><hr class="dropdown-divider"/></li>
                 <li>
                   <Link to="/profile">
@@ -134,12 +135,19 @@ function Navbar() {
                 </li>
                 <li><hr class="dropdown-divider"/></li>
                 <Link to="/login">
-                    <button className="btn btn-light userdditem dropdown-item">LOG OUT</button>
+                    <button className="btn btn-light userdditem dropdown-item" onClick={logout} >LOG OUT</button>
                   </Link>
               </ul>
+              </div>
+            </>):(<>
+              <Link to="/login">
+              <button className="btn btn-light">
+                <i className="fa-solid fa-user btnicon"></i>Sign in
+              </button>
+            </Link>
+            </>)}
             </div>
           </div>
-        </div>
       </nav>
     </>
   );
