@@ -18,8 +18,9 @@ function SigninPage() {
   
       try {
         // setloading(true)
-        const result = (await axios.post('http://localhost:5000/api/user/login', user));
-        console.log(result)
+        const result = (await axios.post('http://localhost:5000/api/user/login', user)).data;
+        console.log(result.data)
+        localStorage.setItem('currentuser', JSON.stringify(result.data));
         toast.success("Login Successfull")
         setInterval(() => {
           window.location.href = "/"

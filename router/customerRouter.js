@@ -109,9 +109,12 @@ router.post('/login',(req,res)=>{
                 }, "fn789disdhcsc87scsdcsdb4", {
                     expiresIn: 3600000
                 })
+                // res.json({
+                //         token
+                //     });
                 res.json({
-                        token
-                    });
+                    data:result
+                })
             }
             else{
                 return res.status(401).json({message:"Something went wrong,Please try again later."})
