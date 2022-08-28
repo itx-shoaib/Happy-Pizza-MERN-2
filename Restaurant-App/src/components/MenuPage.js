@@ -27,9 +27,6 @@ function MenuPage() {
     setNum(e.target.value);
   };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   useEffect(() => {
     async function fetchData() {
       try {

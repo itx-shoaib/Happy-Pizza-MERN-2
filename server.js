@@ -13,10 +13,12 @@ app.use(bodyparser.json());
 
 const customerRouter = require('./router/customerRouter')
 const adminRouter = require('./router/adminRouter')
+const cartRouter = require("./router/cartRouter")
 // const orderRoute = require('./router/orderRouter')
 // const orderitemRoute = require('./router/orderitemRouter')
 app.use('/api/user', customerRouter)
 app.use('/api/admin', adminRouter)
+app.use('/api/admin',cartRouter)
 // app.use('/api/admin',orderRoute)
 // app.use('/api/admin',orderitemRoute)
 
