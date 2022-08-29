@@ -161,6 +161,69 @@ router.post('/getcartitems',(req,res)=>{
     })
 })
 
+// ROUTER 3: Updating the quantity of cart item  by PUT method PATH: http://localhost:5000/api/admin/updatecart
+// STATUS: WORKING
+router.post('/updatecart',(req,res)=>{
+    let customer_Id = req.body.customer_Id;
+    let orderID = req.body.orderID;
+    let quantity = req.body.quantitys
+
+
+    // let mainqr = `SELECT customer.customer_Id,item.*,orderitem.Price,orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem 
+    // inner join cart on cart.cart_Id=orderitem.Order_ID 
+    // inner join customer on customer.customer_Id=cart.customer_Id 
+    // INNER join item on item.ID = orderitem.ProductID 
+    // WHERE cart.customer_Id=${customer_Id} and orderitem.ID = ${orderID}`
+   
+            if(orderID>0){
+
+                if(quantity>0)
+                {
+
+
+                    let qr = `update orderitem 
+                    set Quantity = ${quantity}
+                    where ID = ${orderID}`
+                    dbconfig.query(qr,(err,result)=>{
+                        if(!err){
+                            res.json({
+                                message:"Your item has been updated",
+                                data:result
+                            })
+                        }
+                        else{
+                            res.json({
+                                error:"Something went wrong in updation of cart quantity"
+                            })
+                        }
+                    })
+                }
+                else{
+
+
+                    let qr = `Delete From orderitem 
+                    where ID = ${orderID}`
+                    dbconfig.query(qr,(err,result)=>{
+                        if(!err){
+                            res.json({
+                                message:"Your item has been Delete",
+                                data:result
+                            })
+                        }
+                        else{
+                            res.json({
+                                error:"Something went wrong in Delete"
+                            })
+                        }
+                    })
+                }
+
+          
+            }
+        }
+        
+)
+
 // ROUTER 3: Updating the orders status by PUT method PATH: http://localhost:5000/api/admin/updatestatus/:id
 // STATUS: WORKING
 router.put('/updatestatus/:id',(req,res)=>{

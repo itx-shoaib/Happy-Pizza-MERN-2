@@ -13,12 +13,48 @@ function Navbar() {
     window.location.href="/";
   }
 
-  function add(id) {
-    alert(id)
+  async function add(orderID,quantitys) {
+    alert(orderID)
+    const info = { 
+      orderID,
+      quantitys,
+      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
+
+        try {
+            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            console.log(data.data)
+        } catch (error) {
+            console.log(error)
+        }
   }
 
-  function remove(id) {
-    alert(id)
+  async function remove(orderID,quantitys) {
+   
+    const info = { 
+      orderID,
+      quantitys,
+      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
+
+        try {
+            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            console.log(data.data)
+        } catch (error) {
+            console.log(error)
+        }
+  }
+
+  async function del(orderID){
+   
+    const info = { 
+      orderID
+    }
+
+        try {
+            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            console.log(data.data)
+        } catch (error) {
+            console.log(error)
+        }
   }
  
   useEffect(() => {
@@ -94,13 +130,13 @@ function Navbar() {
               <div className="cart-card">
               <h4>{item.Title}</h4>
               <h6>{item.Quantity} x ${item.Price}</h6>
-              <button className="btn" onClick={()=>{add(item.orderitemid)}}>
+              <button className="btn" onClick={()=>{add(item.orderitemid,item.Quantity+1)}}>
                 <i className="fa-solid fa-plus"></i>
               </button>
-              <button className="btn" onClick={()=>{remove(item.orderitemid)}}>
+              <button className="btn" onClick={()=>{remove(item.orderitemid,item.Quantity-1)}}>
                 <i className="fa-solid fa-minus"></i>
               </button>
-              <button className="btn">
+              <button className="btn" onClick={()=>{del(item.orderitemid)}}>
                 <i className="fa-solid fa-trash"></i>
               </button>
             </div>
