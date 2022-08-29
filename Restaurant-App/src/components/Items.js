@@ -34,6 +34,7 @@ function Items({items , categorys}) {
       const handleShow = () => setShow(true);
   return (
     <>
+                       {items.category_id === categorys.ID ? (<>
                               <div
                         className="row productcard bs"
                         type="button"
@@ -44,7 +45,7 @@ function Items({items , categorys}) {
                       // data-bs-toggle="modal"
                       // data-bs-target="#addtocart"
                       >
-                        {items.category_id === categorys.ID && (<>
+                      
                           <div className="col-xl-7">
                             <h5 className="boldtext">{items.Title}</h5>
                             {items.Description !== "undefined" ? (<p>{items.Description}</p>) : (<></>)}
@@ -54,9 +55,11 @@ function Items({items , categorys}) {
                           <div className="col-xl-5">
                             <img className="productimg" src={items.Image} alt=".." />
                           </div>
+                          </div>
                           </>
-                        )}
-                      </div>
+                        ):(
+                        <></>)}
+                      
 
                       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

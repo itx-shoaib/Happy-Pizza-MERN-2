@@ -96,7 +96,7 @@ router.get('/getcartitems',(req,res)=>{
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             // 1-Finding ProductID of cart items from taking cart id from main query
-            let qr = `Select * from orderitem where Order_ID = ${result[0]['cart_Id']}`
+            let qr = `Select * from orderitem where Order_ID = ${result[0]['cart_Id']} and 	ProductID=${result[0]['ProductID']}`
             dbconfig.query(qr,(err,result)=>{
                 if (!err) {
                     // 2- Finding Product detail from taking Productid from query 1

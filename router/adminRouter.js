@@ -127,8 +127,7 @@ router.get('/getitem/:id',(req,res)=>{
 // STATUS: WORKING
 router.get('/getallitems',(req,res)=>{
     let num = 3;
-    let qr = `SELECT item.ID,item.category_id,category.Name,item.Title,item.Description,item.Price,item.Image FROM item 
-                INNER JOIN category ON item.category_id=category.ID`;
+    let qr = `SELECT * from item`;
 
         dbconfig.query(qr,(err,result)=>{
         if (err) {
