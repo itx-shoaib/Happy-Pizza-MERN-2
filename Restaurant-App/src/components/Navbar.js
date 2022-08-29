@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 
 function Navbar() {
+
+  const [items, setItems] = useState([])
  
  const getstatus= localStorage.getItem('status');
   function logout() {
@@ -11,6 +13,13 @@ function Navbar() {
     window.location.href="/";
   }
 
+  function add(id) {
+    alert(id)
+  }
+
+  function remove(id) {
+    alert(id)
+  }
  
   useEffect(() => {
 
@@ -26,6 +35,7 @@ function Navbar() {
 
         const data = (await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
         console.log(data.data)
+        setItems(data.data)
 
       } catch (error) {
         console.log(error);
@@ -79,7 +89,25 @@ function Navbar() {
                   Order Minimum is $5.00. Please add more items in the cart.
                 </p>
               </div>
+              {items && items.map((item)=>{
+                return <>
               <div className="cart-card">
+              <h4>{item.Title}</h4>
+              <h6>{item.Quantity} x ${item.Price}</h6>
+              <button className="btn" onClick={()=>{add(item.orderitemid)}}>
+                <i className="fa-solid fa-plus"></i>
+              </button>
+              <button className="btn" onClick={()=>{remove(item.orderitemid)}}>
+                <i className="fa-solid fa-minus"></i>
+              </button>
+              <button className="btn">
+                <i className="fa-solid fa-trash"></i>
+              </button>
+            </div>
+            </>
+              })}
+
+              {/* <div className="cart-card">
                 <h4>Item Name</h4>
                 <h6>Q x $Price</h6>
                 <button className="btn">
@@ -91,20 +119,7 @@ function Navbar() {
                 <button className="btn">
                   <i className="fa-solid fa-trash"></i>
                 </button>
-              </div>
-              <div className="cart-card">
-                <h4>Item Name</h4>
-                <h6>Q x $Price</h6>
-                <button className="btn">
-                  <i className="fa-solid fa-plus"></i>
-                </button>
-                <button className="btn">
-                  <i className="fa-solid fa-minus"></i>
-                </button>
-                <button className="btn">
-                  <i className="fa-solid fa-trash"></i>
-                </button>
-              </div>
+              </div> */}
               <div className="row my-5">
                 <h6>Sub-total: $100</h6>
                 <Link to="/cart-checkout">
