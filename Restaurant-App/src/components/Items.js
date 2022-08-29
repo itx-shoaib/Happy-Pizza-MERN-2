@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 function Items({items , categorys}) {
     const [show, setShow] = useState(false);
     const [quantity, setQuantity] = useState()
+    
     const [category, setcategory] = useState(
         []
       )
@@ -18,9 +19,11 @@ function Items({items , categorys}) {
           price:items.Price,
           ProductID:items.ID,
           quantity:quantity,
-          userID:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+          userID:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id,
+          order_id:items.ID
         }
-        
+        alert(quantity)
+        console.log(cartDetail)
         try {
           const result = await axios.post('http://localhost:5000/api/admin/cart',cartDetail)
           console.log(result)

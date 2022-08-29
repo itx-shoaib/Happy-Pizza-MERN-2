@@ -22,11 +22,12 @@ router.post('/cart',(req,res)=>{
     // values('${customer_id}',${status})`
 
     let qr = `Select * from cart where customer_id = ${customer_id} and Status = 1`
-     dbconfig.query(qr,(err,result)=>{
+     dbconfig.query(qr,(err,results)=>{
+        console.log(results[0]['cart_Id'])
         if(!err){
-            if(result.length <=0){
+            if(results[0]['cart_Id']<=0){
                 // Creating the cart in db
-                let qr = ` insert into cart(customer_Id,Status)
+                let qr = `insert into cart(customer_Id,Status)
                         values('${customer_id}',${status})`
                 dbconfig.query(qr,(err,result)=>{
                     if(!err){
@@ -75,9 +76,61 @@ router.post('/cart',(req,res)=>{
                 // })
             }
             else{
-                res.json({
-                    data:result
+                let qrordetitem = `Select * from orderitem where order_ID =${results[0]['cart_Id']} and ProductID = ${product_id} `;
+                dbconfig.query(qrordetitem,(err,result)=>{
+                   
+                    if (!err) {
+                        if (result.length==0) {
+                            let qr = `insert into orderitem(ProductID,Quantity,Price,Order_ID)
+                            values(${product_id},${quantity},${price},${results[0]['cart_Id']})`
+                            dbconfig.query(qr,(err,result)=>{
+                                if(!err){
+                                    if(result.affectedRows === 1){
+                                        res.json({
+                                            message:"Orderitem has been created",
+                                            data:result
+                                        })
+                                    }
+                                    else{
+                                        res.json({
+                                            error:"Error in creating orderitem"
+                                        })
+                                    }
+                                }
+                                else{
+                                    res.json({
+                                        error:"Error"
+                                    })
+                                }
+                            })
+                        } else {
+                            console.log('sssss' +results[0]['cart_Id'])
+                        // Updating the cart quantity
+                        let qr = `update orderitem 
+                        set Quantity = ${quantity}
+                        where Order_ID = ${results[0]['cart_Id']}`
+                        dbconfig.query(qr,(err,result)=>{
+                            if(!err){
+                                res.json({
+                                    data:result
+                                })
+                            }else{
+                                console.log(err,'err')
+                            }
+                        })
+                        // res.json({
+                        //     data:result
+                        // })
+                        }
+                    
+                    } else {
+                        console.log(err,"err")
+                    }
                 })
+ 
+
+
+               
             }
         }
         else{
