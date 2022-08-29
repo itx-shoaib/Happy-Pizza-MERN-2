@@ -86,6 +86,46 @@ router.post('/cart',(req,res)=>{
     })
 });
 
+// ROUTER 2: Showing orders in cart by GET method PATH: http://localhost:5000/api/admin/getcartitems
+// STATUS: WORKING
+router.get('/getcartitems',(req,res)=>{
+    let customer_Id = req.body.customer_Id;
+
+    // Main query: Finding customer cart
+    let qr = `Select * from cart where customer_id = ${customer_Id} and status = 1`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            // 1-Finding ProductID of cart items from taking cart id from main query
+            let qr = `Select * from orderitem where Order_ID = ${result[0]['cart_Id']}`
+            dbconfig.query(qr,(err,result)=>{
+                if (!err) {
+                    // 2- Finding Product detail from taking Productid from query 1
+                    let qr = `Select *  from item where ID = ${result[0]['ProductID']}`
+                    dbconfig.query(qr,(err,result)=>{
+                        if (!err) {
+                            res.json({
+                                data:result
+                            })
+                        } else {
+                            console.log(err,'err')
+                        }
+                    })
+                    // res.json({
+                    //     data:result[0]['ProductID']
+                    // })
+                } else {
+                    console.log(err,'err')
+                }
+            })
+            // res.json({
+            //     data:result[0]['cart_Id']
+            // })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
+
 // ROUTER 3: Updating the orders status by PUT method PATH: http://localhost:5000/api/admin/updatestatus/:id
 // STATUS: WORKING
 router.put('/updatestatus/:id',(req,res)=>{
