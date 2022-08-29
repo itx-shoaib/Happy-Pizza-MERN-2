@@ -1,12 +1,40 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 function Navbar() {
-  const user = JSON.parse(localStorage.getItem("currentuser"))[0];
+ 
+ const getstatus= localStorage.getItem('status');
   function logout() {
+    localStorage.setItem('status','false');
     localStorage.removeItem('currentuser');
-    window.location.href="/login";
+    window.location.href="/";
   }
+
+ 
+  useEffect(() => {
+
+    if(getstatus==="true")
+  {
+   const user =JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
+    async function fetchData() {
+
+      const temp = {
+        customer_Id:user
+      }
+      try {
+
+        const data = (await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
+        console.log(data.data)
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
+    fetchData();
+  }
+  }, []);
   return (
     <>
       <nav className="navbar-light justify-content-center mainnavbar">
@@ -101,7 +129,7 @@ function Navbar() {
             <Link to="/menu">
               <button className="btn btn-primary">Order Now</button>
             </Link>
-            {user ? (<>
+            {getstatus==="true" ? (<>
               <div className="dropdown">
               <button
                 className="btn btn-light dropdown-toggle"
@@ -113,7 +141,9 @@ function Navbar() {
                 <i className="fa-solid fa-user"></i>
               </button>
               <ul className="dropdown-menu userddmenu" aria-labelledby="dropdownMenuButton1">
-              <li className="dropdown-item"><p className="dropdown-item text-center userdditem boldtext">{user.name}</p></li>
+              <li className="dropdown-item"><p className="dropdown-item text-center userdditem boldtext">
+                {JSON.parse(localStorage.getItem('currentuser'))[0].name}
+                </p></li>
               <li><hr class="dropdown-divider"/></li>
                 <li>
                   <Link to="/profile">

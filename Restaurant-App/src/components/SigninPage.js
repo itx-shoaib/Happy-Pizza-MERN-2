@@ -20,7 +20,22 @@ function SigninPage() {
         // setloading(true)
         const result = (await axios.post('http://localhost:5000/api/user/login', user)).data;
         console.log(result.data)
+
         localStorage.setItem('currentuser', JSON.stringify(result.data));
+       
+        if(result.data[0].customer_Id!=null)
+        {
+
+          localStorage.setItem('status','true');
+        }
+        else
+        {
+
+
+          localStorage.setItem('status','false');
+        }
+
+        
         toast.success("Login Successfull")
         setInterval(() => {
           window.location.href = "/"

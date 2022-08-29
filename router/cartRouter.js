@@ -141,7 +141,7 @@ router.post('/cart',(req,res)=>{
 
 // ROUTER 2: Showing orders in cart by GET method PATH: http://localhost:5000/api/admin/getcartitems
 // STATUS: WORKING
-router.get('/getcartitems',(req,res)=>{
+router.post('/getcartitems',(req,res)=>{
     let customer_Id = req.body.customer_Id;
 
     let qr = `SELECT customer.customer_Id,item.*,orderitem.Price,orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem 
