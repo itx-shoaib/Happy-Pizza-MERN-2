@@ -144,37 +144,19 @@ router.post('/cart',(req,res)=>{
 router.get('/getcartitems',(req,res)=>{
     let customer_Id = req.body.customer_Id;
 
-    // Main query: Finding customer cart
-    let qr = `Select * from cart where customer_id = ${customer_Id} and status = 1`
+    let qr = `SELECT customer.customer_Id,item.*,orderitem.Price,orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem 
+    inner join cart on cart.cart_Id=orderitem.Order_ID 
+    inner join customer on customer.customer_Id=cart.customer_Id 
+    INNER join item on item.ID = orderitem.ProductID 
+    WHERE cart.customer_Id=${customer_Id};`
     dbconfig.query(qr,(err,result)=>{
-        if (!err) {
-            // 1-Finding ProductID of cart items from taking cart id from main query
-            let qr = `Select * from orderitem where Order_ID = ${result[0]['cart_Id']} and 	ProductID=${result[0]['ProductID']}`
-            dbconfig.query(qr,(err,result)=>{
-                if (!err) {
-                    // 2- Finding Product detail from taking Productid from query 1
-                    let qr = `Select *  from item where ID = ${result[0]['ProductID']}`
-                    dbconfig.query(qr,(err,result)=>{
-                        if (!err) {
-                            res.json({
-                                data:result
-                            })
-                        } else {
-                            console.log(err,'err')
-                        }
-                    })
-                    // res.json({
-                    //     data:result[0]['ProductID']
-                    // })
-                } else {
-                    console.log(err,'err')
-                }
+        if(!err){
+            res.json({
+                data:result
             })
-            // res.json({
-            //     data:result[0]['cart_Id']
-            // })
-        } else {
-            console.log(err,'err')
+        }
+        else{
+            console.log(err,"err")
         }
     })
 })

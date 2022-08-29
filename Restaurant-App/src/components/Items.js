@@ -74,7 +74,7 @@ function Items({items , categorys}) {
             <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Quantity</Form.Label>
-        <Form.Control type="number" value={quantity} onChange={(e) => { setQuantity(e.target.value) }} />
+        <Form.Control type="number" value={quantity} onChange={(e) => { setQuantity(e.target.value) }} required />
       </Form.Group>
       </Form>
         </Modal.Body>
