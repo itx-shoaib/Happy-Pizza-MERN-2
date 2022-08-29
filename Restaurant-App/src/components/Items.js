@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -27,9 +29,11 @@ function Items({items , categorys}) {
         try {
           const result = await axios.post('http://localhost:5000/api/admin/cart',cartDetail)
           console.log(result)
+          toast.success("Item has been added to cart")
           setQuantity('')
         } catch (error) {
           console.log(error);
+          toast.warn("Failed! Try again later")
         }
         
         setShow(false);
@@ -65,6 +69,7 @@ function Items({items , categorys}) {
                       
 
                       <Modal show={show} onHide={handleClose}>
+                     
         <Modal.Header closeButton>
           <Modal.Title>{items.Title}</Modal.Title>
         </Modal.Header>
@@ -84,6 +89,7 @@ function Items({items , categorys}) {
           </Button>
         </Modal.Footer>
       </Modal>
+       {/* <ToastContainer /> */}
     </>
 )
 }
