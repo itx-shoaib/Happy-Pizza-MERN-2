@@ -65,7 +65,7 @@ function Navbar() {
             const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
             console.log(data.data)
             update()
-            toast.success("Item has been deleted")
+            toast.warn("Item has been deleted")
         } catch (error) {
             console.log(error)
             toast.warn("Failed! Try again later")
