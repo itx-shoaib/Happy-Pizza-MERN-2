@@ -226,6 +226,16 @@ router.post('/updatecart',(req,res)=>{
         
 )
 
+
+// Router 4 : 
+// Status:
+router.post('/cartcheckout',(req,res)=>{
+
+
+    let qr = ``
+
+})
+
 // ROUTER 3: Updating the orders status by PUT method PATH: http://localhost:5000/api/admin/updatestatus/:id
 // STATUS: WORKING
 router.put('/updatestatus/:id',(req,res)=>{

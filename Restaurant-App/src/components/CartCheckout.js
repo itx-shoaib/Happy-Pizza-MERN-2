@@ -1,9 +1,26 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import {Link} from "react-router-dom"
 
 function CartCheckout() {
+  const [address, setAddress] = useState()
+  useEffect(() => {
+    async function fetchData() {
+      const user={
+        customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+      }
+      try {
+        const data = await (await axios.post('http://localhost:5000/api/user/getaddress',user)).data
+        setAddress(data.data)
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
   return (
     <>
       <Navbar />
@@ -37,9 +54,16 @@ function CartCheckout() {
                   </label>
                 </div>
                 <h5 className="mt-4 boldtext">Delivery Address</h5>
-                <h6 className="mt-3 boldtext">
+                {address ? (<>
+                  <h6 className="mt-3 boldtext">
+                  House no:{address.house},Flat:{address.flat},{address.street},{address.postcode},{address.town}
+                </h6>
+                </>):(<>
+                  <h6 className="mt-3 boldtext">
                   You dont have any address. Please add one
                 </h6>
+                </>)}
+
                 <button
                   type="button"
                   className="btn btn-primary mt-3 mb-5"

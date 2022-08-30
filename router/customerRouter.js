@@ -169,4 +169,23 @@ router.post('/addaddress',(req,res)=>{
     })
 });
 
+// Router 4: http://localhost:5000/api/user/getaddress
+// Status: Working
+router.post('/getaddress',(req,res)=>{
+    let customer_Id = req.body.customer_Id
+
+    let qr = `SELECT * FROM address
+    where customer_Id = ${customer_Id}`;
+    dbconfig.query(qr,(err,result)=>{
+        if(!err){
+            res.json({
+                data:result[0]
+            })
+        }
+        else{
+            console.log(err,'err')
+        }
+    })
+})
+
 module.exports = router
