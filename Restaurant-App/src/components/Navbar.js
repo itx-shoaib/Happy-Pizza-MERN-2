@@ -121,6 +121,16 @@ function Navbar() {
     fetchData();
   }
   }, []);
+
+  let total = 0;
+  // for (const product of order) {
+  //     const productTotal = product.price;
+  //     total = total + productTotal;
+  // }
+  for (var i = 0; i < items.length; i++) {
+      let productTotal = items[i].totalp;
+      total = total + parseInt(productTotal);
+  }
   return (
     <>
      <ToastContainer />
@@ -200,7 +210,7 @@ function Navbar() {
               <div className="row my-5">
 
 
-              <h6>Sub-total: $100</h6>
+              <h6>Sub-total: ${total}</h6>
 
                 
                 <Link to="/cart-checkout">
