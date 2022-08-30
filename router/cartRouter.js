@@ -144,7 +144,7 @@ router.post('/cart',(req,res)=>{
 router.post('/getcartitems',(req,res)=>{
     let customer_Id = req.body.customer_Id;
 
-    let qr = `SELECT customer.customer_Id,item.*,orderitem.Price,orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem 
+    let qr = `SELECT customer.customer_Id,item.*,orderitem.Price as "totalp",orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem 
     inner join cart on cart.cart_Id=orderitem.Order_ID 
     inner join customer on customer.customer_Id=cart.customer_Id 
     INNER join item on item.ID = orderitem.ProductID 

@@ -17,7 +17,7 @@ function Navbar() {
 
 
   async function add(orderID,quantitys,price) {
-    alert(orderID)
+    alert(price)
     const info = { 
       orderID,
       quantitys,
