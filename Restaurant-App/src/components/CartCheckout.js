@@ -1,4 +1,6 @@
 import React,{useState,useEffect} from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
@@ -6,6 +8,9 @@ import {Link} from "react-router-dom"
 
 function CartCheckout() {
   const [address, setAddress] = useState()
+  const [comment, setcomment] = useState()
+  const [items, setItems] = useState([])
+  const getstatus= localStorage.getItem('status');
   useEffect(() => {
     async function fetchData() {
       const user={
@@ -21,8 +26,72 @@ function CartCheckout() {
     }
     fetchData();
   }, [])
+
+  useEffect(() => {
+
+    if(getstatus==="true")
+  {
+   const user =JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
+    async function fetchData() {
+
+      const temp = {
+        customer_Id:user
+      }
+      try {
+
+        const data = (await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
+        console.log(data.data)
+        setItems(data.data)
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
+    fetchData();
+  }
+  }, []);
+
+  let total = 0;
+  for (var i = 0; i < items.length; i++) {
+      let productTotal = items[i].totalp;
+      total = total + parseInt(productTotal);
+  }
+
+
+
+  async function checkout() {
+    const user = {
+      comment,
+      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+  };
+
+  console.log(user)
+
+  try {
+
+      // setloading(true)
+      const result = await axios.post("http://localhost:5000/api/admin/cartcheckout",user).data;
+      console.log(result)
+      toast.success("Checkout Successfull")
+      // setloading(true)
+      setInterval(() => {
+        window.location.href = "/"
+      }, 2000);
+
+      setcomment('')
+
+
+
+  } catch (error) {
+      console.log(error);
+      toast.warn("Something went wrong!")
+      // setloading(true)
+  }
+}
   return (
     <>
+        <ToastContainer />
       <Navbar />
       <div className="row justify-content-center my-5">
         <div className="col-md-10">
@@ -219,9 +288,9 @@ function CartCheckout() {
               <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>CHECKOUT</h6>
                 <hr />
-                <h6 className="boldtext">Subtotal: $100</h6>
+                <h6 className="boldtext">Subtotal: ${total}</h6>
                 <h6 className="boldtext">Delivery: $0.0</h6>
-                <h6 className="boldtext">Total: $100</h6>
+                <h6 className="boldtext">Total: ${total}</h6>
                 <br />
                 <br />
                 <br />
@@ -229,6 +298,8 @@ function CartCheckout() {
                   className="form-control"
                   rows="3"
                   placeholder="Your comments here..."
+                  value={comment}
+                  onChange={(e) => { setcomment(e.target.value) }}
                 ></textarea>
                 <div className="form-check mt-3 mb-3">
                   <input
@@ -252,7 +323,7 @@ function CartCheckout() {
                     Pay with Card
                   </label>
                 </div>
-                <button className="btn btn-primary disabled mb-3">
+                <button className="btn btn-primary mb-3" onClick={checkout}>
                   Place Order
                 </button>
                 <div className="form-check mb-5">

@@ -227,12 +227,36 @@ router.post('/updatecart',(req,res)=>{
 )
 
 
-// Router 4 : 
+// Router 4 : http://localhost:5000/api/admin/cartcheckout
 // Status:
 router.post('/cartcheckout',(req,res)=>{
+    let customer_Id = req.body.customer_Id
+    let comment = req.body.comment
 
-
-    let qr = ``
+    let qr = `SELECT * FROM cart
+                where customer_Id=${customer_Id}`
+    dbconfig.query(qr,(err,result)=>{
+        if(!err){
+            let qr = `update cart 
+            set comment = '${comment}'
+            , Status = 2
+            , Orderstatus = 1
+            where customer_Id=${customer_Id}`
+            dbconfig.query(qr,(err,result)=>{
+                if(!err){
+                    res.json({
+                        message:"Your Cart has been checkout"
+                    })
+                }
+                else{
+                    console.log(err,"err")
+                }
+            })
+        }
+        else{
+            console.log(err,"err")
+        }
+    })
 
 })
 
