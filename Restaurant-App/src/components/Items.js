@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 function Items({items , categorys}) {
     const [show, setShow] = useState(false);
     const [quantity, setQuantity] = useState()
+
     
     const [category, setcategory] = useState(
         []

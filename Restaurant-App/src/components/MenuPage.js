@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Loader from './Loader'
 import Footer from "./Footer";
 import  Items from './Items';
 import { Link } from "react-router-dom";
@@ -10,6 +11,7 @@ import Navbar from "./Navbar";
 
 function MenuPage() {
   const [show, setShow] = useState(false);
+  const [loading, setloading] = useState(true)
   let [num, setNum] = useState(1);
   const [category, setcategory] = useState(
     []
@@ -30,12 +32,15 @@ function MenuPage() {
   useEffect(() => {
     async function fetchData() {
       try {
+        setloading(true)
         const data = await (await axios.get('http://localhost:5000/api/admin/getallmenu')).data
         setcategory(data.data);
         console.log(category)
+        setloading(false)
 
       } catch (error) {
         console.log(error);
+        setloading(false)
       }
     }
     fetchData();
@@ -2351,10 +2356,15 @@ function MenuPage() {
 
   return (
     <>
-      <div className="scrollingoff">
-        <Navbar/>
-
-        <div className="row justify-content-center">
+        {loading ? (
+          <div className="container">
+<Loader />
+          </div>
+        
+        ):(<>
+          <div className="scrollingoff">
+          <Navbar/>
+          <div className="row justify-content-center">
           <div className="col-xl-12 text-center">
             <img
               className="menutitleimg"
@@ -2362,6 +2372,47 @@ function MenuPage() {
             />
           </div>
         </div>
+        <ul className="nav nav-pills nav-fill sticky-top flex-column">
+
+{category && (category.map(categorys => {
+  return <>
+    <li className="nav-item">
+      <a className="nav-link" aria-current="page" href={`#${categorys.Name}`}>
+        {categorys.Name}
+      </a>
+    </li>
+  </>
+}))}
+</ul>
+
+{category && (category.map(categorys => {
+          return <>
+            {/*  */}
+            <div className="row productrow" id={`${categorys.Name}`}>
+              <div className="col-xl-12 responsiveness">
+                <h3 className="boldtext ms-2 mt-5 nomargin">{categorys.Name}</h3>
+                <div className="row centeritems">
+                  {item && (item.map(items => {
+                    return <>
+                    
+
+                    <Items items={items} categorys={categorys} />
+                      
+
+                    </>
+                  }))}
+
+                </div>
+              </div>
+
+            </div>
+
+          </>
+        }))}
+                    <Footer />
+            </div>
+        </>)}
+
 
         {/* <ul className="nav nav-pills nav-fill sticky-top flex-column">
           <li className="nav-item">
@@ -2476,18 +2527,7 @@ function MenuPage() {
           </li>
         </ul> */}
 
-<ul className="nav nav-pills nav-fill sticky-top flex-column">
 
-{category && (category.map(categorys => {
-  return <>
-    <li className="nav-item">
-      <a className="nav-link" aria-current="page" href={`#${categorys.Name}`}>
-        {categorys.Name}
-      </a>
-    </li>
-  </>
-}))}
-</ul>
 
 {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
@@ -2495,29 +2535,7 @@ function MenuPage() {
 
 
 
-{category && (category.map(categorys => {
-          return <>
-            {/*  */}
-            <div className="row productrow" id={`${categorys.Name}`}>
-              <div className="col-xl-12 responsiveness">
-                <h3 className="boldtext ms-2 mt-5 nomargin">{categorys.Name}</h3>
-                <div className="row centeritems">
-                  {item && (item.map(items => {
-                    return <>
-                    
 
-                    <Items items={items} categorys={categorys} />
-                      
-
-                    </>
-                  }))}
-
-                </div>
-              </div>
-
-            </div>
-          </>
-        }))}
 {/* <div
                         className="row productcard bs"
                         type="button"
@@ -2724,8 +2742,8 @@ function MenuPage() {
           </div>
         </div> */}
 
-        <Footer />
-      </div>
+
+ 
     </>
   );
 }
