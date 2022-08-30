@@ -210,5 +210,34 @@ router.delete('/deleteitem/:id',(req,res)=>{
 
 })
 
+// Router: http://localhost:5000/api/admin/getliveorders
+// Status: Working
+router.post('/getliveorders',(req,res)=>{
+
+    let customer_Id = req.body.customer_Id
+
+    // Main query
+    let qr  = `SELECT * FROM cart 
+    INNER JOIN address on cart.customer_Id = address.customer_Id
+    Where cart.customer_Id = ${customer_Id} AND address.customer_Id = ${customer_Id}`;
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            if(result.length>0){
+                res.json({
+                    data:result
+                })
+            }
+            else{
+                res.status(401).json({
+                    error:"Data not found"
+                })
+            }
+        } else {
+            console.log(err,"err")
+        }
+    })
+
+})
+
 
 module.exports = router
