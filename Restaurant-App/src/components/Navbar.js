@@ -209,12 +209,14 @@ function Navbar() {
 
               <h6>Sub-total: ${total}</h6>
 
-                
-                <Link to="/cart-checkout">
+                {items.length>0 && (<>
+                  <Link to="/cart-checkout">
                 <button className="btn btn-primary btn-lg w-100 mt-2">
                   CheckOut
                 </button>
                 </Link>
+                </>)}
+
               </div>
             </div>
           </div>

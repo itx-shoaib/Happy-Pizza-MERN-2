@@ -9,7 +9,8 @@ const dbconfig = require('../db');
 // ROUTER 2: Creating orders by cart by POST method PATH: http://localhost:5000/api/admin/cart/:id
 // STATUS: WORKING
 router.post('/cart',(req,res)=>{
-    let customer_id = req.body.userID;
+    console.log(req.body)
+    let customer_id = req.body .userID;
     let status = 1;
     let product_id = req.body.ProductID;
     let quantity = req.body.quantity;
@@ -23,17 +24,17 @@ router.post('/cart',(req,res)=>{
 
     let qr = `Select * from cart where customer_id = ${customer_id} and Status = 1`
      dbconfig.query(qr,(err,results)=>{
-        console.log(results[0]['cart_Id'])
+     
         if(!err){
-            if(results[0]['cart_Id']<=0){
+            if(results.length<=0){
                 // Creating the cart in db
-                let qr = `insert into cart(customer_Id,Status)
-                        values('${customer_id}',${status})`
+                let qr = `insert into cart(customer_Id,Status,Orderstatus)
+                        values(${customer_id},${status},1)`
                 dbconfig.query(qr,(err,result)=>{
                     if(!err){
                         if(result.affectedRows === 1){
                             let qr = `insert into orderitem(ProductID,Quantity,Price,Order_ID)
-                            values(${product_id},${quantity},${quantity*price},${result.insertId})`
+                            values(${product_id},${quantity},${price *quantity},${result.insertId})`
                             dbconfig.query(qr,(err,result)=>{
                                 if(!err){
                                     if(result.affectedRows === 1){

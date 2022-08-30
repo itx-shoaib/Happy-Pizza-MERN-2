@@ -212,7 +212,7 @@ router.delete('/deleteitem/:id',(req,res)=>{
 
 // Router: http://localhost:5000/api/admin/getliveorders
 // Status: Working
-router.post('/getliveorders',(req,res)=>{
+router.get('/getliveorders',(req,res)=>{
 
     let customer_Id = req.body.customer_Id
 
@@ -220,11 +220,11 @@ router.post('/getliveorders',(req,res)=>{
     let qr  = `SELECT * FROM cart 
     INNER JOIN address on cart.customer_Id = address.customer_Id
     INNER JOIN customer on customer.customer_Id = address.customer_Id
-    Where cart.customer_Id = ${customer_Id} AND address.customer_Id = ${customer_Id} AND customer.customer_Id = ${customer_Id}`;
+   `;
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             if(result.length>0){
-                res.json({
+                res.json({  
                     data:result
                 })
             }
@@ -244,12 +244,11 @@ router.post('/getliveorders',(req,res)=>{
 // Status:
 router.post('/acceptorder',(req,res)=>{
     let cart_Id = req.body.cart_Id;
-    let customer_Id = req.body.customer_Id
-    let Orderstatus = req.body.status + 1
+    let Orderstatus = parseInt(req.body.status) + 1
 
     let qr = `Update cart 
-    set Orderstatus=${Orderstatus}
-    Where customer_Id = ${customer_Id} AND cart_Id = ${cart_Id}`
+    set Orderstatus='${Orderstatus}'
+    Where  cart_Id = ${cart_Id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.json({
@@ -265,11 +264,10 @@ router.post('/acceptorder',(req,res)=>{
 // Status:
 router.post('/rejectorder',(req,res)=>{
     let cart_Id = req.body.cart_Id;
-    let customer_Id = req.body.customer_Id
 
     let qr = `Update cart 
-    set Orderstatus=0
-    Where customer_Id = ${customer_Id} AND cart_Id = ${cart_Id}`
+    set Orderstatus='0'
+    Where cart_Id = ${cart_Id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.json({
