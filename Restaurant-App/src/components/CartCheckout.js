@@ -11,7 +11,7 @@ function CartCheckout() {
         <div className="col-md-10">
           <div className="row">
             <div className="col-md-6">
-              <div className="container bs br mx-2 my-4 px-5 py-3 responsiveness">
+              <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>DELIVERY/COLLECTION</h6>
                 <hr />
                 <div className="form-check ordertype">
@@ -49,7 +49,7 @@ function CartCheckout() {
                   Add New Address
                 </button>
                 <h5 className="boldtext">Delivery Time</h5>
-                <div className="dropup timelist mb-4">
+                <div className="dropdown timelist mb-4">
                   <button
                     className="btn btn-light w-100 dropdown-toggle"
                     type="button"
@@ -79,7 +79,7 @@ function CartCheckout() {
                   </ul>
                 </div>
               </div>
-              <div className="container bs br mx-2 my-4 px-5 py-3 responsiveness">
+              <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>ORDER ITEMS</h6>
                 <hr />
                 <h4>You dont have any orders...</h4>
@@ -192,7 +192,7 @@ function CartCheckout() {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="container bs br mx-2 my-4 px-5 py-3 responsiveness">
+              <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>CHECKOUT</h6>
                 <hr />
                 <h6 className="boldtext">Subtotal: $100</h6>
@@ -243,7 +243,7 @@ function CartCheckout() {
                   </label>
                 </div>
               </div>
-              <div className="container bs br mx-2 my-4 px-5 py-3 responsiveness">
+              <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>HAVE A PROMO CODE?</h6>
                 <hr />
                 <input

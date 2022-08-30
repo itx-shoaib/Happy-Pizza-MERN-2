@@ -137,7 +137,7 @@ code {
 }
 
 .footerimg{
-  width: 240px;
+  width: 100%;
   height: 40px;
 }
 
@@ -150,89 +150,6 @@ code {
 .footer button{
   width: 100%;
 }
-
-@media
-(max-width: 992px)
-{
-  .menu{
-    display: flex !important;
-    flex-direction: row;
-  }
-  .menuitems{
-    width: 33.33%;
-  }
-  .disablebtn{
-    display: none;
-  }
-  .menuitems button{
-    margin: 0;
-    font-size: small;
-  }
-  .menuitems a{
-    margin: 0;
-    font-size: small;
-  }
-  iframe{
-    width: 100%;
-    height: auto;
-  }
-  .signinimg{
-    display: none;
-  }
-
-  .productrow{
-    display: block !important;
-    margin-top: 20px;
-    justify-content: center !important;
-  }
-  .productcard{
-    width: 80% !important;
-    text-align: center;
-  }
-  .blockimg{
-    height: 250px;
-  }
-  .centered{
-    height: 250px;
-    padding: 0 10px;
-    width: 94%;
-  }
-
-  .centered h4{
-    font-size: 12px;
-    font-weight: 400;
-    padding: 0;
-  }
-
-  .centered h1{
-    font-size: 18px;
-    font-weight: 600;
-    padding: 0;
-  }
-
-  .whyus{
-    font-size: 12px !important;
-    padding: 0 10px !important;
-
-  }
-  .sidebar{
-    display: none;
-  }
-  body{
-    overflow-x: hidden !important;
-  }
-  .usercartbtn{
-    width: 40% !important;
-  }
-  .responsiveness{
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  .menutitleimg{
-    height: 180px !important;
-  }
-}
-
 
 .carouselcont {
   position: relative;
@@ -466,6 +383,7 @@ a{
 
 .time{
   font-size: small;
+  font-weight: 500;
   height: 25px;
 }
 
@@ -485,4 +403,111 @@ a{
 
 .shoppingcart{
   z-index: 2000;
+}
+
+
+@media
+(max-width: 992px)
+{
+  .body{
+    overflow-x: hidden !important;
+  }
+  .menu{
+    display: flex !important;
+    flex-direction: row;
+  }
+  .menuitems{
+    width: 33.33%;
+  }
+  .disablebtn{
+    display: none;
+  }
+  .menuitems button{
+    margin: 0;
+    font-size: small;
+  }
+  .menuitems a{
+    margin: 0;
+    font-size: small;
+  }
+  iframe{
+    width: 100%;
+    height: auto;
+  }
+  .signinimg{
+    display: none;
+  }
+
+  .productrow{
+    display: block !important;
+    margin-top: 20px;
+    justify-content: center !important;
+  }
+  .productcard{
+    width: 80% !important;
+    text-align: center;
+  }
+  .blockimg{
+    height: 250px;
+  }
+  .centered{
+    height: 250px;
+    padding: 0 10px;
+    width: 94%;
+  }
+
+  .centered h4{
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0;
+  }
+
+  .centered h1{
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0;
+  }
+
+  .whyus{
+    font-size: 12px !important;
+    padding: 0 10px !important;
+
+  }
+  .sidebar{
+    display: none;
+  }
+  body{
+    overflow-x: hidden !important;
+  }
+  .usercartbtn{
+    width: 40% !important;
+  }
+  .responsiveness{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .menutitleimg{
+    height: 180px !important;
+  }
+  .time{
+    font-size: smaller;
+    height: 18px;
+  }
+  .checkout-box{
+    width: 90%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .row{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+.body{
+  overflow-x: hidden !important;
+}
+}
+
+.body{
+  overflow-x: hidden !important;
 }
