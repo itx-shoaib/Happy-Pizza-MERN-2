@@ -1,10 +1,46 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios'
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 
 function Addresses() {
+  const [house, sethouse] = useState('');
+  const [postcode, setpostcode] = useState('');
+  const [flat, setflat] = useState('');
+  const [street, setstreet] = useState('');
+  const [town, settown] = useState('');
+
+  async function addAddress(){
+    const info = {
+      house,
+      postcode,
+      flat,
+      street,
+      town,
+      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+    }
+    try {
+      const data =  (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
+      console.log(data.data)
+      toast.success("New address added")
+
+      sethouse('');
+      setpostcode('');
+      setflat('');
+      setstreet('');
+      settown('');
+      
+  } catch (error) {
+      console.log(error)
+      toast.warn("Failed! Try again later")
+  }
+    }
+
   return (
     <>
+      <ToastContainer />
       <Navbar />
       <div className="container-fluid">
         <div className="row flex-nowrap">
@@ -119,13 +155,17 @@ function Addresses() {
                           className="form-control mb-3 px-2"
                           placeholder="House/Door No."
                           id="houseno"
-                          required
+                          value={house} 
+              onChange={(e) => { sethouse(e.target.value) }}
+                  required
                         />
                         <label for="postcode">Postcode</label>
                         <input
                           className="form-control mb-3 px-2"
                           placeholder="Postcode"
                           id="postcode"
+                          value={postcode} 
+              onChange={(e) => { setpostcode(e.target.value) }}
                           required
                         />
                       </div>
@@ -135,12 +175,17 @@ function Addresses() {
                           className="form-control mb-3 px-2"
                           placeholder="Flat"
                           id="flat"
+                          value={flat} 
+                          onChange={(e) => { setflat(e.target.value) }}
+                          required
                         />
                         <label for="street">Street</label>
                         <input
                           className="form-control mb-3 px-2"
                           placeholder="Street"
                           id="street"
+                          value={street} 
+                          onChange={(e) => { setstreet(e.target.value) }}
                           required
                         />
                       </div>
@@ -150,6 +195,8 @@ function Addresses() {
                           className="form-control my-3 px-2"
                           placeholder="Postal Town"
                           id="town"
+                          value={town} 
+                          onChange={(e) => { settown(e.target.value) }}
                           required
                         />
                         <div class="form-check form-switch my-3">
@@ -176,7 +223,7 @@ function Addresses() {
                     >
                       Close
                     </button>
-                    <button type="button" className="btn btn-primary">
+                    <button type="button" onClick={addAddress} className="btn btn-primary">
                       Save changes
                     </button>
                   </div>
