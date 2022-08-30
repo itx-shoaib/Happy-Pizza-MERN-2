@@ -33,7 +33,7 @@ router.post('/cart',(req,res)=>{
                     if(!err){
                         if(result.affectedRows === 1){
                             let qr = `insert into orderitem(ProductID,Quantity,Price,Order_ID)
-                            values(${product_id},${quantity},${price},${result.insertId})`
+                            values(${product_id},${quantity},${quantity*price},${result.insertId})`
                             dbconfig.query(qr,(err,result)=>{
                                 if(!err){
                                     if(result.affectedRows === 1){
@@ -82,7 +82,7 @@ router.post('/cart',(req,res)=>{
                     if (!err) {
                         if (result.length==0) {
                             let qr = `insert into orderitem(ProductID,Quantity,Price,Order_ID)
-                            values(${product_id},${quantity},${price},${results[0]['cart_Id']})`
+                            values(${product_id},${quantity},${price *quantity},${results[0]['cart_Id']})`
                             dbconfig.query(qr,(err,result)=>{
                                 if(!err){
                                     if(result.affectedRows === 1){
@@ -167,6 +167,7 @@ router.post('/updatecart',(req,res)=>{
     let customer_Id = req.body.customer_Id;
     let orderID = req.body.orderID;
     let quantity = req.body.quantitys
+    let price = req.body.price
 
 
     // let mainqr = `SELECT customer.customer_Id,item.*,orderitem.Price,orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem 
@@ -183,6 +184,7 @@ router.post('/updatecart',(req,res)=>{
 
                     let qr = `update orderitem 
                     set Quantity = ${quantity}
+                    , Price = ${price* quantity}
                     where ID = ${orderID}`
                     dbconfig.query(qr,(err,result)=>{
                         if(!err){

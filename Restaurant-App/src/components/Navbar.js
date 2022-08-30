@@ -15,16 +15,20 @@ function Navbar() {
     window.location.href="/";
   }
 
-  async function add(orderID,quantitys) {
+
+  async function add(orderID,quantitys,price) {
     alert(orderID)
     const info = { 
       orderID,
       quantitys,
+      price,
       customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
+
 
         try {
             const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
             console.log(data.data)
+            update()
             toast.success("Quantity increase")
         } catch (error) {
             console.log(error)
@@ -32,16 +36,18 @@ function Navbar() {
         }
   }
 
-  async function remove(orderID,quantitys) {
+  async function remove(orderID,quantitys,price) {
    
     const info = { 
       orderID,
       quantitys,
+      price,
       customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
 
         try {
             const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
             console.log(data.data)
+            update()
             toast.success("Quantity decrease")
         } catch (error) {
             console.log(error)
@@ -58,11 +64,37 @@ function Navbar() {
         try {
             const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
             console.log(data.data)
+            update()
             toast.success("Item has been deleted")
         } catch (error) {
             console.log(error)
             toast.warn("Failed! Try again later")
         }
+  }
+
+  async function update(){
+
+
+    
+    if(getstatus==="true")
+  {
+   const user =JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
+   
+
+      const temp = {
+        customer_Id:user
+      }
+      try {
+
+        const data = ( await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
+        console.log(data.data)
+        setItems(data.data)
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
   }
  
   useEffect(() => {
@@ -139,10 +171,10 @@ function Navbar() {
               <div className="cart-card">
               <h4>{item.Title}</h4>
               <h6>{item.Quantity} x ${item.Price}</h6>
-              <button className="btn" onClick={()=>{add(item.orderitemid,item.Quantity+1)}}>
+              <button className="btn" onClick={()=>{add(item.orderitemid,item.Quantity+1,item.Price)}}>
                 <i className="fa-solid fa-plus"></i>
               </button>
-              <button className="btn" onClick={()=>{remove(item.orderitemid,item.Quantity-1)}}>
+              <button className="btn" onClick={()=>{remove(item.orderitemid,item.Quantity-1,item.Price)}}>
                 <i className="fa-solid fa-minus"></i>
               </button>
               <button className="btn" onClick={()=>{del(item.orderitemid)}}>
@@ -166,7 +198,11 @@ function Navbar() {
                 </button>
               </div> */}
               <div className="row my-5">
-                <h6>Sub-total: $100</h6>
+
+
+              <h6>Sub-total: $100</h6>
+
+                
                 <Link to="/cart-checkout">
                 <button className="btn btn-primary btn-lg w-100 mt-2">
                   CheckOut
