@@ -219,7 +219,8 @@ router.post('/getliveorders',(req,res)=>{
     // Main query
     let qr  = `SELECT * FROM cart 
     INNER JOIN address on cart.customer_Id = address.customer_Id
-    Where cart.customer_Id = ${customer_Id} AND address.customer_Id = ${customer_Id}`;
+    INNER JOIN customer on customer.customer_Id = address.customer_Id
+    Where cart.customer_Id = ${customer_Id} AND address.customer_Id = ${customer_Id} AND customer.customer_Id = ${customer_Id}`;
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             if(result.length>0){
@@ -239,5 +240,45 @@ router.post('/getliveorders',(req,res)=>{
 
 })
 
+// Router 6: http://localhost:5000/api/admin/acceptorder
+// Status:
+router.post('/acceptorder',(req,res)=>{
+    let cart_Id = req.body.cart_Id;
+    let customer_Id = req.body.customer_Id
+    let Orderstatus = req.body.status + 1
+
+    let qr = `Update cart 
+    set Orderstatus=${Orderstatus}
+    Where customer_Id = ${customer_Id} AND cart_Id = ${cart_Id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result
+            })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
+
+// Router 7: http://localhost:5000/api/admin/rejectorder
+// Status:
+router.post('/rejectorder',(req,res)=>{
+    let cart_Id = req.body.cart_Id;
+    let customer_Id = req.body.customer_Id
+
+    let qr = `Update cart 
+    set Orderstatus=0
+    Where customer_Id = ${customer_Id} AND cart_Id = ${cart_Id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result
+            })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
 
 module.exports = router
