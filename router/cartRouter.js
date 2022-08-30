@@ -148,7 +148,7 @@ router.post('/getcartitems',(req,res)=>{
     inner join cart on cart.cart_Id=orderitem.Order_ID 
     inner join customer on customer.customer_Id=cart.customer_Id 
     INNER join item on item.ID = orderitem.ProductID 
-    WHERE cart.customer_Id=${customer_Id};`
+    WHERE cart.customer_Id=${customer_Id} and status=1;`
     dbconfig.query(qr,(err,result)=>{
         if(!err){
             res.json({

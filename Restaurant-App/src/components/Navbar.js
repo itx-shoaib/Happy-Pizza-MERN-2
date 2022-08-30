@@ -168,9 +168,6 @@ function Navbar() {
               ></button>
             </div>
             <div className="offcanvas-body">
-              <div className="my-5">
-                <h6>Your Cart is Empty!</h6>
-              </div>
               <div className="cart-cont">
                 <p>
                   Order Minimum is $5.00. Please add more items in the cart.
