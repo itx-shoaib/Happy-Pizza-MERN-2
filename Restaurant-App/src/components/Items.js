@@ -25,7 +25,7 @@ function Items({items , categorys}) {
           userID:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id,
           order_id:items.ID
         }
-        alert(quantity)
+
         console.log(cartDetail)
         try {
           const result = await axios.post('http://localhost:5000/api/admin/cart',cartDetail)
