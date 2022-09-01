@@ -175,7 +175,28 @@ function CartCheckout() {
               <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>ORDER ITEMS</h6>
                 <hr />
-                <h4>You dont have any orders...</h4>
+                <div class="table-responsive cart-items">
+            <table class="table table-hover table-borderless mb-0">
+                <thead class="light">
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Items</th>
+                    <th>Price</th>
+                    <th class="text-end">Total</th>
+                    <th class="text-end">Actions</th>
+
+                </tr>
+                </thead>
+                <tbody id="cartList"><tr class="items"><td><img src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" width="70" alt="" class="productImage"/></td> <td><strong>Bottle Of Pop Small</strong></td> <td>
+                            3
+                        </td> <td>
+                            £1.70
+                        </td> <td class="text-end">
+                            £5.10
+                        </td> <td><button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-minus"></i></span></button> <button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-plus"></i></span></button> <button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-trash"></i></span></button></td></tr></tbody>
+            </table>
+        </div>
               </div>
             </div>
             <div

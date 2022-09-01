@@ -7,7 +7,7 @@ import axios from 'axios';
 function Navbar() {
 
   const [items, setItems] = useState([])
- 
+
  const getstatus= localStorage.getItem('status');
   function logout() {
     localStorage.setItem('status','false');
@@ -118,6 +118,10 @@ function Navbar() {
       }
     }
     fetchData();
+    setInterval(() => {
+      fetchData();
+    }, 2000);
+    
   }
   }, []);
 
