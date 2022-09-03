@@ -11,6 +11,7 @@ function Addresses() {
   const [flat, setflat] = useState('');
   const [street, setstreet] = useState('');
   const [town, settown] = useState('');
+  const [address, setAddress] = useState([])
 
   async function addAddress(){
     const info = {
@@ -37,6 +38,22 @@ function Addresses() {
       toast.warn("Failed! Try again later")
   }
     }
+
+    useEffect(() => {
+      async function fetchData() {
+        const user={
+          customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+        }
+        try {
+          const data = await (await axios.post('http://localhost:5000/api/user/getaddress',user)).data
+          setAddress(data.data)
+  
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      fetchData();
+    }, [])
 
   return (
     <>
@@ -110,7 +127,27 @@ function Addresses() {
                 <br />
                 <hr />
                 <br />
-                <h4>You dont have any addresses...</h4>
+                
+                {/* {address.map((item)=>{
+                  return <>
+                  <h4>{item.house}</h4>
+                  </>
+                })} */}
+
+                {address.length === 1 ?(<>
+                <h4>{address.house}</h4>
+                </>):(<>
+                {address.map((item)=>{
+                  return <>
+                  <h4>{item.house}</h4>
+                  </>
+                })}
+                </>)}
+
+                
+                  <h4>You dont have any addresses...</h4>
+                
+                
               </div>
             </div>
             <div
