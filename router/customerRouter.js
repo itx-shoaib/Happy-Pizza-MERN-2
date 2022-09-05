@@ -189,7 +189,7 @@ router.post('/getaddress',(req,res)=>{
 })
 
 // Router : Update the  address status (assigning it primary) path:http://localhost:5000/api/user/setaddressprimary
-// Status:
+// Status: Working
 router.post('/setaddressprimary',(req,res)=>{
     let ID = req.body.ID
     let customer_Id = req.body.customer_Id
@@ -213,6 +213,25 @@ router.post('/setaddressprimary',(req,res)=>{
             }
            })
         } else {
+            console.log(err,'err')
+        }
+    })
+})
+
+// Router : Delete the address PATH:http://localhost:5000/api/user/deleteaddress
+// Status:
+router.post('/deleteaddress',(req,res)=>{
+    let ID = req.body.ID
+
+    let qr = `Delete From address 
+    where ID = ${ID}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                message:"Address has been deleted"
+            })
+        }
+        else{
             console.log(err,'err')
         }
     })
