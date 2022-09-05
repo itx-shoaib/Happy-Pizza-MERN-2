@@ -135,9 +135,9 @@ function Orders() {
                           <td><span class="badge text-bg-info info">{orders.ID}</span></td>
                           <td>{orders.DateTime}</td>
                           <td><span class="badge text-bg-primary primary">collection</span></td>
-                          <td><span class="badge text-bg-info info">rejected</span></td>
+                          <td><span class="badge text-bg-info info">{orders.Orderstatus === "1" ? (<>Pending</>):orders.Orderstatus === "2" ?(<>In Process</>):orders.Orderstatus === "3" ?(<>Completed</>):(<>Rejected</>)}</span></td>
                           <td><span class="badge text-bg-primary primary">cod(unpaid)</span></td>
-                          <td>£{orders.Price}</td>
+                          <td>${orders.Price}</td>
                         </tr>
                           </>
                         })}
@@ -165,7 +165,7 @@ function Orders() {
                           <td><span class="badge text-bg-primary primary">collection</span></td>
                           <td><span class="badge text-bg-info info">rejected</span></td>
                           <td><span class="badge text-bg-primary primary">cod(unpaid)</span></td>
-                          <td>£{order.Price}</td>
+                          <td>${order.Price}</td>
                         </tr>
                       </tbody>
                     </table>
