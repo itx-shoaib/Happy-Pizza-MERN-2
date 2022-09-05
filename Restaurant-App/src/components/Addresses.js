@@ -82,6 +82,22 @@ function Addresses() {
     }
   }
 
+  async function del(ID) {
+    const info = {
+      ID
+    }
+    try {
+      const data = (await axios.post('http://localhost:5000/api/user/deleteaddress', info)).data
+      update()
+      toast.success("Address successfully deactivated.")
+      // window.location.reload();
+      // console.log(data.data)
+
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
     async function fetchData() {
       const user = {
@@ -204,10 +220,10 @@ function Addresses() {
                                       </button>
                                       <ul class="dropdown-menu">
                                         {item.address_status === 1 ? (<>
-                                          <li><button class="dropdown-item" type="button">Delete</button></li>
+                                          <li><button class="dropdown-item" type="button" onClick={()=>{del(item.ID)}}>Delete</button></li>
                                         </>):(<>
                                           <li><button class="dropdown-item" type="button" onClick={()=>{primary(item.ID)}}>Set as primary</button></li>
-                                          <li><button class="dropdown-item" type="button">Delete</button></li>
+                                          <li><button class="dropdown-item" type="button" onClick={()=>{del(item.ID)}}>Delete</button></li>
                                           </>)}
                                         
                                         
