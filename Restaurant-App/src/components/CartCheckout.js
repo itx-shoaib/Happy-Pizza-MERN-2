@@ -18,7 +18,8 @@ function CartCheckout() {
       }
       try {
         const data = await (await axios.post('http://localhost:5000/api/user/getaddress',user)).data
-        setAddress(data.data)
+        console.log(data.data[0])
+        setAddress(data.data[0])
 
       } catch (error) {
         console.log(error);

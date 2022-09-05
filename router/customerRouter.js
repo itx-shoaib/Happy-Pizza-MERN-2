@@ -175,7 +175,7 @@ router.post('/getaddress',(req,res)=>{
     let customer_Id = req.body.customer_Id
 
     let qr = `SELECT * FROM address
-    where customer_Id = ${customer_Id}`;
+    where customer_Id = ${customer_Id} AND address_status=1`;
     dbconfig.query(qr,(err,result)=>{
         if(!err){
             res.json({
