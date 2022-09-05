@@ -9,8 +9,41 @@ import {Link} from "react-router-dom"
 function CartCheckout() {
   const [address, setAddress] = useState()
   const [comment, setcomment] = useState()
+  const [house, sethouse] = useState('');
+  const [postcode, setpostcode] = useState('');
+  const [flat, setflat] = useState('');
+  const [street, setstreet] = useState('');
+  const [town, settown] = useState('');
   const [items, setItems] = useState([])
   const getstatus= localStorage.getItem('status');
+
+  async function addAddress() {
+    const info = {
+      house,
+      postcode,
+      flat,
+      street,
+      town,
+      customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+    }
+    try {
+      const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
+      console.log(data.data)
+      toast.success("New address added")
+
+      sethouse('');
+      setpostcode('');
+      setflat('');
+      setstreet('');
+      settown('');
+
+    } catch (error) {
+      console.log(error)
+      toast.warn("Failed! Try again later")
+    }
+  }
+
+
   useEffect(() => {
     async function fetchData() {
       const user={
@@ -242,6 +275,8 @@ function CartCheckout() {
                           className="form-control mb-3 px-2"
                           placeholder="House/Door No."
                           id="houseno"
+                          value={house}
+                          onChange={(e) => { sethouse(e.target.value) }}
                           required
                         />
                         <label for="postcode">Postcode</label>
@@ -249,6 +284,8 @@ function CartCheckout() {
                           className="form-control mb-3 px-2"
                           placeholder="Postcode"
                           id="postcode"
+                          value={postcode}
+                          onChange={(e) => { setpostcode(e.target.value) }}
                           required
                         />
                       </div>
@@ -258,12 +295,16 @@ function CartCheckout() {
                           className="form-control mb-3 px-2"
                           placeholder="Flat"
                           id="flat"
+                          value={flat}
+                          onChange={(e) => { setflat(e.target.value) }}
                         />
                         <label for="street">Street</label>
                         <input
                           className="form-control mb-3 px-2"
                           placeholder="Street"
                           id="street"
+                          value={street}
+                          onChange={(e) => { setstreet(e.target.value) }}
                           required
                         />
                       </div>
@@ -273,6 +314,8 @@ function CartCheckout() {
                           className="form-control my-3 px-2"
                           placeholder="Postal Town"
                           id="town"
+                          value={town}
+                          onChange={(e) => { settown(e.target.value) }}
                           required
                         />
                         <div className="form-check form-switch my-3">
@@ -299,7 +342,7 @@ function CartCheckout() {
                     >
                       Close
                     </button>
-                    <button type="button" className="btn btn-primary">
+                    <button type="button"  onClick={addAddress}  className="btn btn-primary">
                       Save changes
                     </button>
                   </div>
