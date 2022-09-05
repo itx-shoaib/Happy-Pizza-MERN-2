@@ -110,6 +110,32 @@ function Orders() {
                   <hr />
                   <br />
                   <br />
+                  
+
+                  <div className="table-responsive-sm">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Created</th>
+                          <th scope="col">Method</th>
+                          <th scope="col">Last status</th>
+                          <th scope="col">Payment status</th>
+                          <th scope="col">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-group-divider">
+                        <tr>
+                          <td scope="row">1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>@mdo</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                   <h4>You dont have any orders...</h4>
                 </div>
               </div>
