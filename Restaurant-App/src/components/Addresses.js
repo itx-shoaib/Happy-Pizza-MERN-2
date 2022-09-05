@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import '../Css/Address.css'
 
 function Addresses() {
   const [house, sethouse] = useState('');
@@ -12,7 +14,7 @@ function Addresses() {
   const [street, setstreet] = useState('');
   const [town, settown] = useState('');
   const [address, setAddress] = useState([])
-  const getstatus= localStorage.getItem('status');
+  const getstatus = localStorage.getItem('status');
 
   async function addAddress() {
     const info = {
@@ -64,10 +66,10 @@ function Addresses() {
         <div className="row flex-nowrap">
           <div className="col-auto col-lg-3 col-xl-2 px-sm-2 px-0 sidebar">
             <div className="d-flex flex-column align-items-center px-3 pt-2 min-vh-100">
-              <h5 className="my-5 text-center">{getstatus==="true" ? (<>
+              <h5 className="my-5 text-center">{getstatus === "true" ? (<>
                 {JSON.parse(localStorage.getItem('currentuser'))[0].name}
-              </>):(<>
-              user name</>)}</h5>
+              </>) : (<>
+                user name</>)}</h5>
               <ul
                 className="nav nav-tabs mb-sm-auto mb-0 align-items-center align-items-sm-start"
                 id="menu"
@@ -133,59 +135,69 @@ function Addresses() {
                 <br />
                 <div className="row">
                   <div className="col-md-12">
-                  {address.length > 0 && (<>
-                    <div className="table-responsive-sm">
+                    {address.length > 0 && (<>
+                      <div className="table-responsive-sm">
 
-                    
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Address</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                      {address.map((item) => {
-                        return <>
+
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Address</th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                              <th scope="col">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody class="table-group-divider">
+                            {address.map((item) => {
+                              return <>
+                                <tr>
+                                  <td>{item.house},{item.flat},{item.street},{item.postcode},{item.town}</td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>
+                                    <div class="dropdown">
+                                      <button class="btn btn-info customRadius" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <AiOutlineUnorderedList />
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                        <li><button class="dropdown-item" type="button">Set as primary</button></li>
+                                        <li><button class="dropdown-item" type="button">Delete</button></li>
+                                      </ul>
+                                    </div>
+                                  </td>
+                                </tr>
+
+                                {/* <h4>{item.house},{item.flat},{item.street},{item.postcode},{item.town}</h4> */}
+                              </>
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </>)}
+                    {address ? (<>
+                      <table class="table">
+                        <thead>
                           <tr>
-                            <td scope="row">{item.house},{item.flat},{item.street},{item.postcode},{item.town}</td>
+                            <th scope="col">Address</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                          <tr>
+                            <td scope="row">{address.house},{address.flat},{address.street},{address.postcode},{address.town}</td>
                             <td></td>
                             <td></td>
                             <td>@mdo</td>
                           </tr>
-
-                          {/* <h4>{item.house},{item.flat},{item.street},{item.postcode},{item.town}</h4> */}
-                        </>
-                      })}
-                    </tbody>
-                  </table>
-                  </div>
-                </>)}
-                {address ? (<>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Address</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                      <tr>
-                        <td scope="row">{address.house},{address.flat},{address.street},{address.postcode},{address.town}</td>
-                        <td></td>
-                        <td></td>
-                        <td>@mdo</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  {/* <h4> {address.house},{address.flat},{address.street},{address.postcode},{address.town}</h4> */}
-                </>) : (<>
-                  <h4>You dont have any addresses...</h4>
-                </>)}
+                        </tbody>
+                      </table>
+                      {/* <h4> {address.house},{address.flat},{address.street},{address.postcode},{address.town}</h4> */}
+                    </>) : (<>
+                      <h4>You dont have any addresses...</h4>
+                    </>)}
                   </div>
                 </div>
 

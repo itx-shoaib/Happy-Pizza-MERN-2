@@ -188,4 +188,6 @@ router.post('/getaddress',(req,res)=>{
     })
 })
 
+// Router : Update the  address status (assigning it primary)
+
 module.exports = router
