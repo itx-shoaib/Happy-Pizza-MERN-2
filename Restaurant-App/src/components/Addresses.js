@@ -42,6 +42,46 @@ function Addresses() {
     }
   }
 
+  async function primary(ID) {
+    const info = {
+      customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id,
+      ID
+    }
+    try {
+      const data = (await axios.post('http://localhost:5000/api/user/setaddressprimary', info)).data
+      update()
+      toast.success("Address successfully updated.")
+      // window.location.reload();
+      // console.log(data.data)
+
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function update(){
+    if(getstatus==="true")
+  {
+   const user =JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
+   
+
+      const temp = {
+        customer_Id:user
+      }
+      try {
+
+        const data = ( await axios.post("http://localhost:5000/api/user/getaddress",temp)).data;
+        console.log(data.data)
+        setAddress(data.data)
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       const user = {
@@ -152,7 +192,9 @@ function Addresses() {
                             {address.map((item) => {
                               return <>
                                 <tr>
-                                  <td>{item.house},{item.flat},{item.street},{item.postcode},{item.town}</td>
+                                  <td>{item.house},{item.flat},{item.street},{item.postcode},{item.town}
+                                  {item.address_status === 1 && (<><span class="badge text-bg-info info">Primary Address</span></>) }
+                                  </td>
                                   <td></td>
                                   <td></td>
                                   <td>
@@ -161,8 +203,14 @@ function Addresses() {
                                       <AiOutlineUnorderedList />
                                       </button>
                                       <ul class="dropdown-menu">
-                                        <li><button class="dropdown-item" type="button">Set as primary</button></li>
-                                        <li><button class="dropdown-item" type="button">Delete</button></li>
+                                        {item.address_status === 1 ? (<>
+                                          <li><button class="dropdown-item" type="button">Delete</button></li>
+                                        </>):(<>
+                                          <li><button class="dropdown-item" type="button" onClick={()=>{primary(item.ID)}}>Set as primary</button></li>
+                                          <li><button class="dropdown-item" type="button">Delete</button></li>
+                                          </>)}
+                                        
+                                        
                                       </ul>
                                     </div>
                                   </td>

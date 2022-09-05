@@ -188,6 +188,34 @@ router.post('/getaddress',(req,res)=>{
     })
 })
 
-// Router : Update the  address status (assigning it primary)
+// Router : Update the  address status (assigning it primary) path:http://localhost:5000/api/user/setaddressprimary
+// Status:
+router.post('/setaddressprimary',(req,res)=>{
+    let ID = req.body.ID
+    let customer_Id = req.body.customer_Id
+
+    let qr = `update address 
+    set address_status = 1
+    WHERE customer_Id = ${customer_Id} AND ID = ${ID};`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+           let qr = `UPDATE address 
+           set address_status = 0 
+           WHERE ID!= ${ID}
+           `
+           dbconfig.query(qr,(err,result)=>{
+            if (!err) {
+                res.json({
+                    message:"Other status = 0"
+                })
+            } else {
+                console.log(err,'err')
+            }
+           })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
 
 module.exports = router
