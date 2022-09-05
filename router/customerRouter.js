@@ -179,7 +179,7 @@ router.post('/getaddress',(req,res)=>{
     dbconfig.query(qr,(err,result)=>{
         if(!err){
             res.json({
-                data:result[0]
+                data:result
             })
         }
         else{

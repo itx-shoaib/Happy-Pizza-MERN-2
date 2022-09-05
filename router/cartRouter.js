@@ -325,4 +325,23 @@ router.get('/deleteorder/:id',(req,res)=>{
     })
 });
 
+// ROUTER : http://localhost:5000/api/admin/getcart
+// STATUS:
+router.get('/getcart',(req,res)=>{
+    let customer_Id = req.body.customer_Id
+
+    let qr = `SELECT * FROM cart
+    inner join orderitem on cart.cart_Id=orderitem.Order_ID  
+    WHERE cart.customer_Id= ${customer_Id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result
+            })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
+
 module.exports = router

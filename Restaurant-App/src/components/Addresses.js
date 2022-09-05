@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
@@ -13,17 +13,17 @@ function Addresses() {
   const [town, settown] = useState('');
   const [address, setAddress] = useState([])
 
-  async function addAddress(){
+  async function addAddress() {
     const info = {
       house,
       postcode,
       flat,
       street,
       town,
-      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+      customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
     }
     try {
-      const data =  (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
+      const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
       console.log(data.data)
       toast.success("New address added")
 
@@ -32,28 +32,28 @@ function Addresses() {
       setflat('');
       setstreet('');
       settown('');
-      
-  } catch (error) {
+
+    } catch (error) {
       console.log(error)
       toast.warn("Failed! Try again later")
-  }
     }
+  }
 
-    useEffect(() => {
-      async function fetchData() {
-        const user={
-          customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
-        }
-        try {
-          const data = await (await axios.post('http://localhost:5000/api/user/getaddress',user)).data
-          setAddress(data.data)
-  
-        } catch (error) {
-          console.log(error);
-        }
+  useEffect(() => {
+    async function fetchData() {
+      const user = {
+        customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
       }
-      fetchData();
-    }, [])
+      try {
+        const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
+        setAddress(data.data)
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
 
   return (
     <>
@@ -127,27 +127,67 @@ function Addresses() {
                 <br />
                 <hr />
                 <br />
-                
-                {/* {address.map((item)=>{
-                  return <>
-                  <h4>{item.house}</h4>
-                  </>
-                })} */}
+                <div className="row">
+                  <div className="col-md-12">
+                  {address.length > 0 && (<>
+                    <div className="table-responsive-sm">
 
-                {address.length === 1 ?(<>
-                <h4>{address.house}</h4>
-                </>):(<>
-                {address.map((item)=>{
-                  return <>
-                  <h4>{item.house}</h4>
-                  </>
-                })}
+                    
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Address</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                      {address.map((item) => {
+                        return <>
+                          <tr>
+                            <td scope="row">{item.house},{item.flat},{item.street},{item.postcode},{item.town}</td>
+                            <td></td>
+                            <td></td>
+                            <td>@mdo</td>
+                          </tr>
+
+                          {/* <h4>{item.house},{item.flat},{item.street},{item.postcode},{item.town}</h4> */}
+                        </>
+                      })}
+                    </tbody>
+                  </table>
+                  </div>
                 </>)}
-
-                
+                {address ? (<>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Address</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                      <tr>
+                        <td scope="row">{address.house},{address.flat},{address.street},{address.postcode},{address.town}</td>
+                        <td></td>
+                        <td></td>
+                        <td>@mdo</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  {/* <h4> {address.house},{address.flat},{address.street},{address.postcode},{address.town}</h4> */}
+                </>) : (<>
                   <h4>You dont have any addresses...</h4>
-                
-                
+                </>)}
+                  </div>
+                </div>
+
+
+
+
               </div>
             </div>
             <div
@@ -192,17 +232,17 @@ function Addresses() {
                           className="form-control mb-3 px-2"
                           placeholder="House/Door No."
                           id="houseno"
-                          value={house} 
-              onChange={(e) => { sethouse(e.target.value) }}
-                  required
+                          value={house}
+                          onChange={(e) => { sethouse(e.target.value) }}
+                          required
                         />
                         <label for="postcode">Postcode</label>
                         <input
                           className="form-control mb-3 px-2"
                           placeholder="Postcode"
                           id="postcode"
-                          value={postcode} 
-              onChange={(e) => { setpostcode(e.target.value) }}
+                          value={postcode}
+                          onChange={(e) => { setpostcode(e.target.value) }}
                           required
                         />
                       </div>
@@ -212,7 +252,7 @@ function Addresses() {
                           className="form-control mb-3 px-2"
                           placeholder="Flat"
                           id="flat"
-                          value={flat} 
+                          value={flat}
                           onChange={(e) => { setflat(e.target.value) }}
                           required
                         />
@@ -221,18 +261,18 @@ function Addresses() {
                           className="form-control mb-3 px-2"
                           placeholder="Street"
                           id="street"
-                          value={street} 
+                          value={street}
                           onChange={(e) => { setstreet(e.target.value) }}
                           required
                         />
                       </div>
                       <div className="col-lg-10">
-                      <label for="town">Town</label>
+                        <label for="town">Town</label>
                         <input
                           className="form-control my-3 px-2"
                           placeholder="Postal Town"
                           id="town"
-                          value={town} 
+                          value={town}
                           onChange={(e) => { settown(e.target.value) }}
                           required
                         />
