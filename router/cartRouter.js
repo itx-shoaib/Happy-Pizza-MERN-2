@@ -327,7 +327,7 @@ router.get('/deleteorder/:id',(req,res)=>{
 
 // ROUTER : http://localhost:5000/api/admin/getcart
 // STATUS:
-router.get('/getcart',(req,res)=>{
+router.post('/getcart',(req,res)=>{
     let customer_Id = req.body.customer_Id
 
     let qr = `SELECT * FROM cart

@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios'
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 
 function Orders() {
+
+  const [order, setOrder] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const user = {
+        customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+      }
+      try {
+        const data = await (await axios.post('http://localhost:5000/api/admin/getcart', user)).data
+        setOrder(data.data)
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
   return (
     <>
       <Navbar />
