@@ -7,6 +7,7 @@ import '../Css/order.css'
 function Orders() {
 
   const [order, setOrder] = useState([])
+  const getstatus= localStorage.getItem('status');
 
   useEffect(() => {
     async function fetchData() {
@@ -30,7 +31,10 @@ function Orders() {
         <div className="row flex-nowrap">
           <div className="col-auto col-lg-3 col-xl-2 px-sm-2 px-0 sidebar">
             <div className="d-flex flex-column align-items-center px-3 pt-2 min-vh-100">
-              <h5 className="my-5 text-center">USER NAME</h5>
+              <h5 className="my-5 text-center">{getstatus==="true" ? (<>
+                {JSON.parse(localStorage.getItem('currentuser'))[0].name}
+              </>):(<>
+              user name</>)}</h5>
               <ul
                 className="nav nav-tabs mb-sm-auto mb-0 align-items-center align-items-sm-start"
                 id="menu"
