@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import '../Css/order.css'
 
 function Orders() {
 
@@ -127,11 +128,11 @@ function Orders() {
                         {order.map((orders)=>{
                           return <>
                         <tr>
-                          <td><span class="badge text-bg-primary">{orders.ID}</span></td>
+                          <td><span class="badge text-bg-info info">{orders.ID}</span></td>
                           <td>{orders.DateTime}</td>
-                          <td><span class="badge text-bg-primary">collection</span></td>
-                          <td><span class="badge text-bg-primary">rejected</span></td>
-                          <td><span class="badge text-bg-primary">cod(unpaid)</span></td>
+                          <td><span class="badge text-bg-primary primary">collection</span></td>
+                          <td><span class="badge text-bg-info info">rejected</span></td>
+                          <td><span class="badge text-bg-primary primary">cod(unpaid)</span></td>
                           <td>£{orders.Price}</td>
                         </tr>
                           </>
@@ -155,11 +156,11 @@ function Orders() {
                       </thead>
                       <tbody class="table-group-divider">
                       <tr>
-                          <td><span class="badge text-bg-primary">{order.ID}</span></td>
+                          <td><span class="badge text-bg-info info">{order.ID}</span></td>
                           <td>{order.DateTime}</td>
-                          <td><span class="badge text-bg-primary">collection</span></td>
-                          <td><span class="badge text-bg-primary">rejected</span></td>
-                          <td><span class="badge text-bg-primary">cod(unpaid)</span></td>
+                          <td><span class="badge text-bg-primary primary">collection</span></td>
+                          <td><span class="badge text-bg-info info">rejected</span></td>
+                          <td><span class="badge text-bg-primary primary">cod(unpaid)</span></td>
                           <td>£{order.Price}</td>
                         </tr>
                       </tbody>
