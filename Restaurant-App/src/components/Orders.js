@@ -110,8 +110,37 @@ function Orders() {
                   <hr />
                   <br />
                   <br />
-                  
-
+                  {order.length > 0 ? (<>
+                    <div className="table-responsive-sm">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Created</th>
+                          <th scope="col">Method</th>
+                          <th scope="col">Last status</th>
+                          <th scope="col">Payment status</th>
+                          <th scope="col">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-group-divider">
+                        {order.map((orders)=>{
+                          return <>
+                        <tr>
+                          <td><span class="badge text-bg-primary">{orders.ID}</span></td>
+                          <td>{orders.DateTime}</td>
+                          <td><span class="badge text-bg-primary">collection</span></td>
+                          <td><span class="badge text-bg-primary">rejected</span></td>
+                          <td><span class="badge text-bg-primary">cod(unpaid)</span></td>
+                          <td>£{orders.Price}</td>
+                        </tr>
+                          </>
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  </>):
+                  order ? (<>
                   <div className="table-responsive-sm">
                     <table class="table">
                       <thead>
@@ -125,18 +154,23 @@ function Orders() {
                         </tr>
                       </thead>
                       <tbody class="table-group-divider">
-                        <tr>
-                          <td scope="row">1</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>@mdo</td>
+                      <tr>
+                          <td><span class="badge text-bg-primary">{order.ID}</span></td>
+                          <td>{order.DateTime}</td>
+                          <td><span class="badge text-bg-primary">collection</span></td>
+                          <td><span class="badge text-bg-primary">rejected</span></td>
+                          <td><span class="badge text-bg-primary">cod(unpaid)</span></td>
+                          <td>£{order.Price}</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
+                  </>):
+                  (<>
                   <h4>You dont have any orders...</h4>
+                  </>)}
+                  
+                  
                 </div>
               </div>
             </div>
