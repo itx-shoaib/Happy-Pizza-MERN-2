@@ -297,6 +297,7 @@ router.get('/getcustomers',(req,res)=>{
 // STATUS:
 router.get('/getallorders',(req,res)=>{
     let qr = `SELECT * FROM cart inner join orderitem on cart.cart_Id=orderitem.Order_ID INNER JOIN address on cart.customer_Id = address.customer_Id;`
+    // WHERE address.address_status = 1
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.json({
