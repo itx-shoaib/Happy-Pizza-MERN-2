@@ -62,12 +62,12 @@ router.put('/updatemenu/:id',(req,res)=>{
 })
 
 
-// ROUTER 4: Deleting the menu by DELETE method PATH: http://localhost:5000/api/admin/deletemenu/:id
+// ROUTER 4: Deleting the menu by DELETE method PATH: http://localhost:5000/api/admin/deletemenu
 // STATUS: WORKING
-router.delete('/deletemenu/:id',(req,res)=>{
-    let id = req.params.id
+router.post('/deletemenu',(req,res)=>{
+    let ID = req.body.ID
     let qr = `delete from category 
-                where id = '${id}'`;
+                where id = '${ID}'`;
 
         dbconfig.query(qr,(err,result)=>{
         if (err) {
