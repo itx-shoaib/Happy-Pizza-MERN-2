@@ -50,7 +50,7 @@ function CartCheckout() {
         customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
       }
       try {
-        const data = await (await axios.post('http://localhost:5000/api/user/getaddress',user)).data
+        const data = await (await axios.post('http://localhost:5000/api/user/getprimaryaddress',user)).data
         console.log(data.data[0])
         setAddress(data.data[0])
 
