@@ -23,10 +23,9 @@ router.get('/getallmenu',(req,res)=>{
 // STATUS: WORKING
 router.post('/createmenu',(req,res)=>{
     let name = req.body.name;
-    let image = req.body.image;
 
-    let qr = `insert into category(Name,Image)
-                    values('${name}','${image}')`
+    let qr = `insert into category(Name)
+                    values('${name}')`
 
     dbconfig.query(qr,(err,result)=>{
         if (err) {
