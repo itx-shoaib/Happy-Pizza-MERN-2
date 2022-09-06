@@ -279,4 +279,18 @@ router.post('/rejectorder',(req,res)=>{
     })
 })
 
+// Router 8 : Get all customers PATH: http://localhost:5000/api/admin/getcustomers
+// STATUS:
+router.get('/getcustomers',(req,res)=>{
+    let qr = `SELECT * FROM customer`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result
+            })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
 module.exports = router
