@@ -141,14 +141,17 @@ function Navbar() {
         <div className="row menu">
           <div className="col-md-4 menuitems text-start">
             <button
-              className="btn"
+              className="btn position-relative"
               type="button"
               data-bs-toggle="offcanvas"
               data-bs-target="#cartOffcanvas"
               aria-controls="cartOffcanvas"
             >
               <i className="fa-solid fa-cart-shopping btnicon"></i>
-              Cart
+              Cart  {  items && items.length > 0 && (<> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {items.length}
+
+  </span></>)}
             </button>
           </div>
 
