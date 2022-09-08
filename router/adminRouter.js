@@ -40,13 +40,13 @@ router.post('/createmenu',(req,res)=>{
 
 // ROUTER 3: Updating the menu by PUT method PATH: http://localhost:5000/api/admin/updatemenu
 // STATUS: WORKING
-router.put('/updatemenu',(req,res)=>{
+router.post('/updatemenu',(req,res)=>{
     let ID = req.body.ID;
-    let name = req.body.name;
+    let title = req.body.title;
     
 
     let qr = `update category 
-                    set Name = '${name}'
+                    set Name = '${title}'
                     where id = ${ID}`;
 
     dbconfig.query(qr,(err,result)=>{
