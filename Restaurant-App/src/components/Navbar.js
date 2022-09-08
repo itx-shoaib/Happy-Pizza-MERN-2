@@ -171,11 +171,14 @@ function Navbar() {
               ></button>
             </div>
             <div className="offcanvas-body">
-              <div className="cart-cont">
-                <p>
+              {total < 5 && (<>
+                <div className="cart-cont">
+                  <p>
                   Order Minimum is $5.00. Please add more items in the cart.
                 </p>
               </div>
+              </>)}
+
               {items && items.map((item)=>{
                 return <>
               <div className="cart-card">
@@ -212,7 +215,7 @@ function Navbar() {
 
               <h6>Sub-total: ${total}</h6>
 
-                {items.length>0 && (<>
+                {total >= 5 && (<>
                   <Link to="/cart-checkout">
                 <button className="btn btn-primary btn-lg w-100 mt-2">
                   CheckOut
