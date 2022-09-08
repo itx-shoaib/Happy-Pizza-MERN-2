@@ -191,7 +191,7 @@ function Addresses() {
                 <br />
                 <div className="row">
                   <div className="col-md-12">
-                    {address.length > 0 && (<>
+                    {address.length > 0 ? (<>
                       <div className="table-responsive-sm">
 
 
@@ -238,8 +238,7 @@ function Addresses() {
                           </tbody>
                         </table>
                       </div>
-                    </>)}
-                    {address ? (<>
+                    </>):  address.length === 1 ? (<>
                       <table class="table">
                         <thead>
                           <tr>
@@ -258,10 +257,14 @@ function Addresses() {
                           </tr>
                         </tbody>
                       </table>
-                      {/* <h4> {address.house},{address.flat},{address.street},{address.postcode},{address.town}</h4> */}
                     </>) : (<>
-                      <h4>You dont have any addresses...</h4>
-                    </>)}
+                      <h4>You dont have any addresses...</h4></>)}
+                    {/* {address ? (<> */}
+
+                      {/* <h4> {address.house},{address.flat},{address.street},{address.postcode},{address.town}</h4> */}
+                    {/* </>) : (<>
+                      
+                    </>)} */}
                   </div>
                 </div>
 

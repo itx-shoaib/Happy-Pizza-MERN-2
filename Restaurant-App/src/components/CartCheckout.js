@@ -7,7 +7,7 @@ import Navbar from "./Navbar";
 import {Link} from "react-router-dom"
 
 function CartCheckout() {
-  const [address, setAddress] = useState()
+  const [address, setAddress] = useState([])
   const [comment, setcomment] = useState()
   const [house, sethouse] = useState('');
   const [postcode, setpostcode] = useState('');
@@ -125,13 +125,12 @@ function CartCheckout() {
 
   useEffect(() => {
     async function fetchData() {
-      const user={
-        customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+      const user = {
+        customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
       }
       try {
-        const data = await (await axios.post('http://localhost:5000/api/user/getprimaryaddress',user)).data
-        console.log(data.data[0])
-        setAddress(data.data[0])
+        const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
+        setAddress(data.data)
 
       } catch (error) {
         console.log(error);
@@ -237,18 +236,30 @@ function CartCheckout() {
                 </div>
                 <h5 className="mt-4 boldtext">Delivery Address</h5>
 
-                {address ? (<>
-                {address.address_status	=== 1 && (<>
-                  <div class="form-check">
-                <input class="form-check-input mt-3" type="radio" name="flexRadioDefault" id={`flexRadioDefault${address.ID}`} checked />
-                <label class="form-check-label" for={`flexRadioDefault${address.ID}`}>
+                {address ? address.map((addresses)=>{
+                  return <>
+                  {addresses.address_status === 1 ? (<>
+                    <div class="form-check">
+                <input class="form-check-input mt-3" type="radio" name="flexRadioDefault" id={`flexRadioDefault${addresses.ID}`} checked />
+                <label class="form-check-label" for={`flexRadioDefault${addresses.ID}`}>
                 <h6 className="mt-3 boldtext">
-                  House no:{address.house},Flat:{address.flat},{address.street},{address.postcode},{address.town}
+                  House no:{addresses.house},Flat:{addresses.flat},{addresses.street},{addresses.postcode},{addresses.town}
                 </h6>
                 </label>
               </div>
-                </>)}
-                </>):(<>
+                  </>):(<>
+                    <div class="form-check">
+                <input class="form-check-input mt-3" type="radio" name="flexRadioDefault" id={`flexRadioDefault${addresses.ID}`} disabled />
+                <label class="form-check-label" for={`flexRadioDefault${addresses.ID}`}>
+                <h6 className="mt-3 boldtext">
+                  House no:{addresses.house},Flat:{addresses.flat},{addresses.street},{addresses.postcode},{addresses.town}
+                </h6>
+                </label>
+              </div>
+                  </>)}
+
+                  </>
+                }):(<>
                   <h6 className="mt-3 boldtext">
                   You dont have any address. Please add one
                 </h6>
