@@ -132,7 +132,7 @@ function Navbar() {
   // }
   for (var i = 0; i < items.length; i++) {
       let productTotal = items[i].totalp;
-      total = total + parseInt(productTotal);
+      total = total + parseFloat(productTotal);
   }
   return (
     <>

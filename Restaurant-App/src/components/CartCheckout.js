@@ -168,7 +168,7 @@ function CartCheckout() {
   let total = 0;
   for (var i = 0; i < items.length; i++) {
       let productTotal = items[i].totalp;
-      total = total + parseInt(productTotal);
+      total = total + parseFloat(productTotal);
   }
 
 
