@@ -305,7 +305,7 @@ function CartCheckout() {
                   {items && items.map((item)=>{
                     return <>
                                       <tr class="items">
-                    <td><img src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" width="70" alt="" class="productImage"/></td> 
+                    <td><img src={item.Image} data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" width="70" alt="" class="productImage"/></td> 
                     <td><strong>{item.Title}</strong></td> 
                     <td>
                     {item.Quantity}
