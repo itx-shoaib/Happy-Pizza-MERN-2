@@ -236,10 +236,18 @@ function CartCheckout() {
                   </label>
                 </div>
                 <h5 className="mt-4 boldtext">Delivery Address</h5>
+
                 {address ? (<>
-                  <h6 className="mt-3 boldtext">
+                {address.address_status	=== 1 && (<>
+                  <div class="form-check">
+                <input class="form-check-input mt-3" type="radio" name="flexRadioDefault" id={`flexRadioDefault${address.ID}`} checked />
+                <label class="form-check-label" for={`flexRadioDefault${address.ID}`}>
+                <h6 className="mt-3 boldtext">
                   House no:{address.house},Flat:{address.flat},{address.street},{address.postcode},{address.town}
                 </h6>
+                </label>
+              </div>
+                </>)}
                 </>):(<>
                   <h6 className="mt-3 boldtext">
                   You dont have any address. Please add one
