@@ -81,16 +81,16 @@ router.post('/deletemenu',(req,res)=>{
 })
 
 
-// ROUTER 4: Creating the item of category by POST method PATH: http://localhost:5000/api/admin/createitem/:id
+// ROUTER 4: Creating the item of category by POST method PATH: http://localhost:5000/api/admin/createitem
 // STATUS: WORKING
-router.post('/createitem/:id',(req,res)=>{
-    let category_id = req.params.id
+router.post('/createitem',(req,res)=>{
+    let category_id = req.body.category_id
     let title = req.body.title;
     let image = req.body.image;
     let description = req.body.description;
     let price = req.body.price;
     let qr = `insert into item(category_id,Title,Description,Price,Image)
-                   values('${category_id}','${title}','${description}','${price}','${image}')`;
+                   values(${category_id},'${title}','${description}','${price}','${image}')`;
 
         dbconfig.query(qr,(err,result)=>{
         if (err) {
