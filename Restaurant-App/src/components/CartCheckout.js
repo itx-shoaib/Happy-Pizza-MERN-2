@@ -43,6 +43,85 @@ function CartCheckout() {
     }
   }
 
+  async function add(orderID,quantitys,price) {
+    const info = { 
+      orderID,
+      quantitys,
+      price,
+      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
+
+
+        try {
+            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            console.log(data.data)
+            update()
+            toast.success("Quantity increase")
+        } catch (error) {
+            console.log(error)
+            toast.warn("Failed! Try again later")
+        }
+  }
+
+  async function remove(orderID,quantitys,price) {
+   
+    const info = { 
+      orderID,
+      quantitys,
+      price,
+      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
+
+        try {
+            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            console.log(data.data)
+            update()
+            toast.success("Quantity decrease")
+        } catch (error) {
+            console.log(error)
+            toast.warn("Failed! Try again later")
+        }
+  }
+
+  async function del(orderID){
+   
+    const info = { 
+      orderID
+    }
+
+        try {
+            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            console.log(data.data)
+            update()
+            toast.warn("Item has been deleted")
+        } catch (error) {
+            console.log(error)
+            toast.warn("Failed! Try again later")
+        }
+  }
+
+  async function update(){
+
+
+    
+    if(getstatus==="true")
+  {
+   const user =JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
+   
+
+      const temp = {
+        customer_Id:user
+      }
+      try {
+
+        const data = ( await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
+        console.log(data.data)
+        setItems(data.data)
+
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -222,13 +301,31 @@ function CartCheckout() {
 
                 </tr>
                 </thead>
-                <tbody id="cartList"><tr class="items"><td><img src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" width="70" alt="" class="productImage"/></td> <td><strong>Bottle Of Pop Small</strong></td> <td>
-                            3
-                        </td> <td>
-                            £1.70
-                        </td> <td class="text-end">
-                            £5.10
-                        </td> <td><button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-minus"></i></span></button> <button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-plus"></i></span></button> <button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-trash"></i></span></button></td></tr></tbody>
+                <tbody>
+                  {items && items.map((item)=>{
+                    return <>
+                                      <tr class="items">
+                    <td><img src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" width="70" alt="" class="productImage"/></td> 
+                    <td><strong>{item.Title}</strong></td> 
+                    <td>
+                    {item.Quantity}
+                        </td> 
+                        <td>
+                        ${item.Price}
+                        </td> 
+                        <td class="text-end">
+                            ${item.Quantity * item.Price}
+                        </td> 
+                        <td>
+                          <button type="button" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius" ><span class="btn-inner--icon btn-cart-icon" onClick={()=>{remove(item.orderitemid,item.Quantity-1,item.Price)}}><i class="fa fa-minus"></i></span></button> 
+                          <button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius" onClick={()=>{add(item.orderitemid,item.Quantity+1,item.Price)}}><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-plus"></i></span></button> 
+                          <button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius" onClick={()=>{del(item.orderitemid)}}><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-trash"></i></span></button>
+                          </td>
+                        </tr>
+                    </>
+                  })}
+
+                </tbody>
             </table>
         </div>
               </div>
