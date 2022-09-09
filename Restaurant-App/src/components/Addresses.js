@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
@@ -15,6 +15,7 @@ function Addresses() {
   const [town, settown] = useState('');
   const [address, setAddress] = useState([])
   const getstatus = localStorage.getItem('status');
+  const refClose = useRef(null)
 
   async function addAddress() {
     const info = {
@@ -28,6 +29,8 @@ function Addresses() {
     try {
       const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
       console.log(data.data)
+      refClose.current.click();
+      updateAddress();
       toast.success("New address added")
 
       sethouse('');
@@ -81,6 +84,20 @@ function Addresses() {
       }
     }
   }
+
+  async function updateAddress(){
+    const user = {
+      customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+    }
+    try {
+      const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
+      setAddress(data.data)
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   async function del(ID) {
     const info = {
@@ -380,6 +397,7 @@ function Addresses() {
                       type="button"
                       className="btn btn-secondary"
                       data-bs-dismiss="modal"
+                      ref={refClose}
                     >
                       Close
                     </button>
