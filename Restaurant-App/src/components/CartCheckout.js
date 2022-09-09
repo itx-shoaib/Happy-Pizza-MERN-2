@@ -29,6 +29,7 @@ function CartCheckout() {
     try {
       const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
       console.log(data.data)
+      updateAddress();
       toast.success("New address added")
 
       sethouse('');
@@ -120,6 +121,19 @@ function CartCheckout() {
         console.log(error);
 
       }
+    }
+  }
+
+  async function updateAddress(){
+    const user = {
+      customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+    }
+    try {
+      const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
+      setAddress(data.data)
+
+    } catch (error) {
+      console.log(error);
     }
   }
 
