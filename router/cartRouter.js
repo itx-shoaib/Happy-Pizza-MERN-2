@@ -108,7 +108,8 @@ router.post('/cart',(req,res)=>{
                             console.log('sssss' +results[0]['cart_Id'])
                         // Updating the cart quantity
                         let qr = `update orderitem 
-                        set Quantity = ${quantity}
+                        set Quantity = ${quantity},
+                        Price=${price * quantity}
                         where Order_ID = ${results[0]['cart_Id']}`
                         dbconfig.query(qr,(err,result)=>{
                             if(!err){
