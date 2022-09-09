@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
@@ -16,6 +16,7 @@ function CartCheckout() {
   const [town, settown] = useState('');
   const [items, setItems] = useState([])
   const getstatus= localStorage.getItem('status');
+  const refClose = useRef(null)
 
   async function addAddress() {
     const info = {
@@ -30,6 +31,7 @@ function CartCheckout() {
       const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
       console.log(data.data)
       updateAddress();
+      refClose.current.click();
       toast.success("New address added")
 
       sethouse('');
@@ -469,6 +471,7 @@ function CartCheckout() {
                       type="button"
                       className="btn btn-secondary"
                       data-bs-dismiss="modal"
+                      ref={refClose}
                     >
                       Close
                     </button>
