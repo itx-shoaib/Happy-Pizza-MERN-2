@@ -30,8 +30,8 @@ function CartCheckout() {
     try {
       const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
       console.log(data.data)
-      updateAddress();
       refClose.current.click();
+      updateAddress();
       toast.success("New address added")
 
       sethouse('');
