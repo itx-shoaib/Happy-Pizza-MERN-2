@@ -238,6 +238,35 @@ router.get('/getliveorders',(req,res)=>{
 
 })
 
+// Router: http://localhost:5000/api/admin/getliveorderscount
+// Status: Working
+router.get('/getliveorderscount',(req,res)=>{
+
+    let customer_Id = req.body.customer_Id
+
+    // Main query
+    let qr  = `SELECT count(*) FROM cart 
+    Where 	Orderstatus='1'
+   `;
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            if(result.length>0){
+                res.json({  
+                    data:'true'
+                })
+            }
+            else{
+                res.status(401).json({
+                    data:'false'
+                })
+            }
+        } else {
+            console.log(err,"err")
+        }
+    })
+
+})
+
 // Router 6: http://localhost:5000/api/admin/acceptorder
 // Status:
 router.post('/acceptorder',(req,res)=>{
