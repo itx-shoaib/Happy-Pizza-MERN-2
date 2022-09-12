@@ -410,8 +410,8 @@ router.post('/registeradmin',async(req,res)=>{
     dbconfig.query(qr,(err,result)=>{
             if (!err) {
                 if (result.length <=0) {
-                      let qr = `insert into customer(name,email,number,password)
-                                values('${name}','${email}','${number}','${password}')`
+                      let qr = `insert into customer(name,email,number,password,role)
+                                values('${name}','${email}','${number}','${password}',1)`
                             dbconfig.query(qr,(err,result)=>{
                                     if (err) {
                                         console.log(err,'errs');
