@@ -358,11 +358,11 @@ router.post('/loginadmin',(req,res)=>{
                     return res.status(401).json({message:"Incorrect username or password"})
             }
             else if(result[0]['password'] === password) {
-                const token = JWT.sign({
-                    email
-                }, "fn789disdhcsc87scsdcsdb4", {
-                    expiresIn: 3600000
-                })
+                // const token = JWT.sign({
+                //     email
+                // }, "fn789disdhcsc87scsdcsdb4", {
+                //     expiresIn: 3600000
+                // })
                 // res.json({
                 //         token
                 //     });
