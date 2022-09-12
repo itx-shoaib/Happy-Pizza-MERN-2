@@ -338,4 +338,105 @@ router.get('/getallorders',(req,res)=>{
     })
 
 })
+
+
+
+// ROUTER 11: Login a admin by GET method PATH: http://localhost:5000/api/admin/loginadmin
+// STATUS:
+router.post('/loginadmin',(req,res)=>{
+
+    let email = req.body.email;
+    let password = req.body.password;
+
+    
+    let qr = `SELECT * FROM customer 
+                     where email = '${email}'`
+    
+        dbconfig.query(qr,(err,result)=>{
+        if (!err) { 
+            if (result.length <=0 || result[0]['password'] != password ) {
+                    return res.status(401).json({message:"Incorrect username or password"})
+            }
+            else if(result[0]['password'] === password) {
+                const token = JWT.sign({
+                    email
+                }, "fn789disdhcsc87scsdcsdb4", {
+                    expiresIn: 3600000
+                })
+                // res.json({
+                //         token
+                //     });
+                res.json({
+                    data:result
+                })
+            }
+            else{
+                return res.status(401).json({message:"Something went wrong,Please try again later."})
+            }
+        }
+        else {  
+            console.log(err,'errs');
+        }
+    })
+
+   
+});
+
+// ROUTER 10: Register a admin by POST method PATH: http://localhost:5000/api/admin/registeradmin
+// STATUS: WORKING
+router.post('/registeradmin',async(req,res)=>{
+
+    // const secPass = await bcrypt.hash(req.body.password,10);
+    let name = req.body.name;
+    let email = req.body.email;
+    let number = req.body.number;
+    let password = req.body.password;
+
+
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return res.status(400).json({ errors: errors.array()});
+    // }
+
+    const token = JWT.sign({
+        email
+    }, "fn789disdhcsc87scsdcsdb4", {
+        expiresIn: 3600000
+    })
+
+
+    let qr =  `SELECT * FROM customer
+                    WHERE email = '${email}'`
+    dbconfig.query(qr,(err,result)=>{
+            if (!err) {
+                if (result.length <=0) {
+                      let qr = `insert into customer(name,email,number,password)
+                                values('${name}','${email}','${number}','${password}')`
+                            dbconfig.query(qr,(err,result)=>{
+                                    if (err) {
+                                        console.log(err,'errs');
+                                    }
+                                    else {  
+                                        // res.json({
+                                        //     token
+                                        // });
+                                        res.send({
+                                            message : 'Registration successful',
+                                           data:result
+                                        });
+                                    }
+                                })
+                }
+                else {
+                    return res.status(400).json({message:"Email already exist"})
+                }
+            }
+            else {  
+                console.log(err,'errs');
+            }
+        })
+
+});
+
+
 module.exports = router
