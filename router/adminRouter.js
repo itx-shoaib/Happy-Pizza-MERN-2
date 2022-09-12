@@ -350,7 +350,7 @@ router.post('/loginadmin',(req,res)=>{
 
     
     let qr = `SELECT * FROM customer 
-                     where email = '${email}'`
+                     where email = '${email}' and role = 1`
     
         dbconfig.query(qr,(err,result)=>{
         if (!err) { 
@@ -398,11 +398,11 @@ router.post('/registeradmin',async(req,res)=>{
     //   return res.status(400).json({ errors: errors.array()});
     // }
 
-    const token = JWT.sign({
-        email
-    }, "fn789disdhcsc87scsdcsdb4", {
-        expiresIn: 3600000
-    })
+    // const token = JWT.sign({
+    //     email
+    // }, "fn789disdhcsc87scsdcsdb4", {
+    //     expiresIn: 3600000
+    // })
 
 
     let qr =  `SELECT * FROM customer
