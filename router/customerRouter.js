@@ -256,4 +256,23 @@ router.post('/deleteaddress',(req,res)=>{
     })
 })
 
+// Router : Delete the customer PATH:http://localhost:5000/api/user/deletecustomer
+// Status:
+router.post('/deletecustomer',(req,res)=>{
+    let ID = req.body.ID
+
+    let qr = `Delete From customer 
+    where customer_Id = ${ID}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                message:"Address has been deleted"
+            })
+        }
+        else{
+            console.log(err,'err')
+        }
+    })
+})
+
 module.exports = router
