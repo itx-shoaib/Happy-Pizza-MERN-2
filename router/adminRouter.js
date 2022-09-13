@@ -245,19 +245,21 @@ router.get('/getliveorderscount',(req,res)=>{
     let customer_Id = req.body.customer_Id
 
     // Main query
-    let qr  = `SELECT count(*) FROM cart 
+    let qr  = `SELECT count(*) as 'total' FROM cart 
     Where 	Orderstatus='1'
    `;
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
-            if(result.length>0){
+            if(result[0]['total']>0){
                 res.json({  
-                    data:'true'
+                    data:'true',
+                    message:result[0]['total']
                 })
             }
             else{
                 res.status(401).json({
-                    data:'false'
+                    data:'false',
+                    message:result[0]['total']
                 })
             }
         } else {
