@@ -345,4 +345,49 @@ router.post('/getcart',(req,res)=>{
     })
 })
 
+// ROUTER : http://localhost:5000/api/admin/getitemmanagement/:itemid/:categoryid
+// STATUS:
+router.get('/getitemmanagement/:itemid/:categoryid',(req,res)=>{
+    let categoryid = req.params.categoryid
+    let itemid = req.params.itemid
+
+    let qr = `SELECT * FROM item WHERE category_id = ${categoryid} and ID = ${itemid}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result[0]
+            })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
+
+// ROUTER : http://localhost:5000/api/admin/updateitemmanagement/:itemid/:categoryid
+// STATUS:
+router.post('/updateitemmanagement/:itemid/:categoryid',(req,res)=>{
+    let categoryid = req.params.categoryid
+    let itemid = req.params.itemid
+    let title = req.body.title
+    let Description = req.body.Description
+    let Price = req.body.Price
+
+
+
+    let qr = `update item 
+    set Title = "${title}"
+    , Description = "${Description}"
+    , Price = "${Price}"
+    WHERE category_id = ${categoryid} and ID = ${itemid}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result[0]
+            })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
+
 module.exports = router
