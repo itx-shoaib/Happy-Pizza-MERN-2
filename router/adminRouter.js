@@ -215,9 +215,7 @@ router.get('/getliveorders',(req,res)=>{
     let customer_Id = req.body.customer_Id
 
     // Main query
-    let qr  = `SELECT * FROM cart 
-    INNER JOIN address on cart.customer_Id = address.customer_Id
-    INNER JOIN customer on customer.customer_Id = address.customer_Id
+    let qr  = `SELECT * FROM cart INNER JOIN address on cart.customer_Id = address.customer_Id INNER JOIN customer on customer.customer_Id = address.customer_Id WHERE cart.address_Id = address.ID;
    `;
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
