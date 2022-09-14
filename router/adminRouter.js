@@ -327,7 +327,7 @@ router.get('/getcustomers',(req,res)=>{
 // Router 9 : Get all customers PATH: http://localhost:5000/api/admin/getallorders
 // STATUS:
 router.get('/getallorders',(req,res)=>{
-    let qr = `SELECT * FROM cart inner join orderitem on cart.cart_Id=orderitem.Order_ID INNER JOIN address on cart.customer_Id = address.customer_Id;`
+    let qr = `SELECT *,orderitem.ID as "orderitemid" FROM cart inner join orderitem on cart.cart_Id=orderitem.Order_ID INNER JOIN address on cart.customer_Id = address.customer_Id;`
     // WHERE address.address_status = 1
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
@@ -439,6 +439,43 @@ router.post('/registeradmin',async(req,res)=>{
         })
 
 });
+
+// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getorderdetails/:id
+// STATUS:
+router.get('/getorderdetails/:id',(req,res)=>{
+    let id = req.params.id
+
+    let qr = `SELECT * FROM cart inner join orderitem on cart.cart_Id=orderitem.Order_ID INNER JOIN address on cart.customer_Id = address.customer_Id INNER join customer on cart.customer_Id = customer.customer_Id where cart.cart_Id = ${id};`
+    // WHERE address.address_status = 1
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result
+                       })
+        } else {
+            console.log(err,'err')
+        }
+    })
+
+})
+
+// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getorderlength
+// STATUS:
+router.get('/getorderlength',(req,res)=>{
+
+    let qr = `SELECT count(*) as 'total' FROM orderitem;`
+    // WHERE address.address_status = 1
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result[0]['total']
+                       })
+        } else {
+            console.log(err,'err')
+        }
+    })
+
+})
 
 
 module.exports = router

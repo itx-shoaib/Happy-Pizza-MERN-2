@@ -239,10 +239,19 @@ router.post('/cartcheckout',(req,res)=>{
                 where customer_Id=${customer_Id}`
     dbconfig.query(qr,(err,result)=>{
         if(!err){
-            let qr = `update cart 
+            if (result.length>0) {
+                let qr = `SELECT * FROM address
+            where customer_Id=${customer_Id} and address_status =1`
+                        dbconfig.query(qr,(err,result)=>{
+                if(result.length>0){
+                    // res.json({
+                    //     data:result[0]['customer_Id']
+                    // })
+                                let qr = `update cart 
             set comment = '${comment}'
             , Status = 2
             , Orderstatus = 1
+            , address_Id = ${result[0]['ID']}
             where customer_Id=${customer_Id}`
             dbconfig.query(qr,(err,result)=>{
                 if(!err){
@@ -254,6 +263,31 @@ router.post('/cartcheckout',(req,res)=>{
                     console.log(err,"err")
                 }
             })
+
+                }
+                else{
+                    console.log(err,"err")
+                }
+            })
+            } else {
+                console.log(err,'err')
+            }
+
+            // let qr = `update cart 
+            // set comment = '${comment}'
+            // , Status = 2
+            // , Orderstatus = 1
+            // where customer_Id=${customer_Id}`
+            // dbconfig.query(qr,(err,result)=>{
+            //     if(!err){
+            //         res.json({
+            //             message:"Your Cart has been checkout"
+            //         })
+            //     }
+            //     else{
+            //         console.log(err,"err")
+            //     }
+            // })
         }
         else{
             console.log(err,"err")
