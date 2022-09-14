@@ -495,5 +495,19 @@ router.get('/getcustomerlength',(req,res)=>{
 
 })
 
+// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getitemslength
+// STATUS:
+router.get("/getitemslength",(req,res)=>{
+    let qr = `Select count(*) as 'total' from item`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result[0]['total']
+            })
+        } else {
+            console.log(err,'err')
+        }
+    })
+})
 
 module.exports = router
