@@ -325,7 +325,7 @@ router.get('/getcustomers',(req,res)=>{
 // Router 9 : Get all customers PATH: http://localhost:5000/api/admin/getallorders
 // STATUS:
 router.get('/getallorders',(req,res)=>{
-    let qr = `SELECT *,orderitem.ID as "orderitemid" FROM cart inner join orderitem on cart.cart_Id=orderitem.Order_ID INNER JOIN address on cart.customer_Id = address.customer_Id;`
+    let qr = `SELECT *,orderitem.ID as "orderitemid" FROM cart inner join orderitem on cart.cart_Id=orderitem.Order_ID INNER JOIN address on cart.customer_Id = address.customer_Id WHERE cart.address_Id = address.ID;`
     // WHERE address.address_status = 1
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
