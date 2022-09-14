@@ -234,6 +234,7 @@ router.post('/updatecart',(req,res)=>{
 router.post('/cartcheckout',(req,res)=>{
     let customer_Id = req.body.customer_Id
     let comment = req.body.comment
+    let total = req.body.total
 
     let qr = `SELECT * FROM cart
                 where customer_Id=${customer_Id}`
@@ -252,6 +253,7 @@ router.post('/cartcheckout',(req,res)=>{
             , Status = 2
             , Orderstatus = 1
             , address_Id = ${result[0]['ID']}
+            , total = "${total}"
             where customer_Id=${customer_Id}`
             dbconfig.query(qr,(err,result)=>{
                 if(!err){
