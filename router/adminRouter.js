@@ -443,12 +443,15 @@ router.post('/registeradmin',async(req,res)=>{
 router.get('/getorderdetails/:id',(req,res)=>{
     let id = req.params.id
 
-    let qr = `SELECT * FROM cart inner join orderitem on cart.cart_Id=orderitem.Order_ID INNER JOIN address on cart.customer_Id = address.customer_Id INNER join customer on cart.customer_Id = customer.customer_Id where cart.cart_Id = ${id};`
+    let qr = `SELECT * FROM address 
+    INNER JOIN cart on cart.address_Id = address.ID
+    INNER JOIN customer on customer.customer_Id = cart.customer_Id
+    WHERE cart.cart_Id = ${id};`
     // WHERE address.address_status = 1
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.json({
-                data:result
+                data:result[0]
                        })
         } else {
             console.log(err,'err')
