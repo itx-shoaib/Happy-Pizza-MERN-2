@@ -27,7 +27,7 @@ function Navbar() {
 
 
         try {
-            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
             console.log(data.data)
             update()
             toast.success("Quantity increase")
@@ -46,7 +46,7 @@ function Navbar() {
       customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
 
         try {
-            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
             console.log(data.data)
             update()
             toast.success("Quantity decrease")
@@ -63,7 +63,7 @@ function Navbar() {
     }
 
         try {
-            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
             console.log(data.data)
             update()
             toast.warn("Item has been deleted")
@@ -87,7 +87,7 @@ function Navbar() {
       }
       try {
 
-        const data = ( await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
+        const data = ( await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",temp)).data;
         console.log(data.data)
         setItems(data.data)
 
@@ -110,7 +110,7 @@ function Navbar() {
       }
       try {
 
-        const data = (await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
+        const data = (await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",temp)).data;
         console.log(data.data)
         setItems(data.data)
 

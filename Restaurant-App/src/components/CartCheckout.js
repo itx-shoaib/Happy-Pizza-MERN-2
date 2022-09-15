@@ -28,7 +28,7 @@ function CartCheckout() {
       customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
     }
     try {
-      const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
+      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/addaddress', info)).data
       console.log(data.data)
       refClose.current.click();
       updateAddress();
@@ -55,7 +55,7 @@ function CartCheckout() {
 
 
         try {
-            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
             console.log(data.data)
             update()
             toast.success("Quantity increase")
@@ -74,7 +74,7 @@ function CartCheckout() {
       customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
 
         try {
-            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
             console.log(data.data)
             update()
             toast.success("Quantity decrease")
@@ -91,7 +91,7 @@ function CartCheckout() {
     }
 
         try {
-            const data =  (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
             console.log(data.data)
             update()
             toast.warn("Item has been deleted")
@@ -115,7 +115,7 @@ function CartCheckout() {
       }
       try {
 
-        const data = ( await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
+        const data = ( await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",temp)).data;
         console.log(data.data)
         setItems(data.data)
 
@@ -131,7 +131,7 @@ function CartCheckout() {
       customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
     }
     try {
-      const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
+      const data = await (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/getaddress', user)).data
       setAddress(data.data)
 
     } catch (error) {
@@ -145,7 +145,7 @@ function CartCheckout() {
         customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
       }
       try {
-        const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
+        const data = await (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/getaddress', user)).data
         setAddress(data.data)
 
       } catch (error) {
@@ -167,7 +167,7 @@ function CartCheckout() {
       }
       try {
 
-        const data = (await axios.post("http://localhost:5000/api/admin/getcartitems",temp)).data;
+        const data = (await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",temp)).data;
         console.log(data.data)
         setItems(data.data)
 
@@ -200,7 +200,7 @@ function CartCheckout() {
   try {
 
       // setloading(true)
-      const result = await axios.post("http://localhost:5000/api/admin/cartcheckout",user).data;
+      const result = await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/cartcheckout",user).data;
       console.log(result)
       toast.success("Checkout Successfull")
       // setloading(true)

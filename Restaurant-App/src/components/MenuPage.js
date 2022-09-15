@@ -33,7 +33,7 @@ function MenuPage() {
     async function fetchData() {
       try {
         setloading(true)
-        const data = await (await axios.get('http://localhost:5000/api/admin/getallmenu')).data
+        const data = await (await axios.get('https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu')).data
         setcategory(data.data);
         console.log(category)
         setloading(false)
@@ -49,7 +49,7 @@ function MenuPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await (await axios.get('http://localhost:5000/api/admin/getallitems')).data
+        const data = await (await axios.get('https://apinodejs.creativeparkingsolutions.com/api/admin/getallitems')).data
         setItem(data.data);
         console.log(item)
 
