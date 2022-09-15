@@ -438,9 +438,9 @@ router.post('/registeradmin',async(req,res)=>{
 
 });
 
-// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getorderdetails/:id
+// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getorderdetails/:id/:cid
 // STATUS:
-router.get('/getorderdetails/:id',(req,res)=>{
+router.get('/getorderdetails/:id/:cid',(req,res)=>{
     let id = req.params.id
 
     let qr = `SELECT * FROM address 
