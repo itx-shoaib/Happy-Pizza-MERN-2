@@ -426,4 +426,26 @@ router.post('/updateitemmanagement/:itemid/:categoryid',(req,res)=>{
     })
 })
 
+// ROUTER 2: Showing orders in cart by GET method PATH: http://localhost:5000/api/admin/getcartorderdetailitems
+// STATUS: WORKING
+router.post('/getcartorderdetailitems',(req,res)=>{
+    let customer_Id = req.body.customer_Id;
+
+    let qr = `SELECT customer.customer_Id,item.*,orderitem.Price as "totalp",orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem 
+    inner join cart on cart.cart_Id=orderitem.Order_ID 
+    inner join customer on customer.customer_Id=cart.customer_Id 
+    INNER join item on item.ID = orderitem.ProductID 
+    WHERE cart.customer_Id=${customer_Id}`
+    dbconfig.query(qr,(err,result)=>{
+        if(!err){
+            res.json({
+                data:result
+            })
+        }
+        else{
+            console.log(err,"err")
+        }
+    })
+})
+
 module.exports = router
