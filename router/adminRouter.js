@@ -89,8 +89,8 @@ router.post('/createitem',(req,res)=>{
     let image = req.body.image;
     let description = req.body.description;
     let price = req.body.price;
-    let qr = `insert into item(category_id,Title,Description,Price,Image)
-                   values(${category_id},'${title}','${description}','${price}','${image}')`;
+    let qr = `insert into item(category_id,Title,Description,Price)
+                   values(${category_id},'${title}','${description}','${price}')`;
 
         dbconfig.query(qr,(err,result)=>{
         if (err) {
