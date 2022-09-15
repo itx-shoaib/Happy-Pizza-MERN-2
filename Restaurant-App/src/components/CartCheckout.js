@@ -191,7 +191,8 @@ function CartCheckout() {
   async function checkout() {
     const user = {
       comment,
-      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
+      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id,
+      total
   };
 
   console.log(user)

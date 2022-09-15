@@ -244,7 +244,7 @@ router.post('/cartcheckout',(req,res)=>{
                 let qr = `SELECT * FROM address
             where customer_Id=${customer_Id} and address_status =1`
                         dbconfig.query(qr,(err,result)=>{
-                if(result.length>0){
+                if(!err){
                     // res.json({
                     //     data:result[0]['customer_Id']
                     // })
