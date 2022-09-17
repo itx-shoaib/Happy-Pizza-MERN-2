@@ -116,7 +116,7 @@ function Homepage() {
       </div>
 
       <div className="row justify-content-center">
-        <div className="col-md-11 text-center">
+        <div className="col-md-11 customHomeOrdernow text-center">
           <div className="bs">
             <div className="row">
               <div className="col-md-12">

@@ -78,7 +78,11 @@ code {
 }
 
 .bs {
-  box-shadow: rgba(90, 90, 90, 0.35) 0px 5px 15px;
+  box-shadow: rgb(236 236 236 / 35%) 0px 5px 15px
+}
+
+.customHomeOrdernow{
+  padding: 0px 36px;
 }
 
 .blockimg {
@@ -368,7 +372,7 @@ a {
 }
 
 .br {
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 .ordertype {
