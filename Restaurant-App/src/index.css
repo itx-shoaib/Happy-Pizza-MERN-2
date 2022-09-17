@@ -14,9 +14,14 @@ code {
 }
 
 .menu {
-  margin: 10px 0;
+  padding: 16px 11px;
+  margin: 0px;
   position: sticky;
   z-index: 1000;
+}
+
+.container-fluid{
+  padding: 0;
 }
 
 .btnicon {
