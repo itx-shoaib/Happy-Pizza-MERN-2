@@ -54,13 +54,13 @@ function Items({items , categorys}) {
                       // data-bs-target="#addtocart"
                       >
                       
-                          <div className="col-xl-7">
+                          <div className="col-7 producttext">
                             <h5 className="boldtext">{items.Title}</h5>
                             {items.Description !== "undefined" ? (<p>{items.Description}</p>) : (<></>)}
                             {items.Price !== "undefined" ? (<h5>$ {items.Price}</h5>) : (<></>)}
 
                           </div>
-                          <div className="col-xl-5">
+                          <div className="col-5">
                             <img className="productimg" src={items.Image} alt=".." />
                           </div>
                           </div>
