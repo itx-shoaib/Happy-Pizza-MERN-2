@@ -131,7 +131,7 @@ function Homepage() {
                   src="https://www.happyspizzaburger.co.uk/uploads/restorants/327JGSU1654251343.jpg"
                 />
                 <h2>Easy to Order.</h2>
-                <p>
+                <p className="customPmargin">
                   You can now order online, all your favourite dishes and many
                   more delicious options, and have them delivered straight to
                   your door in no time at all
