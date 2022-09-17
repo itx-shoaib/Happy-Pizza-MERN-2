@@ -141,7 +141,7 @@ function Navbar() {
     <>
      <ToastContainer />
       <nav className="navbar-light justify-content-center mainnavbar">
-        <div className="row menu">
+        <div className="row menu mobileActive">
           <div className="col-md-4 menuitems text-start">
             <button
               className="btn position-relative"

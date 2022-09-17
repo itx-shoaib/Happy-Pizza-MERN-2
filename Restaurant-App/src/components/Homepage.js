@@ -116,10 +116,10 @@ function Homepage() {
       </div>
 
       <div className="row justify-content-center">
-        <div className="col-md-11 customHomeOrdernow text-center">
+        <div className="col-md-11 mobileActive customHomeOrdernow text-center">
           <div className="bs">
             <div className="row">
-              <div className="col-md-12">
+              <div className="col-md-12 mobileActiveButton">
                 <Link to="/menu"><button className="btn btn-primary homebtn">Order Now</button></Link>
               </div>
             </div>
@@ -181,7 +181,7 @@ function Homepage() {
       </div>
 
       <div className="row my-5">
-        <div className="col-md-12 text-center">
+        <div className="col-md-12 mobileActive text-center">
           <h1 className="boldtext">Why Us?</h1>
           <h5 className="text-responsive whyus">
           We are pleased to offer good quality and quantity at affordable prices. Only the freshest and best quality ingredients are used in the preparation of our food items. In addition, hygiene is an important factor of quality food delivery and is taken very seriously at Mighty Pizza. Periodic fumigation and strict vigil on kitchen staff on hygiene issues helps ensure that our valued customers not only receive tasty food, but that it is also hygienic and healthful.
