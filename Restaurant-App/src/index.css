@@ -190,6 +190,12 @@ code {
   background-color: brown !important;
 }
 
+.carousel-indicators {
+
+  right: 60%;
+
+}
+
 .indicatorcont {
   margin-left: 0 !important;
   position: absolute !important;
@@ -211,6 +217,11 @@ code {
   margin: 20px 40px;
   width: 90%;
   border: 1px solid blue;
+}
+
+.fixedNavbar{
+  position: fixed;
+  width: 100%;
 }
 
 .registerbtn {
@@ -242,9 +253,10 @@ a {
 }
 
 .productcard {
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
   margin: 22px;
   padding: 20px 10px;
+  background-color: white;
   width: 30%;
   cursor: pointer;
   min-height: 150px;
@@ -258,6 +270,7 @@ a {
 .nav-pills {
   overflow-x: auto;
   overflow-y: hidden;
+  top: 13%;
   background-color: black;
   color: white;
   height: 85px;
@@ -447,6 +460,17 @@ a {
     display: none;
   }
 
+  .nav-pills {
+    overflow-x: auto;
+    overflow-y: hidden;
+    top: 0;
+    background-color: black;
+    color: white;
+    height: 85px;
+    position: sticky !important;
+    z-index: 0 !important;
+  }
+
   .productrow {
     display: block !important;
     margin-top: 20px;
@@ -455,8 +479,10 @@ a {
   .productcard {
     width: 90% !important;
     text-align: start;
+    background-color: white;
     padding: 10px 5px !important;
     min-height: 150px;
+
     /* height: 150px !important;
     background-color:aliceblue; */
   }
@@ -477,7 +503,7 @@ a {
   }
   .centered {
     height: 250px;
-    /* padding: 0 10px; */
+    padding: 0 10px;
     width: 100%;
   }
 
@@ -566,6 +592,7 @@ a {
 .productcard {
   width: 45% !important;
   text-align: start;
+  background-color: white;
   padding: 10px 5px !important;
   min-height: 150px;
   /* height: 150px !important;
@@ -584,6 +611,7 @@ a {
 .productcard {
   width: 40% !important;
   text-align: start;
+  background-color: white;
   padding: 10px 5px !important;
   min-height: 150px;
   margin-right: 20px !important;
@@ -602,11 +630,35 @@ a {
   .productcard {
     width: 90% !important;
     text-align: start;
+    background-color: white;
     padding: 10px 5px !important;
     min-height: 150px;
     /* height: 150px !important;
     background-color:aliceblue; */
   }
+}
+
+
+@media screen and (max-width:360px) {
+  .centered {
+    height: 300px;
+    padding: 0 10px;
+    width: 100%;
+}
+.blockimg {
+  height: 300px;
+}
+}
+
+@media screen and (min-width:469px) and (max-width:600px){
+  .centered {
+    padding: 30px 10px;
+}
+}
+@media screen and (min-width:601px) {
+  .centered {
+    padding: 40px 10px;
+}
 }
 
 .body {

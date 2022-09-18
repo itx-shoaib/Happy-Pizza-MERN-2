@@ -9,9 +9,23 @@ import { Link } from "react-router-dom";
 import "../Css/MenuPage.css";
 import Navbar from "./Navbar";
 
+
 function MenuPage() {
   const [show, setShow] = useState(false);
   const [loading, setloading] = useState(true)
+
+//   const [navbar, setNavbar] = useState(false)
+//   const fixingit = ()=>{
+//     if(window.scrollY >= 70){
+//         setNavbar(true);
+//     }
+//     else{
+//         setNavbar(false)
+//     }
+// };
+
+// window.addEventListener('scroll',fixingit)
+
   let [num, setNum] = useState(1);
   const [category, setcategory] = useState(
     []
@@ -2365,14 +2379,14 @@ function MenuPage() {
           <div className="scrollingoff">
           <Navbar/>
           <div className="row justify-content-center">
-          <div className="col-xl-12 text-center">
+          <div className="col-xl-12 text-center" style={{padding:"0px"}}>
             <img
               className="menutitleimg"
               src="https://www.happyspizzaburger.co.uk/uploads/restorants/751msq61654252482.jpg"
             />
           </div>
         </div>
-        <ul className="nav nav-pills nav-fill sticky-top flex-column">
+        <ul className="nav nav-pills nav-fill stick flex-column">
 
 {category && (category.map(categorys => {
   return <>

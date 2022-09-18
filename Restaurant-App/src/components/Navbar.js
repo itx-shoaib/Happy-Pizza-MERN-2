@@ -1,12 +1,14 @@
 import React,{useState,useEffect} from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import axios from 'axios';
 
 function Navbar() {
 
   const [items, setItems] = useState([])
+  let location = useLocation();
+
   
   // let [totals, settotal] = useState()
 
@@ -140,7 +142,7 @@ function Navbar() {
   return (
     <>
      <ToastContainer />
-      <nav className="navbar-light justify-content-center mainnavbar">
+      <nav className={ location.pathname === "/menu" ? "navbar-light justify-content-center mainnavbar fixedNavbar" : "navbar-light justify-content-center mainnavbar"}>
         <div className="row menu mobileActive">
           <div className="col-md-4 menuitems text-start">
             <button

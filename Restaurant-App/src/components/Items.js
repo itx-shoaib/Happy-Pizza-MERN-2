@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-
+import Swal from 'sweetalert2'
 
 function Items({items , categorys}) {
     const [show, setShow] = useState(false);
@@ -44,6 +44,17 @@ function Items({items , categorys}) {
         setShow(false);
       }
       const handleShow = () => setShow(true);
+
+      function showAlert
+      (){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Dear user, you must have in login first to add to cart. Thank you!',
+          footer: '<a href="/login">Login and register</a>'
+        })
+        
+      }
   return (
     <>
                        {items.category_id === categorys.ID ? (<>
@@ -53,7 +64,8 @@ function Items({items , categorys}) {
                       // onClick={() => {
                       //   showmodal(item);
                       // }}
-                      onClick={handleShow}
+                      
+                      onClick={getstatus === "true" ? (handleShow) : (showAlert)}
                       // data-bs-toggle="modal"
                       // data-bs-target="#addtocart"
                       >
@@ -72,7 +84,7 @@ function Items({items , categorys}) {
                         ):(
                         <></>)}
                       
-{getstatus === "true" ? (<>
+
   <Modal show={show} onHide={handleClose}>
                      
                      <Modal.Header closeButton>
@@ -96,26 +108,7 @@ function Items({items , categorys}) {
              
                      </Modal.Footer>
                    </Modal>
-</>):(<>
-  <Modal show={show} onHide={handleClose}>
-                     
 
-                     <Modal.Body>
-                     <Modal.Header closeButton>
-                       <Modal.Title>Alert</Modal.Title>
-                     </Modal.Header>
-                     <h3>Dear user, you must have in login first to add to cart. Thank you!</h3> 
-
-                     </Modal.Body>
-                     <Modal.Footer>
-
-                     <Button variant="primary" size="lg" style={{width:"100%"}} onClick={location}>
-                         Login
-                       </Button>
-
-                     </Modal.Footer>
-                   </Modal>
-</>)}
 
        {/* <ToastContainer /> */}
     </>
