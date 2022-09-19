@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.3",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "react-spinners": "^0.13.4"
   }
 }

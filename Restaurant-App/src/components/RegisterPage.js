@@ -57,7 +57,6 @@ function RegisterPage() {
   return (
     <>
      <ToastContainer />
-      <div className="scrolling-disable">
         <div className="row justify-content-center">
           <div className="col-md-4 text-center mt-2 responsiveness">
           <Link to="/">
@@ -163,7 +162,6 @@ function RegisterPage() {
             />
           </div>
         </div>
-      </div>
     </>
   );
 }

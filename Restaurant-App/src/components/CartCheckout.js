@@ -1,22 +1,22 @@
-import React,{useState,useEffect,useRef} from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect, useRef } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 function CartCheckout() {
-  const [address, setAddress] = useState([])
-  const [comment, setcomment] = useState()
-  const [house, sethouse] = useState('');
-  const [postcode, setpostcode] = useState('');
-  const [flat, setflat] = useState('');
-  const [street, setstreet] = useState('');
-  const [town, settown] = useState('');
-  const [items, setItems] = useState([])
-  const getstatus= localStorage.getItem('status');
-  const refClose = useRef(null)
+  const [address, setAddress] = useState([]);
+  const [comment, setcomment] = useState();
+  const [house, sethouse] = useState("");
+  const [postcode, setpostcode] = useState("");
+  const [flat, setflat] = useState("");
+  const [street, setstreet] = useState("");
+  const [town, settown] = useState("");
+  const [items, setItems] = useState([]);
+  const getstatus = localStorage.getItem("status");
+  const refClose = useRef(null);
 
   async function addAddress() {
     const info = {
@@ -25,115 +25,139 @@ function CartCheckout() {
       flat,
       street,
       town,
-      customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
-    }
+      customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id,
+    };
     try {
-      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/addaddress', info)).data
-      console.log(data.data)
+      const data = (
+        await axios.post(
+          "https://apinodejs.creativeparkingsolutions.com/api/user/addaddress",
+          info
+        )
+      ).data;
+      console.log(data.data);
       refClose.current.click();
       updateAddress();
-      toast.success("New address added")
+      toast.success("New address added");
 
-      sethouse('');
-      setpostcode('');
-      setflat('');
-      setstreet('');
-      settown('');
-
+      sethouse("");
+      setpostcode("");
+      setflat("");
+      setstreet("");
+      settown("");
     } catch (error) {
-      console.log(error)
-      toast.warn("Failed! Try again later")
+      console.log(error);
+      toast.warn("Failed! Try again later");
     }
   }
 
-  async function add(orderID,quantitys,price) {
-    const info = { 
+  async function add(orderID, quantitys, price) {
+    const info = {
       orderID,
       quantitys,
       price,
-      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
+      customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id,
+    };
 
-
-        try {
-            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
-            console.log(data.data)
-            update()
-            toast.success("Quantity increase")
-        } catch (error) {
-            console.log(error)
-            toast.warn("Failed! Try again later")
-        }
-  }
-
-  async function remove(orderID,quantitys,price) {
-   
-    const info = { 
-      orderID,
-      quantitys,
-      price,
-      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id }
-
-        try {
-            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
-            console.log(data.data)
-            update()
-            toast.success("Quantity decrease")
-        } catch (error) {
-            console.log(error)
-            toast.warn("Failed! Try again later")
-        }
-  }
-
-  async function del(orderID){
-   
-    const info = { 
-      orderID
+    try {
+      const data = (
+        await axios.post(
+          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
+          info
+        )
+      ).data;
+      console.log(data.data);
+      update();
+      toast.success("Quantity increase");
+    } catch (error) {
+      console.log(error);
+      toast.warn("Failed! Try again later");
     }
-
-        try {
-            const data =  (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
-            console.log(data.data)
-            update()
-            toast.warn("Item has been deleted")
-        } catch (error) {
-            console.log(error)
-            toast.warn("Failed! Try again later")
-        }
   }
 
-  async function update(){
+  async function remove(orderID, quantitys, price) {
+    const info = {
+      orderID,
+      quantitys,
+      price,
+      customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id,
+    };
 
+    try {
+      const data = (
+        await axios.post(
+          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
+          info
+        )
+      ).data;
+      console.log(data.data);
+      update();
+      toast.success("Quantity decrease");
+    } catch (error) {
+      console.log(error);
+      toast.warn("Failed! Try again later");
+    }
+  }
 
-    
-    if(getstatus==="true")
-  {
-   const user =JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
-   
+  async function del(orderID) {
+    const info = {
+      orderID,
+    };
+
+    try {
+      const data = (
+        await axios.post(
+          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
+          info
+        )
+      ).data;
+      console.log(data.data);
+      update();
+      toast.warn("Item has been deleted");
+    } catch (error) {
+      console.log(error);
+      toast.warn("Failed! Try again later");
+    }
+  }
+
+  async function update() {
+    if (getstatus === "true") {
+      const user = JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id;
 
       const temp = {
-        customer_Id:user
-      }
+        customer_Id: user,
+      };
       try {
-
-        const data = ( await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",temp)).data;
-        console.log(data.data)
-        setItems(data.data)
-
+        const data = (
+          await axios.post(
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",
+            temp
+          )
+        ).data;
+        console.log(data.data);
+        setItems(data.data);
       } catch (error) {
         console.log(error);
-
       }
     }
   }
 
-  async function updateAddress(){
+  async function updateAddress() {
     const user = {
-      customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
-    }
+      customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id,
+    };
     try {
-      const data = await (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/getaddress', user)).data
-      setAddress(data.data)
-
+      const data = await (
+        await axios.post(
+          "https://apinodejs.creativeparkingsolutions.com/api/user/getaddress",
+          user
+        )
+      ).data;
+      setAddress(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -142,85 +166,104 @@ function CartCheckout() {
   useEffect(() => {
     async function fetchData() {
       const user = {
-        customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
-      }
+        customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
+          .customer_Id,
+      };
       try {
-        const data = await (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/getaddress', user)).data
-        setAddress(data.data)
-
+        const data = await (
+          await axios.post(
+            "https://apinodejs.creativeparkingsolutions.com/api/user/getaddress",
+            user
+          )
+        ).data;
+        setAddress(data.data);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [])
+  }, []);
 
   useEffect(() => {
-
-    if(getstatus==="true")
-  {
-   const user =JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
-    async function fetchData() {
-
-      const temp = {
-        customer_Id:user
+    if (getstatus === "true") {
+      const user = JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id;
+      async function fetchData() {
+        const temp = {
+          customer_Id: user,
+        };
+        try {
+          const data = (
+            await axios.post(
+              "https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",
+              temp
+            )
+          ).data;
+          console.log(data.data);
+          setItems(data.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
-      try {
-
-        const data = (await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",temp)).data;
-        console.log(data.data)
-        setItems(data.data)
-
-      } catch (error) {
-        console.log(error);
-
-      }
+      fetchData();
     }
-    fetchData();
-  }
   }, []);
 
   let total = 0;
   for (var i = 0; i < items.length; i++) {
-      let productTotal = items[i].totalp;
-      total = total + parseFloat(productTotal);
+    let productTotal = items[i].totalp;
+    total = total + parseFloat(productTotal);
   }
-
-
 
   async function checkout() {
     const user = {
       comment,
-      customer_Id:JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id,
-      total
-  };
+      customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id,
+      total,
+    };
 
-  console.log(user)
+    console.log(user);
 
-  try {
-
+    try {
       // setloading(true)
-      const result = await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/cartcheckout",user).data;
-      console.log(result)
-      toast.success("Checkout Successfull")
+      const result = await axios.post(
+        "https://apinodejs.creativeparkingsolutions.com/api/admin/cartcheckout",
+        user
+      ).data;
+      console.log(result);
+      toast.success("Checkout Successfull");
       // setloading(true)
       setInterval(() => {
-        window.location.href = "/"
+        window.location.href = "/";
       }, 2000);
 
-      setcomment('')
-
-
-
-  } catch (error) {
+      setcomment("");
+    } catch (error) {
       console.log(error);
-      toast.warn("Something went wrong!")
+      toast.warn("Something went wrong!");
       // setloading(true)
+    }
   }
-}
+
+  var times = [
+    "4:30PM - 5:00PM",
+    "5:00PM - 5:30PM",
+    "5:30PM - 6:00PM",
+    "6:00PM - 6:30PM",
+    "6:30PM - 7:00PM",
+    "7:00PM - 7:30PM",
+    "7:30PM - 8:00PM",
+    "8:00PM - 8:30PM",
+    "8:30PM - 9:00PM",
+    "9:00PM - 9:30PM",
+    "9:30PM - 10:00PM",
+    "10:00PM - 10:30PM",
+    "10:30PM - 11:00PM ",
+  ];
   return (
     <>
-        <ToastContainer />
+      <ToastContainer />
       <Navbar />
       <div className="row justify-content-center my-5">
         <div className="col-md-10">
@@ -253,34 +296,65 @@ function CartCheckout() {
                 </div>
                 <h5 className="mt-4 boldtext">Delivery Address</h5>
 
-                {address ? address.map((addresses)=>{
-                  return <>
-                  {addresses.address_status === 1 ? (<>
-                    <div class="form-check">
-                <input class="form-check-input mt-3" type="radio" name="flexRadioDefault" id={`flexRadioDefault${addresses.ID}`} checked />
-                <label class="form-check-label" for={`flexRadioDefault${addresses.ID}`}>
-                <h6 className="mt-3 boldtext">
-                  House no:{addresses.house},Flat:{addresses.flat},{addresses.street},{addresses.postcode},{addresses.town}
-                </h6>
-                </label>
-              </div>
-                  </>):(<>
-                    <div class="form-check">
-                <input class="form-check-input mt-3" type="radio" name="flexRadioDefault" id={`flexRadioDefault${addresses.ID}`} disabled />
-                <label class="form-check-label" for={`flexRadioDefault${addresses.ID}`}>
-                <h6 className="mt-3 boldtext">
-                  House no:{addresses.house},Flat:{addresses.flat},{addresses.street},{addresses.postcode},{addresses.town}
-                </h6>
-                </label>
-              </div>
-                  </>)}
-
+                {address ? (
+                  address.map((addresses) => {
+                    return (
+                      <>
+                        {addresses.address_status === 1 ? (
+                          <>
+                            <div class="form-check">
+                              <input
+                                class="form-check-input mt-3"
+                                type="radio"
+                                name="flexRadioDefault"
+                                id={`flexRadioDefault${addresses.ID}`}
+                                checked
+                              />
+                              <label
+                                class="form-check-label"
+                                for={`flexRadioDefault${addresses.ID}`}
+                              >
+                                <h6 className="mt-3 boldtext">
+                                  House no:{addresses.house},Flat:
+                                  {addresses.flat},{addresses.street},
+                                  {addresses.postcode},{addresses.town}
+                                </h6>
+                              </label>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div class="form-check">
+                              <input
+                                class="form-check-input mt-3"
+                                type="radio"
+                                name="flexRadioDefault"
+                                id={`flexRadioDefault${addresses.ID}`}
+                                disabled
+                              />
+                              <label
+                                class="form-check-label"
+                                for={`flexRadioDefault${addresses.ID}`}
+                              >
+                                <h6 className="mt-3 boldtext">
+                                  House no:{addresses.house},Flat:
+                                  {addresses.flat},{addresses.street},
+                                  {addresses.postcode},{addresses.town}
+                                </h6>
+                              </label>
+                            </div>
+                          </>
+                        )}
+                      </>
+                    );
+                  })
+                ) : (
+                  <>
+                    <h6 className="mt-3 boldtext">
+                      You dont have any address. Please add one
+                    </h6>
                   </>
-                }):(<>
-                  <h6 className="mt-3 boldtext">
-                  You dont have any address. Please add one
-                </h6>
-                </>)}
+                )}
 
                 <button
                   type="button"
@@ -305,19 +379,13 @@ function CartCheckout() {
                     className="dropdown-menu timelist"
                     aria-labelledby="dropdownMenuButton1"
                   >
-                    <li className="dropdown-item time">4:30PM - 5:00PM</li>
-                    <li className="dropdown-item time">5:00PM - 5:30PM</li>
-                    <li className="dropdown-item time">5:30PM - 6:00PM</li>
-                    <li className="dropdown-item time">6:00PM - 6:30PM</li>
-                    <li className="dropdown-item time">6:30PM - 7:00PM</li>
-                    <li className="dropdown-item time">7:00PM - 7:30PM</li>
-                    <li className="dropdown-item time">7:30PM - 8:00PM</li>
-                    <li className="dropdown-item time">8:00PM - 8:30PM</li>
-                    <li className="dropdown-item time">8:30PM - 9:00PM</li>
-                    <li className="dropdown-item time">9:00PM - 9:30PM</li>
-                    <li className="dropdown-item time">9:30PM - 10:00PM</li>
-                    <li className="dropdown-item time">10:00PM - 10:30PM</li>
-                    <li className="dropdown-item time">10:30PM - 11:00PM</li>
+                    {
+                      times.map((time) => (
+                    <>
+                      <li className="dropdown-item time">{time}</li>
+                    </>
+                    ))
+                    }
                   </ul>
                 </div>
               </div>
@@ -325,45 +393,94 @@ function CartCheckout() {
                 <h6>ORDER ITEMS</h6>
                 <hr />
                 <div class="table-responsive cart-items">
-            <table class="table table-hover table-borderless mb-0">
-                <thead class="light">
-                <tr>
-                    <th></th>
-                    <th>Product</th>
-                    <th>Items</th>
-                    <th>Price</th>
-                    <th class="text-end">Total</th>
-                    <th class="text-end">Actions</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                  {items && items.map((item)=>{
-                    return <>
-                                      <tr class="items">
-                    <td><img src={item.Image} data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg" width="70" alt="" class="productImage"/></td> 
-                    <td><strong>{item.Title}</strong></td> 
-                    <td>
-                    {item.Quantity}
-                        </td> 
-                        <td>
-                        ${item.Price}
-                        </td> 
-                        <td class="text-end">
-                            ${item.Quantity * item.Price}
-                        </td> 
-                        <td>
-                          <button type="button" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius" ><span class="btn-inner--icon btn-cart-icon" onClick={()=>{remove(item.orderitemid,item.Quantity-1,item.Price)}}><i class="fa fa-minus"></i></span></button> 
-                          <button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius" onClick={()=>{add(item.orderitemid,item.Quantity+1,item.Price)}}><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-plus"></i></span></button> 
-                          <button type="button" value="1661936711" class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius" onClick={()=>{del(item.orderitemid)}}><span class="btn-inner--icon btn-cart-icon"><i class="fa fa-trash"></i></span></button>
-                          </td>
-                        </tr>
-                    </>
-                  })}
-
-                </tbody>
-            </table>
-        </div>
+                  <table class="table table-hover table-borderless mb-0">
+                    <thead class="light">
+                      <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Items</th>
+                        <th>Price</th>
+                        <th class="text-end">Total</th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {items &&
+                        items.map((item) => {
+                          return (
+                            <>
+                              <tr class="items">
+                                <td>
+                                  <img
+                                    src={item.Image}
+                                    data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg"
+                                    width="70"
+                                    alt=""
+                                    class="productImage"
+                                  />
+                                </td>
+                                <td>
+                                  <strong>{item.Title}</strong>
+                                </td>
+                                <td>{item.Quantity}</td>
+                                <td>${item.Price}</td>
+                                <td class="text-end">
+                                  ${item.Quantity * item.Price}
+                                </td>
+                                <td>
+                                  <button
+                                    type="button"
+                                    class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
+                                  >
+                                    <span
+                                      class="btn-inner--icon btn-cart-icon"
+                                      onClick={() => {
+                                        remove(
+                                          item.orderitemid,
+                                          item.Quantity - 1,
+                                          item.Price
+                                        );
+                                      }}
+                                    >
+                                      <i class="fa fa-minus"></i>
+                                    </span>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    value="1661936711"
+                                    class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
+                                    onClick={() => {
+                                      add(
+                                        item.orderitemid,
+                                        item.Quantity + 1,
+                                        item.Price
+                                      );
+                                    }}
+                                  >
+                                    <span class="btn-inner--icon btn-cart-icon">
+                                      <i class="fa fa-plus"></i>
+                                    </span>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    value="1661936711"
+                                    class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
+                                    onClick={() => {
+                                      del(item.orderitemid);
+                                    }}
+                                  >
+                                    <span class="btn-inner--icon btn-cart-icon">
+                                      <i class="fa fa-trash"></i>
+                                    </span>
+                                  </button>
+                                </td>
+                              </tr>
+                            </>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
             <div
@@ -409,7 +526,9 @@ function CartCheckout() {
                           placeholder="House/Door No."
                           id="houseno"
                           value={house}
-                          onChange={(e) => { sethouse(e.target.value) }}
+                          onChange={(e) => {
+                            sethouse(e.target.value);
+                          }}
                           required
                         />
                         <label for="postcode">Postcode</label>
@@ -418,7 +537,9 @@ function CartCheckout() {
                           placeholder="Postcode"
                           id="postcode"
                           value={postcode}
-                          onChange={(e) => { setpostcode(e.target.value) }}
+                          onChange={(e) => {
+                            setpostcode(e.target.value);
+                          }}
                           required
                         />
                       </div>
@@ -429,7 +550,9 @@ function CartCheckout() {
                           placeholder="Flat"
                           id="flat"
                           value={flat}
-                          onChange={(e) => { setflat(e.target.value) }}
+                          onChange={(e) => {
+                            setflat(e.target.value);
+                          }}
                         />
                         <label for="street">Street</label>
                         <input
@@ -437,7 +560,9 @@ function CartCheckout() {
                           placeholder="Street"
                           id="street"
                           value={street}
-                          onChange={(e) => { setstreet(e.target.value) }}
+                          onChange={(e) => {
+                            setstreet(e.target.value);
+                          }}
                           required
                         />
                       </div>
@@ -448,7 +573,9 @@ function CartCheckout() {
                           placeholder="Postal Town"
                           id="town"
                           value={town}
-                          onChange={(e) => { settown(e.target.value) }}
+                          onChange={(e) => {
+                            settown(e.target.value);
+                          }}
                           required
                         />
                         <div className="form-check form-switch my-3">
@@ -476,7 +603,11 @@ function CartCheckout() {
                     >
                       Close
                     </button>
-                    <button type="button"  onClick={addAddress}  className="btn btn-primary">
+                    <button
+                      type="button"
+                      onClick={addAddress}
+                      className="btn btn-primary"
+                    >
                       Save changes
                     </button>
                   </div>
@@ -498,7 +629,9 @@ function CartCheckout() {
                   rows="3"
                   placeholder="Your comments here..."
                   value={comment}
-                  onChange={(e) => { setcomment(e.target.value) }}
+                  onChange={(e) => {
+                    setcomment(e.target.value);
+                  }}
                 ></textarea>
                 <div className="form-check mt-3 mb-3">
                   <input
@@ -532,7 +665,10 @@ function CartCheckout() {
                     value=""
                     id="flexCheckIndeterminate"
                   />
-                  <label className="form-check-label" for="flexCheckIndeterminate">
+                  <label
+                    className="form-check-label"
+                    for="flexCheckIndeterminate"
+                  >
                     I agree to the Terms of Service and Privacy Policy.
                   </label>
                 </div>
@@ -550,7 +686,9 @@ function CartCheckout() {
                 <button className="btn btn-primary">Apply</button>
               </div>
             </div>
-            <Link to="/"><button className="btn btn-danger w-auto backbutton">Back</button></Link>
+            <Link to="/">
+              <button className="btn btn-danger w-auto backbutton">Back</button>
+            </Link>
           </div>
         </div>
       </div>

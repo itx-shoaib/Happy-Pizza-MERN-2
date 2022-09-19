@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Loader from './Loader'
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Loader from "./Loader";
 import Footer from "./Footer";
-import  Items from './Items';
+import Items from "./Items";
 import { Link } from "react-router-dom";
 import "../Css/MenuPage.css";
 import Navbar from "./Navbar";
 
-
 function MenuPage() {
   const [show, setShow] = useState(false);
-  const [loading, setloading] = useState(true)
+  const [loading, setloading] = useState(true);
 
-//   const [navbar, setNavbar] = useState(false)
-//   const fixingit = ()=>{
-//     if(window.scrollY >= 70){
-//         setNavbar(true);
-//     }
-//     else{
-//         setNavbar(false)
-//     }
-// };
+  //   const [navbar, setNavbar] = useState(false)
+  //   const fixingit = ()=>{
+  //     if(window.scrollY >= 70){
+  //         setNavbar(true);
+  //     }
+  //     else{
+  //         setNavbar(false)
+  //     }
+  // };
 
-// window.addEventListener('scroll',fixingit)
+  // window.addEventListener('scroll',fixingit)
 
   let [num, setNum] = useState(1);
-  const [category, setcategory] = useState(
-    []
-  )
-  const [item, setItem] = useState([])
+  const [category, setcategory] = useState([]);
+  const [item, setItem] = useState([]);
   let incNum = () => {
     setNum(Number(num) + 1);
   };
@@ -46,33 +43,39 @@ function MenuPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        setloading(true)
-        const data = await (await axios.get('https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu')).data
+        setloading(true);
+        const data = await (
+          await axios.get(
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu"
+          )
+        ).data;
         setcategory(data.data);
-        console.log(category)
-        setloading(false)
-
+        console.log(category);
+        setloading(false);
       } catch (error) {
         console.log(error);
-        setloading(false)
+        setloading(false);
       }
     }
     fetchData();
-  }, [])
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await (await axios.get('https://apinodejs.creativeparkingsolutions.com/api/admin/getallitems')).data
+        const data = await (
+          await axios.get(
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/getallitems"
+          )
+        ).data;
         setItem(data.data);
-        console.log(item)
-
+        console.log(item);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [])
+  }, []);
 
   // function showmodal(item) {
   //   console.log(item.title);
@@ -2370,65 +2373,69 @@ function MenuPage() {
 
   return (
     <>
-        {loading ? (
-          <div className="container">
-<Loader />
-          </div>
-        
-        ):(<>
-          <div className="scrollingoff">
-          <Navbar/>
-          <div className="row justify-content-center">
-          <div className="col-xl-12 text-center" style={{padding:"0px"}}>
-            <img
-              className="menutitleimg"
-              src="https://www.happyspizzaburger.co.uk/uploads/restorants/751msq61654252482.jpg"
-            />
-          </div>
+      {loading ? (
+        <div className="container">
+          <Loader />
         </div>
-        <ul className="nav nav-pills nav-fill stick flex-column">
-
-{category && (category.map(categorys => {
-  return <>
-    <li className="nav-item">
-      <a className="nav-link" aria-current="page" href={`#${categorys.Name}`}>
-        {categorys.Name}
-      </a>
-    </li>
-  </>
-}))}
-</ul>
-
-{category && (category.map(categorys => {
-          return <>
-            {/*  */}
-            <div className="row productrow" id={`${categorys.Name}`}>
-              <div className="col-xl-12 responsiveness">
-                <h3 className="boldtext ms-2 mt-5 nomargin">{categorys.Name}</h3>
-                <div className="row centeritems">
-                  {item && (item.map(items => {
-                    return <>
-                    
-
-                    <Items items={items} categorys={categorys} />
-                      
-
-                    </>
-                  }))}
-
-                </div>
+      ) : (
+        <>
+            <Navbar />
+            <div className="row justify-content-center">
+              <div className="col-xl-12 text-center" style={{ padding: "0px" }}>
+                <img
+                  className="menutitleimg"
+                  src="https://www.happyspizzaburger.co.uk/uploads/restorants/751msq61654252482.jpg"
+                />
               </div>
-
             </div>
+            <ul className="nav nav-pills nav-fill stick flex-column">
+              {category &&
+                category.map((categorys) => {
+                  return (
+                    <>
+                      <li className="nav-item">
+                        <a
+                          className="nav-link"
+                          aria-current="page"
+                          href={`#${categorys.Name}`}
+                        >
+                          {categorys.Name}
+                        </a>
+                      </li>
+                    </>
+                  );
+                })}
+            </ul>
 
-          </>
-        }))}
-                    <Footer />
-            </div>
-        </>)}
+            {category &&
+              category.map((categorys) => {
+                return (
+                  <>
+                    <div className="row productrow" id={`${categorys.Name}`}>
+                      <div className="col-xl-12 responsiveness">
+                        <h3 className="boldtext ms-2 mt-5 nomargin">
+                          {categorys.Name}
+                        </h3>
+                        <div className="row centeritems">
+                          {item &&
+                            item.map((items) => {
+                              return (
+                                <>
+                                  <Items items={items} categorys={categorys} />
+                                </>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            <Footer />
+        </>
+      )}
 
-
-        {/* <ul className="nav nav-pills nav-fill sticky-top flex-column">
+      {/* <ul className="nav nav-pills nav-fill sticky-top flex-column">
           <li className="nav-item">
             <a className="nav-link active" aria-current="page" href="#drinks">
               Drinks
@@ -2541,16 +2548,11 @@ function MenuPage() {
           </li>
         </ul> */}
 
-
-
-{/* <Button variant="primary" onClick={handleShow}>
+      {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
       </Button> */}
 
-
-
-
-{/* <div
+      {/* <div
                         className="row productcard bs"
                         type="button"
                       // onClick={() => {
@@ -2584,10 +2586,10 @@ function MenuPage() {
           </Button>
         </Modal.Footer>
       </Modal> */}
-                          {/* </>
+      {/* </>
                         )}
                       </div> */}
-{/* <Modal show={show} onHide={handleClose}>
+      {/* <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>modal</Modal.Title>
         </Modal.Header>
@@ -2602,7 +2604,7 @@ function MenuPage() {
         </Modal.Footer>
       </Modal> */}
 
-        {/* <div className="row productrow" id="drinks">
+      {/* <div className="row productrow" id="drinks">
           <div className="col-xl-12 responsiveness">
             <h3 className="boldtext ms-2 mt-5 nomargin">Drinks</h3>
             <div className="row centeritems">{drinks}</div>
@@ -2755,9 +2757,6 @@ function MenuPage() {
             <div className="row centeritems">{chickenfilletburgers}</div>
           </div>
         </div> */}
-
-
- 
     </>
   );
 }

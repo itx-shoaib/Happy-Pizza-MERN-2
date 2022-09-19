@@ -389,9 +389,9 @@ a {
   padding: 20px 40px;
 }
 
-.br {
-  /* border-radius: 20px; */
-}
+/* .br {
+  border-radius: 20px;
+} */
 
 .ordertype {
   display: inline-flex !important;
@@ -530,7 +530,7 @@ a {
     overflow-x: hidden !important;
   }
   .usercartbtn {
-    width: 40% !important;
+    width: 100% !important;
   }
   .responsiveness {
     margin-left: 0 !important;
@@ -660,7 +660,6 @@ a {
     padding: 40px 10px;
 }
 }
-
-.body {
-  overflow-x: hidden !important;
+.hidescroll{
+  overflow-x: hidden;
 }

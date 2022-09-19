@@ -1,7 +1,4 @@
 @media (max-width:992px){
-.scrollingoff{
-    overflow-x: hidden;
-}
 .centeritems{
     display: flex;
     flex-direction: row;

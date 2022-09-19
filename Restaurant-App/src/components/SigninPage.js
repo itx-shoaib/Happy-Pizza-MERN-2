@@ -56,7 +56,6 @@ function SigninPage() {
   return (
     <>
         <ToastContainer />
-      <div className="scrolling-off">
         <div className="row justify-content-center">
           <div className="col-md-4 text-center mt-2 responsiveness">
           <Link to="/">
@@ -127,7 +126,6 @@ function SigninPage() {
             />
           </div>
         </div>
-      </div>
     </>
   );
 }
