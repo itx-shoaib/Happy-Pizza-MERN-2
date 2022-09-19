@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import "../Css/RegisterPage.css"
+import Swal from 'sweetalert2'
 import 'react-toastify/dist/ReactToastify.css';
 function RegisterPage() {
   const [name, setname] = useState('');
@@ -11,7 +12,7 @@ function RegisterPage() {
   const [password, setpassword] = useState('');
   const [cpassword, setcpassword] = useState('');
 
-  async function register(){
+  async function register(e){
     if (password === cpassword) {
         const user = {
             name,
@@ -46,11 +47,17 @@ function RegisterPage() {
         } catch (error) {
             console.log(error);
             toast.warn("Something went wrong!")
+            e.preventDefault()
             // setloading(true)
         }
     }
     else{
-        alert("Password is not matched");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Password and Confirm password are not matched!'
+      })
+      e.preventDefault()
     }
 }
 
