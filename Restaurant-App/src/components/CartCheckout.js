@@ -16,6 +16,7 @@ function CartCheckout() {
   const [town, settown] = useState("");
   const [items, setItems] = useState([]);
   const getstatus = localStorage.getItem("status");
+  const [visible, setvisible] = useState(false)
   const refClose = useRef(null);
 
   async function addAddress() {
@@ -278,22 +279,38 @@ function CartCheckout() {
                     type="radio"
                     name="ordertype"
                     id="ordertype1"
+                    value="0"
+                    onClick={()=>{setvisible(true)}}
+                    
+                    required
                   />
                   <label className="form-check-label" for="ordertype1">
                     Delivery
                   </label>
                 </div>
-                <div className="form-check ordertype">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="ordertype"
-                    id="ordertype2"
-                  />
-                  <label className="form-check-label" for="ordertype2">
-                    Collection
-                  </label>
-                </div>
+
+                              <div className="form-check ordertype">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="ordertype"
+                  id="ordertype2"
+                  value="1"
+                  onClick={()=>{setvisible(false)}}
+                  checked
+                  required
+                />
+                <label className="form-check-label" for="ordertype2">
+                  Collection
+                </label>
+              </div>
+
+
+
+              {visible  && (
+                <>
+
+
                 <h5 className="mt-4 boldtext">Delivery Address</h5>
 
                 {address ? (
@@ -388,7 +405,10 @@ function CartCheckout() {
                     }
                   </ul>
                 </div>
+                </>
+                )}
               </div>
+              
               <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>ORDER ITEMS</h6>
                 <hr />
@@ -632,6 +652,7 @@ function CartCheckout() {
                   onChange={(e) => {
                     setcomment(e.target.value);
                   }}
+                  required
                 ></textarea>
                 <div className="form-check mt-3 mb-3">
                   <input
