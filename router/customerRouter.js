@@ -96,7 +96,7 @@ router.post('/login',(req,res)=>{
     // || result[0]['password'] != password
     
     let qr = `SELECT * FROM customer 
-                     where email = '${email}'`
+                     where email = '${email}' and role=0`
     
         dbconfig.query(qr,(err,result)=>{
         if (!err) { 
