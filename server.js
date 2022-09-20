@@ -20,7 +20,7 @@ const settingRouter = require("./router/settingRouter")
 app.use('/api/user', customerRouter)
 app.use('/api/admin', adminRouter)
 app.use('/api/admin',cartRouter)
-app.use('/api/setting')
+app.use('/api/setting',settingRouter)
 // app.use('/api/admin',orderRoute)
 // app.use('/api/admin',orderitemRoute)
 
