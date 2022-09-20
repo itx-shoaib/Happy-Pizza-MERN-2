@@ -1,5 +1,5 @@
-/* html {
+html {
 
-    overflow: -moz-scrollbars-vertical !important;
-    overflow-y: scroll !important;
-}    */
+    overflow: -moz-scrollbars-vertical ;
+    overflow-y: scroll ;
+}   

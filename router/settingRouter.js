@@ -3,7 +3,7 @@ const router = express.Router();
 const dbconfig = require('../db');
 
 
-// Router 1 : Registering the resturant information http://localhost:5000/api/setting/resturantmanagement
+// Router 1 : Registering the resturant information https://apinodejs.creativeparkingsolutions.com/api/setting/resturantmanagement
 // Status
 router.post('/resturantmanagement',(req,res)=>{
     let name = req.body.name;
@@ -45,7 +45,7 @@ router.post('/resturantmanagement',(req,res)=>{
 })
 
 
-// Router 2: http://localhost:5000/api/setting/loyality
+// Router 2: https://apinodejs.creativeparkingsolutions.com/api/setting/loyality
 // Status
 router.post('/loyality',(req,res)=>{
     let status = req.body.status;

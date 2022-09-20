@@ -271,7 +271,8 @@ a {
 .nav-pills {
   overflow-x: auto;
   overflow-y: hidden;
-  top: 13%;
+  top: 0%;
+  /* top: 13%; */
   background-color: black;
   color: white;
   height: 85px;
@@ -464,7 +465,8 @@ a {
   .nav-pills {
     overflow-x: auto;
     overflow-y: hidden;
-    top: 8%;
+    /* top: 8%; */
+    top:0%;
     background-color: black;
     color: white;
     height: 85px;
@@ -668,13 +670,15 @@ a {
 /* -------------------------------------------- */
 @media screen and (max-width: 400px) {
   .nav-pills{
-    top:9%;
+    top:0%;
+    /* top:9%; */
   }
 }
 
 @media screen and (min-width:768px) and (max-width:820px) {
   .nav-pills{
-    top:5%;
+    top:0%;
+    /* top:5%; */
   }
 }
 .hidescroll{
