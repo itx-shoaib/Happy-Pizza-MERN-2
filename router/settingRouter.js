@@ -23,7 +23,7 @@ router.post('/resturantmanagement',(req,res)=>{
     dbconfig.query(qr,(err,result)=>{
         if (err) {
             // Writing second query for registering the resturant
-            let qr = `insert into resturant(name,description,address,phone,charges,minimum_order,average_order,time,owner_name,email)
+            let qr = `insert into resturant(name,description,address,phone,charges,minimum_order,average_order,time,owner_name,email,owner_phone)
             values('${name}','${description}','${address}','${phone}','${charges}',${minimum_order},${average_order},${time},'${owner_name}','${email}','${owner_phone}')`
             dbconfig.query(qr,(err,result)=>{
                 if(!err){
