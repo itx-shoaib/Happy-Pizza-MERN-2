@@ -45,4 +45,26 @@ router.post('/resturantmanagement',(req,res)=>{
 })
 
 
+// Router 2: http://localhost:5000/api/setting/loyality
+// Status
+router.post('/loyality',(req,res)=>{
+    let status = req.body.status;
+    let redeem = req.body.redeem;
+    let points = req.body.points;
+    let currency_points= req.body.currency_points;
+
+    let qr = `insert into loyality(status,redeem,points,currency_points)
+    values('${status}','${redeem}','${points}','${currency_points}')`
+    dbconfig.query(qr,(err,result)=>{
+        if(!err){
+            res.json({
+                message:"Data has been enter"
+            })
+        }
+        else{
+            console.log(err,"err")
+        }
+    })
+})
+
 module.exports = router
