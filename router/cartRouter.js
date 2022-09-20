@@ -6,7 +6,7 @@ const JWT = require('jsonwebtoken')
 const dbconfig = require('../db');
 
 
-// ROUTER 2: Creating orders by cart by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/cart/:id
+// ROUTER 2: Creating orders by cart by POST method PATH: http://localhost:5000/api/admin/cart/:id
 // STATUS: WORKING
 router.post('/cart',(req,res)=>{
     console.log(req.body)
@@ -141,7 +141,7 @@ router.post('/cart',(req,res)=>{
     })
 });
 
-// ROUTER 2: Showing orders in cart by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems
+// ROUTER 2: Showing orders in cart by GET method PATH: http://localhost:5000/api/admin/getcartitems
 // STATUS: WORKING
 router.post('/getcartitems',(req,res)=>{
     let customer_Id = req.body.customer_Id;
@@ -163,7 +163,7 @@ router.post('/getcartitems',(req,res)=>{
     })
 })
 
-// ROUTER 3: Updating the quantity of cart item  by PUT method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart
+// ROUTER 3: Updating the quantity of cart item  by PUT method PATH: http://localhost:5000/api/admin/updatecart
 // STATUS: WORKING
 router.post('/updatecart',(req,res)=>{
     let customer_Id = req.body.customer_Id;
@@ -229,7 +229,7 @@ router.post('/updatecart',(req,res)=>{
 )
 
 
-// Router 4 : https://apinodejs.creativeparkingsolutions.com/api/admin/cartcheckout
+// Router 4 : http://localhost:5000/api/admin/cartcheckout
 // Status:
 router.post('/cartcheckout',(req,res)=>{
     let customer_Id = req.body.customer_Id
@@ -298,7 +298,7 @@ router.post('/cartcheckout',(req,res)=>{
 
 })
 
-// ROUTER 3: Updating the orders status by PUT method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/updatestatus/:id
+// ROUTER 3: Updating the orders status by PUT method PATH: http://localhost:5000/api/admin/updatestatus/:id
 // STATUS: WORKING
 router.put('/updatestatus/:id',(req,res)=>{
     let id = req.params.id;
@@ -322,7 +322,7 @@ router.put('/updatestatus/:id',(req,res)=>{
     })
 });
 
-// ROUTER 4: Getting the orders  by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getorders
+// ROUTER 4: Getting the orders  by GET method PATH: http://localhost:5000/api/admin/getorders
 // STATUS: WORKING
 router.get('/getorders',(req,res)=>{
     let qr = `
@@ -342,7 +342,7 @@ router.get('/getorders',(req,res)=>{
     })
 });
 
-// ROUTER 5: Deleting the order  by DELETE method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/deleteorder/:id
+// ROUTER 5: Deleting the order  by DELETE method PATH: http://localhost:5000/api/admin/deleteorder/:id
 // STATUS: WORKING
 router.get('/deleteorder/:id',(req,res)=>{
     let id = req.params.id
@@ -362,7 +362,7 @@ router.get('/deleteorder/:id',(req,res)=>{
     })
 });
 
-// ROUTER : https://apinodejs.creativeparkingsolutions.com/api/admin/getcart
+// ROUTER : http://localhost:5000/api/admin/getcart
 // STATUS:
 router.post('/getcart',(req,res)=>{
     let customer_Id = req.body.customer_Id
@@ -381,7 +381,7 @@ router.post('/getcart',(req,res)=>{
     })
 })
 
-// ROUTER : https://apinodejs.creativeparkingsolutions.com/api/admin/getitemmanagement/:itemid/:categoryid
+// ROUTER : http://localhost:5000/api/admin/getitemmanagement/:itemid/:categoryid
 // STATUS:
 router.get('/getitemmanagement/:itemid/:categoryid',(req,res)=>{
     let categoryid = req.params.categoryid
@@ -399,7 +399,7 @@ router.get('/getitemmanagement/:itemid/:categoryid',(req,res)=>{
     })
 })
 
-// ROUTER : https://apinodejs.creativeparkingsolutions.com/api/admin/updateitemmanagement/:itemid/:categoryid
+// ROUTER : http://localhost:5000/api/admin/updateitemmanagement/:itemid/:categoryid
 // STATUS:
 router.post('/updateitemmanagement/:itemid/:categoryid',(req,res)=>{
     let categoryid = req.params.categoryid
@@ -426,7 +426,7 @@ router.post('/updateitemmanagement/:itemid/:categoryid',(req,res)=>{
     })
 })
 
-// ROUTER 2: Showing orders in cart by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getcartorderdetailitems
+// ROUTER 2: Showing orders in cart by GET method PATH: http://localhost:5000/api/admin/getcartorderdetailitems
 // STATUS: WORKING
 router.post('/getcartorderdetailitems',(req,res)=>{
     let customer_Id = req.body.customer_Id;

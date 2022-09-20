@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const JWT = require('jsonwebtoken')
 const dbconfig = require('../db');
 
-// ROUTER 1: Register a customer by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/user/register
+// ROUTER 1: Register a customer by POST method PATH: http://localhost:5000/api/user/register
 // STATUS: WORKING
 router.post('/register',[
     check("email","Enter the valid email").isEmail(),
@@ -85,7 +85,7 @@ router.post('/register',[
 });
 
 
-// ROUTER 2: Login a customer by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/user/login
+// ROUTER 2: Login a customer by GET method PATH: http://localhost:5000/api/user/login
 // STATUS:
 router.post('/login',(req,res)=>{
 
@@ -141,7 +141,7 @@ router.post('/login',(req,res)=>{
 });
 
 
-// ROUTER 3: Making the Address by PUT method PATH: https://apinodejs.creativeparkingsolutions.com/api/user/addaddress
+// ROUTER 3: Making the Address by PUT method PATH: http://localhost:5000/api/user/addaddress
 // STATUS: WORKING
 router.post('/addaddress',(req,res)=>{
     let house = req.body.house;
@@ -169,7 +169,7 @@ router.post('/addaddress',(req,res)=>{
     })
 });
 
-// Router 4: https://apinodejs.creativeparkingsolutions.com/api/user/getaddress
+// Router 4: http://localhost:5000/api/user/getaddress
 // Status: Working
 router.post('/getaddress',(req,res)=>{
     let customer_Id = req.body.customer_Id
@@ -188,7 +188,7 @@ router.post('/getaddress',(req,res)=>{
     })
 })
 
-// Router 4: https://apinodejs.creativeparkingsolutions.com/api/user/getprimaryaddress
+// Router 4: http://localhost:5000/api/user/getprimaryaddress
 // Status: Working
 router.post('/getprimaryaddress',(req,res)=>{
     let customer_Id = req.body.customer_Id
@@ -207,7 +207,7 @@ router.post('/getprimaryaddress',(req,res)=>{
     })
 })
 
-// Router : Update the  address status (assigning it primary) path:https://apinodejs.creativeparkingsolutions.com/api/user/setaddressprimary
+// Router : Update the  address status (assigning it primary) path:http://localhost:5000/api/user/setaddressprimary
 // Status: Working
 router.post('/setaddressprimary',(req,res)=>{
     let ID = req.body.ID
@@ -237,7 +237,7 @@ router.post('/setaddressprimary',(req,res)=>{
     })
 })
 
-// Router : Delete the address PATH:https://apinodejs.creativeparkingsolutions.com/api/user/deleteaddress
+// Router : Delete the address PATH:http://localhost:5000/api/user/deleteaddress
 // Status:
 router.post('/deleteaddress',(req,res)=>{
     let ID = req.body.ID
@@ -256,7 +256,7 @@ router.post('/deleteaddress',(req,res)=>{
     })
 })
 
-// Router : Delete the customer PATH:https://apinodejs.creativeparkingsolutions.com/api/user/deletecustomer
+// Router : Delete the customer PATH:http://localhost:5000/api/user/deletecustomer
 // Status:
 router.post('/deletecustomer',(req,res)=>{
     let ID = req.body.ID

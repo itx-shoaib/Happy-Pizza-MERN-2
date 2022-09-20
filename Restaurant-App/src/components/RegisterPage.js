@@ -27,7 +27,7 @@ function RegisterPage() {
         try {
 
             // setloading(true)
-            const result = await axios.post("https://apinodejs.creativeparkingsolutions.com/api/user/register",user).data;
+            const result = await axios.post("http://localhost:5000/api/user/register",user).data;
             console.log(result)
             toast.success("Registration Successfull")
             // setloading(true)
