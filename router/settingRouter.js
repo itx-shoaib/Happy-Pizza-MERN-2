@@ -87,4 +87,23 @@ router.post('/referral',(req,res)=>{
     })
 })
 
+// Router 4: http://localhost:5000/api/setting/config
+// Status:
+router.post('/config',(req,res)=>{
+    let order_time = req.body.order_time;
+    let otp = req.body.otp;
+
+    let qr = `Insert into config(order_time,otp)
+    values('${order_time}','${otp}')`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                message:"data has been inserted"
+            })
+        } else {
+            console.log(err,"err")
+        }
+    })
+})
+
 module.exports = router
