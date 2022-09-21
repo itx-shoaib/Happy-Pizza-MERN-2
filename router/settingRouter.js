@@ -106,4 +106,24 @@ router.post('/config',(req,res)=>{
     })
 })
 
+// router 5: http://localhost:5000/api/setting/menutype
+// status:
+router.post('/menutype',(req,res)=>{
+    let lowercase = req.body.lowercase;
+    let uppercase  = req.body.uppercase;
+    let capitalized = req.body.capitalized;
+
+    let qr = `insert into menutype(lowercase,uppercase,capitalized)
+    values('${lowercase}','${uppercase}','${capitalized}')`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                message:"data has been inserted"
+            })
+        } else {
+            console.log(err,"err")
+        }
+    })
+})
+
 module.exports = router
