@@ -32,7 +32,7 @@ function CartCheckout() {
     try {
       const data = (
         await axios.post(
-          "http://localhost:5000/api/user/addaddress",
+          "https://apinodejs.creativeparkingsolutions.com/api/user/addaddress",
           info
         )
       ).data;
@@ -64,7 +64,7 @@ function CartCheckout() {
     try {
       const data = (
         await axios.post(
-          "http://localhost:5000/api/admin/updatecart",
+          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
           info
         )
       ).data;
@@ -89,7 +89,7 @@ function CartCheckout() {
     try {
       const data = (
         await axios.post(
-          "http://localhost:5000/api/admin/updatecart",
+          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
           info
         )
       ).data;
@@ -110,7 +110,7 @@ function CartCheckout() {
     try {
       const data = (
         await axios.post(
-          "http://localhost:5000/api/admin/updatecart",
+          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
           info
         )
       ).data;
@@ -134,7 +134,7 @@ function CartCheckout() {
       try {
         const data = (
           await axios.post(
-            "http://localhost:5000/api/admin/getcartitems",
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",
             temp
           )
         ).data;
@@ -154,7 +154,7 @@ function CartCheckout() {
     try {
       const data = await (
         await axios.post(
-          "http://localhost:5000/api/user/getaddress",
+          "https://apinodejs.creativeparkingsolutions.com/api/user/getaddress",
           user
         )
       ).data;
@@ -173,7 +173,7 @@ function CartCheckout() {
       try {
         const data = await (
           await axios.post(
-            "http://localhost:5000/api/user/getaddress",
+            "https://apinodejs.creativeparkingsolutions.com/api/user/getaddress",
             user
           )
         ).data;
@@ -196,7 +196,7 @@ function CartCheckout() {
         try {
           const data = (
             await axios.post(
-              "http://localhost:5000/api/admin/getcartitems",
+              "https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",
               temp
             )
           ).data;
@@ -229,7 +229,7 @@ function CartCheckout() {
     try {
       // setloading(true)
       const result = await axios.post(
-        "http://localhost:5000/api/admin/cartcheckout",
+        "https://apinodejs.creativeparkingsolutions.com/api/admin/cartcheckout",
         user
       ).data;
       console.log(result);
