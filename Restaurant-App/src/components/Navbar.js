@@ -245,9 +245,6 @@ function Navbar() {
           </div>
 
           <div className="col-md-4 menuitems text-end">
-            <Link to="/menu">
-              <button className="btn btn-primary navorderbtn">Order Now</button>
-            </Link>
             {getstatus==="true" ? (<>
               <div className="dropdown">
               <button
