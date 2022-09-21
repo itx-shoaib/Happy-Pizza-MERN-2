@@ -67,4 +67,24 @@ router.post('/loyality',(req,res)=>{
     })
 })
 
+// Router 3: http://localhost:5000/api/setting/referral
+// Status:
+router.post('/referral',(req,res)=>{
+    let status = req.body.status;
+    let new_customer = req.body.new_customer;
+    let existing_customer = req.body.existing_customer;
+
+    let qr = `Insert into referral(status,new_customer,existing_customer)
+    values('${status}','${new_customer}','${existing_customer}')`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                message:"data has been inserted"
+            })
+        } else {
+            console.log(err,"err")
+        }
+    })
+})
+
 module.exports = router
