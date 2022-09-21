@@ -27,7 +27,7 @@ function Addresses() {
       customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
     }
     try {
-      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/addaddress', info)).data
+      const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
       console.log(data.data)
       refClose.current.click();
       updateAddress();
@@ -51,7 +51,7 @@ function Addresses() {
       ID
     }
     try {
-      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/setaddressprimary', info)).data
+      const data = (await axios.post('http://localhost:5000/api/user/setaddressprimary', info)).data
       update()
       toast.success("Address successfully updated.")
       // window.location.reload();
@@ -74,7 +74,7 @@ function Addresses() {
       }
       try {
 
-        const data = ( await axios.post("https://apinodejs.creativeparkingsolutions.com/api/user/getaddress",temp)).data;
+        const data = ( await axios.post("http://localhost:5000/api/user/getaddress",temp)).data;
         console.log(data.data)
         setAddress(data.data)
 
@@ -90,7 +90,7 @@ function Addresses() {
       customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
     }
     try {
-      const data = await (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/getaddress', user)).data
+      const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
       setAddress(data.data)
 
     } catch (error) {
@@ -104,7 +104,7 @@ function Addresses() {
       ID
     }
     try {
-      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/deleteaddress', info)).data
+      const data = (await axios.post('http://localhost:5000/api/user/deleteaddress', info)).data
       update()
       toast.success("Address successfully deactivated.")
       // window.location.reload();
@@ -121,7 +121,7 @@ function Addresses() {
         customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
       }
       try {
-        const data = await (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/getaddress', user)).data
+        const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
         setAddress(data.data)
 
       } catch (error) {
