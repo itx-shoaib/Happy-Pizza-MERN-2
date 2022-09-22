@@ -126,4 +126,30 @@ router.post('/menutype',(req,res)=>{
     })
 })
 
+// Router 6: https://apinodejs.creativeparkingsolutions.com/api/setting/apps
+// Status:
+router.post("/apps",(req,res)=>{
+    let title = req.body.title;
+    let description = req.body.description;
+    let api_key = req.body.api_key;
+    let main_printer = req.body.main_printer;
+    let standard_printer = req.body.standard_printer;
+    let kitchen_printer = req.body.kitchen_printer;
+    let standard_print = req.body.standard_print;
+    let main_print = req.body.main_print;
+    let kitchen_print = req.body.kitchen_print;
+
+    let qr = `Insert into app(title,description,api_key,main_printer,kitchen_printer,standard_printer,standard_print,main_print,kitchen_print)
+    values('${title}','${description}','${api_key}','${main_printer}','${kitchen_printer}','${standard_printer}','${standard_print}','${main_print}','${kitchen_print}')`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                message:"Data has been inserted"
+            })
+        } else {
+            console.log(err,"err")
+        }
+    })
+})
+
 module.exports = router
