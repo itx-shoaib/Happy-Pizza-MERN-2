@@ -37,7 +37,7 @@ router.get('/getallorders',(req,res)=>{
 })
 
 // Router 3: http://localhost:5000/api/superadmin/addpage
-// Status:
+// Status: working
 router.post('/addpage',(req,res)=>{
     let title = req.body.title;
     let description = req.body.description;
@@ -57,4 +57,28 @@ router.post('/addpage',(req,res)=>{
         }
     })
 })
+
+// router 4: http://localhost:5000/api/superadmin/getallpages
+// status: working
+router.get('/getallpages',(req,res)=>{
+    let qr =  `Select * from pages`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            if (result.length > 0) {
+                res.status(200).json({
+                    data:result
+                })
+            } else {
+                res.status(404).json({
+                    error:err
+                })
+            }
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
