@@ -101,4 +101,27 @@ router.post("/deletepage",(req,res)=>{
     })
 })
 
+// Router 6: http://localhost:5000/api/superadmin/editpage
+// Status: working
+router.post("/editpage",(req,res)=>{
+    let ID = req.body.ID;
+    let title = req.body.title;
+    let description = req.body.description;
+
+    let qr = `update pages
+    set title = '${title}', description ='${description}'
+    where ID = ${ID}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Page has been upadated"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
