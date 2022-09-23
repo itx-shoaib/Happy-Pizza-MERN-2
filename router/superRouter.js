@@ -81,4 +81,24 @@ router.get('/getallpages',(req,res)=>{
     })
 })
 
+// Router 5: http://localhost:5000/api/superadmin/deletepage
+// status: working
+router.post("/deletepage",(req,res)=>{
+    let ID = req.body.ID
+
+    let qr = `delete from pages 
+    where ID = '${ID}'`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Page has been deleted"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
