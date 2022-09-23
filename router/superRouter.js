@@ -19,4 +19,21 @@ router.get('/getliveresturants',(req,res)=>{
     })
 })
 
+// Router 2 : http://localhost:5000/api/superadmin/getallorders
+// Status: working
+router.get('/getallorders',(req,res)=>{
+    let qr = `Select * from cart INNER JOIN resturant on cart.resturant_ID = resturant.ID`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.json({
+                data:result
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
