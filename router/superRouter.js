@@ -124,4 +124,26 @@ router.post("/editpage",(req,res)=>{
     })
 })
 
+// router 7: http://localhost:5000/api/superadmin/updatepagestatus
+// Status: working
+router.post('/updatepagestatus',(req,res)=>{
+    let ID = req.body.ID;
+    let status = req.body.status;
+
+    let qr = `Update pages 
+    set status = '${status}'
+    where ID = ${ID}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"page status has been update"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
