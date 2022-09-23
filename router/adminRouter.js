@@ -511,4 +511,41 @@ router.get("/getitemslength",(req,res)=>{
     })
 })
 
+// Router : Change password
+// Status:
+router.post("/changepassword",(req,res)=>{
+    let email = req.body.email;
+    let customer_Id = req.body.customer_Id;
+    let password = req.body.password;
+    let new_password = req.body.new_password;
+
+    let qr = `SELECT * FROM customer where email = '${email}' and password = '${password}'`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            if (result.length > 0) {
+                let qr = `update customer 
+                set password = '${new_password}'
+                where customer_Id = ${customer_Id}`;
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.json({
+                            message:"Your password has been updated"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            } else {
+                res.status(404).json({
+                    error:err
+                })
+            }
+        } else {
+            console.log(err,"err")
+        }
+    })
+})
+
 module.exports = router
