@@ -36,4 +36,25 @@ router.get('/getallorders',(req,res)=>{
     })
 })
 
+// Router 3: http://localhost:5000/api/superadmin/addpage
+// Status:
+router.post('/addpage',(req,res)=>{
+    let title = req.body.title;
+    let description = req.body.description;
+    let status = req.body.status;
+
+    let qr = `Insert into pages (title,description,status)
+    values ('${title}','${description}','${status}')`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"data has been inserted"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
 module.exports = router
