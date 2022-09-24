@@ -146,4 +146,51 @@ router.post('/updatepagestatus',(req,res)=>{
     })
 })
 
+// Router 8:  http://localhost:5000/api/superadmin/orderreport
+// Status: working
+router.get('/orderreport',(req,res)=>{
+    let qr = `SELECT * FROM cart INNER join customer on cart.customer_Id = customer.customer_Id`;
+
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            if (result.length > 0) {
+                res.status(200).json({
+                    data:result
+                })
+            } else {
+                res.status(404).json({
+                    error:err
+                })
+            }
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
+// Router 9: http://localhost:5000/api/superadmin/getallresturants
+// status : working
+router.get('/getallresturants',(req,res)=>{
+    let qr = `Select * from resturant`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            if (result.length > 0) {
+                res.status(200).json({
+                    data:result
+                })
+            } else {
+                res.status(404).json({
+                    error:err
+                })
+            }
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
