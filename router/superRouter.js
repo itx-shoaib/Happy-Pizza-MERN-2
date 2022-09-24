@@ -258,4 +258,101 @@ router.post('/activateresturant',(req,res)=>{
     })
 })
 
+// Router 12: http://localhost:5000/api/superadmin/activateresturant
+// Status:
+router.post('/editresturant',(req,res)=>{
+    let ID = req.body.ID;
+    let name = req.body.name;
+    let description = req.body.description;
+    let address = req.body.address;
+    let phone = req.body.phone;
+    let charges = req.body.charges;
+    let minimum_order = req.body.minimum_order;
+    let average_order = req.body.average_order;
+    let time = req.body.time;
+    let owner_name = req.body.owner_name;
+    let owner_email = req.body.owner_email;
+    let owner_address = req.body.owner_address;
+    let owner_phone = req.body.owner_phone;
+    let domain = req.body.domain;
+    let primary_color = req.body.primary_color;
+    let secondary_color = req.body.secondary_color;
+    let app_name = req.body.app_name;
+    let delivery_min = req.body.delivery_min
+    let location_search = req.body.location_search;
+    let stripe_connect = req.body.stripe_connect
+    let enable_stripe = req.body.enable_stripe;
+    let stripe_key = req.body.stripe_key;
+    let stripe_secret = req.body.stripe_secret;
+    let map_api = req.body.map_api;
+    let analytics = req.body.analytics;
+    let client_id = req.body.client_id;
+    let client_secret = req.body.client_secret;
+    let redirect = req.body.redirect;
+    let fclient_id = req.body.fclient_id;
+    let fclient_secret = req.body.fclient_secret;
+    let fclient_redirect = req.body.fclient_redirect;
+    let app_id = req.body.app_id;
+    let rapi_key = req.body.rapi_key;
+    let sms = req.body.sms;
+    let optomany_enabled = req.body.optomany_enabled;
+    let oclient_id = req.body.oclient_id;
+    let oclient_secret = req.body.oclient_secret;
+    let oterminal_id = req.body.oterminal_id;
+    let otest_mode = req.body.otest_mode;
+
+    let qr = `update resturant
+    set name = '${name}',
+    description = '${description}'
+    address = '${address}',
+    phone = '${phone}',
+    charges = '${charges}',
+    minimum_order = ${minimum_order},
+    average_order = ${average_order},
+    time = ${time},
+    owner_name = '${owner_name}',
+    owner_email = '${owner_email}',
+    owner_address = '${owner_address}',
+    owner_phone = '${owner_phone}',
+    domain = '${domain}',
+    primary_color = '${primary_color}',
+    secondary_color = '${secondary_color}',
+    app_name = '${app_name}',
+    delivery_min = '${delivery_min}',
+    location_search = '${location_search}',
+    stripe_connect = '${stripe_connect}',
+    enable_stripe = '${enable_stripe}',
+    stripe_key = '${stripe_key}',
+    stripe_secret = '${stripe_secret}',
+    map_api = '${map_api}',
+    analytics = '${analytics}',
+    client_id = '${client_id}',
+    client_secret = '${client_secret}',
+    redirect = '${redirect}',
+    fclient_id = '${fclient_id}',
+    fclient_secret = '${fclient_secret}',
+    fclient_redirect = '${fclient_redirect}',
+    app_id = '${app_id}',
+    rapi_key = '${rapi_key}',
+    sms = '${sms}',
+    optomany_enabled = '${optomany_enabled}',
+    oclient_id = '${oclient_id}',
+    oclient_secret = '${oclient_secret}',
+    oterminal_id = '${oterminal_id}',
+    otest_mode = '${otest_mode}'
+    where ID = ${ID}`
+
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"resturant has been updated"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
