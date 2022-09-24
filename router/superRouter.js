@@ -193,4 +193,24 @@ router.get('/getallresturants',(req,res)=>{
     })
 })
 
+// Router 9: http://localhost:5000/api/superadmin/deleteresturant
+// Status: working
+router.post('/deleteresturant',(req,res)=>{
+    let ID = req.body.ID;
+
+    let qr = `delete from resturant 
+    where ID = ${ID} `
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Resturant has been deleted"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
