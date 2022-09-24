@@ -215,7 +215,7 @@ router.post('/deleteresturant',(req,res)=>{
 })
 
 // Router 10: http://localhost:5000/api/superadmin/deactivateresturant
-// Status:
+// Status: working
 router.post('/deactivateresturant',(req,res)=>{
     let ID = req.body.ID;
 
@@ -227,6 +227,28 @@ router.post('/deactivateresturant',(req,res)=>{
         if (!err) {
             res.status(200).json({
                 message:"Dectivated the resturant"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
+// router 11: http://localhost:5000/api/superadmin/activateresturant
+// Status: working
+router.post('/activateresturant',(req,res)=>{
+    let ID = req.body.ID;
+
+    let qr = `update resturant
+    set status = 'true'
+    where ID = ${ID}`
+
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Activated the resturant"
             })
         } else {
             res.status(404).json({
