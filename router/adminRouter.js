@@ -548,4 +548,31 @@ router.post("/changepassword",(req,res)=>{
     })
 })
 
+// Router : My profile
+// Status:
+router.post('/myprofile',(req,res)=>{
+    let customer_Id = req.body.customer_Id;
+    let name = req.body.name;
+    let email = req.body.email;
+    let number = req.body.number;
+
+    let qr = `Update customer 
+    set name = '${name}',
+    email = '${email}',
+    number = '${number}'
+    Where customer_Id = ${customer_Id}`
+
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Profile has been updated"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
