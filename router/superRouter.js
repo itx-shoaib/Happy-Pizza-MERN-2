@@ -1,4 +1,5 @@
 const express = require("express");
+const { body } = require("express-validator");
 const router = express.Router();
 const dbconfig = require('../db');
 
@@ -204,6 +205,28 @@ router.post('/deleteresturant',(req,res)=>{
         if (!err) {
             res.status(200).json({
                 message:"Resturant has been deleted"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
+// Router 10: http://localhost:5000/api/superadmin/deactivateresturant
+// Status:
+router.post('/deactivateresturant',(req,res)=>{
+    let ID = req.body.ID;
+
+    let qr = `update resturant
+    set status = 'false'
+    where ID = ${ID}`
+
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Dectivated the resturant"
             })
         } else {
             res.status(404).json({
