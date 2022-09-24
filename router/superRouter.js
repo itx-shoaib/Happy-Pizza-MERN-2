@@ -258,8 +258,8 @@ router.post('/activateresturant',(req,res)=>{
     })
 })
 
-// Router 12: http://localhost:5000/api/superadmin/activateresturant
-// Status:
+// Router 12: http://localhost:5000/api/superadmin/editresturant
+// Status: 
 router.post('/editresturant',(req,res)=>{
     let ID = req.body.ID;
     let name = req.body.name;
