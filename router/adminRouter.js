@@ -1,6 +1,31 @@
 const express = require("express");
 const router = express.Router();
 const dbconfig = require('../db')
+const multer = require("multer")
+
+// Image storage connfig
+var imgconfig = multer.diskStorage({
+    destination:(req,file,callback)=>{
+        callback(null,"/uploads");
+    },
+    filename:(req,file,callback)=>{
+        callback(null,`image-${Date.now()}.${file.originalname}`)
+    }
+});
+
+// image filter
+const isImage =(req,file,callback)=>{
+    if (file.mimetype.startsWith("image")) {
+        callback(null,true)
+    } else {
+        callback(null,Error("only image is allowed"))
+    }
+}
+
+var upload = multer({
+    storage:imgconfig,
+    fileFilter:isImage
+})
 
 // ROUTER 1: Getting all the menu by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu
 // STATUS: WORKING
@@ -83,14 +108,15 @@ router.post('/deletemenu',(req,res)=>{
 
 // ROUTER 4: Creating the item of category by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/createitem
 // STATUS: WORKING
-router.post('/createitem',(req,res)=>{
+router.post('/createitem',upload.single("image"),(req,res)=>{
     let category_id = req.body.category_id
     let title = req.body.title;
-    let image = req.body.image;
+    let {filename} = req.image;
     let description = req.body.description;
+    console.log(req.file)
     let price = req.body.price;
-    let qr = `insert into item(category_id,Title,Description,Price)
-                   values(${category_id},'${title}','${description}','${price}')`;
+    let qr = `insert into item(category_id,Title,Description,Price,Image)
+                   values(${category_id},'${title}','${description}','${price}','${filename}')`;
 
         dbconfig.query(qr,(err,result)=>{
         if (err) {
