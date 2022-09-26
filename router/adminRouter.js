@@ -351,7 +351,9 @@ router.get('/getcustomers',(req,res)=>{
 // Router 9 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getallorders
 // STATUS:
 router.get('/getallorders',(req,res)=>{
-    let qr = `SELECT * FROM address INNER JOIN cart on address.ID = cart.address_Id;`
+    let qr = `SELECT cart.*,address.*,customer.name FROM address 
+    INNER JOIN cart on address.ID = cart.address_Id
+    INNER join customer on customer.customer_Id = cart.customer_Id;`
     // WHERE address.address_status = 1
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
