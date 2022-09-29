@@ -106,8 +106,8 @@ router.post("/deletepage",(req,res)=>{
 // Status: working
 router.post("/editpage",(req,res)=>{
     let ID = req.body.ID;
-    let title = req.body.title;
-    let description = req.body.description;
+    let title = req.body.updatetitle;
+    let description = req.body.updatedescription;
 
     let qr = `update pages
     set title = '${title}', description ='${description}'
@@ -124,6 +124,29 @@ router.post("/editpage",(req,res)=>{
         }
     })
 })
+
+// Router 14: http://localhost:5000/api/superadmin/editpageitem/:ID
+// Status:
+router.get('/editpageitem/:ID',(req,res)=>{
+    let ID = req.params.ID;
+
+    let qr = `Select * from pages where ID = ${ID}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) { 
+            res.status(200).json({
+                // ID:result[0]['ID'],
+                // title:result[0]['title'],
+                // description:result[0]['description']
+                data:result[0]
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+}
+)
 
 // router 7: http://localhost:5000/api/superadmin/updatepagestatus
 // Status: working
