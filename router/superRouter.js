@@ -355,4 +355,22 @@ router.post('/editresturant',(req,res)=>{
     })
 })
 
+// router 13: http://localhost:5000/api/superadmin/resturantcount
+// status: working
+router.get('/resturantcount',(req,res)=>{
+    let qr = `Select count(*) as 'total' from resturant`
+
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                data:result[0]['total']
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
