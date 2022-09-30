@@ -378,7 +378,7 @@ router.post('/loginadmin',(req,res)=>{
 
     
     let qr = `SELECT * FROM customer 
-                     where email = '${email}' and role = 1`
+                     where email = '${email}' and role = 1 or role = 2`
     
         dbconfig.query(qr,(err,result)=>{
         if (!err) { 
