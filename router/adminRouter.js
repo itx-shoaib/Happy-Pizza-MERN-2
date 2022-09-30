@@ -335,7 +335,7 @@ router.post('/rejectorder',(req,res)=>{
 // Router 8 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getcustomers
 // STATUS:
 router.get('/getcustomers',(req,res)=>{
-    let qr = `SELECT * FROM customer`
+    let qr = `SELECT * FROM customer where role = 0`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.json({
