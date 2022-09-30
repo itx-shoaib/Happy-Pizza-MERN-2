@@ -603,4 +603,22 @@ router.post('/myprofile',(req,res)=>{
     })
 })
 
+// Router : https://apinodejs.creativeparkingsolutions.com/api/admin/salesvloume
+// status:
+router.get('/salesvloume',(req,res)=>{
+    let qr = `Select total from cart`
+
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                data:result
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 module.exports = router
