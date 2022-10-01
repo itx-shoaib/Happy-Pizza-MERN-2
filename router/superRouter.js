@@ -173,7 +173,8 @@ router.post('/updatepagestatus',(req,res)=>{
 // Router 8:  http://localhost:5000/api/superadmin/orderreport
 // Status: working
 router.get('/orderreport',(req,res)=>{
-    let qr = `SELECT * FROM cart INNER join customer on cart.customer_Id = customer.customer_Id`;
+    let qr = `SELECT * FROM cart INNER join customer on cart.customer_Id = customer.customer_Id 
+    INNER join resturant on cart.resturant_ID = resturant.ID`;
 
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
