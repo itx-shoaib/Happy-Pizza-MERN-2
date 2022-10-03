@@ -284,7 +284,7 @@ router.post('/activateresturant',(req,res)=>{
 
 // Router 12: http://localhost:5000/api/superadmin/editresturant
 // Status: 
-router.post('/editresturant',(req,res)=>{
+router.post('/editresturant/:id',(req,res)=>{
     let ID = req.body.ID;
     let name = req.body.name;
     let description = req.body.description;
@@ -370,6 +370,25 @@ router.post('/editresturant',(req,res)=>{
         if (!err) {
             res.status(200).json({
                 message:"resturant has been updated"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
+// Router:
+// Status:
+router.get('/geteditresturant/:id',(req,res)=>{
+    let id = req.params.id;
+
+    let qr = `Select * from resturant where ID = ${id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                data:result
             })
         } else {
             res.status(404).json({
