@@ -7,13 +7,13 @@ const dbconfig = require('../db');
 // Status
 router.post('/addresturant',(req,res)=>{
     let name = req.body.name;
-    let description = req.body.description;
-    let address = req.body.address;
-    let phone = req.body.phone;
-    let charges = req.body.charges;
-    let minimum_order = req.body.minimum_order;
-    let average_order = req.body.average_order;
-    let time = req.body.time;
+    // let description = req.body.description;
+    // let address = req.body.address;
+    // let phone = req.body.phone;
+    // let charges = req.body.charges;
+    // let minimum_order = req.body.minimum_order;
+    // let average_order = req.body.average_order;
+    // let time = req.body.time;
     let owner_name = req.body.owner_name;
     let owner_email = req.body.owner_email;
     let owner_address = req.body.owner_address;
@@ -23,7 +23,7 @@ router.post('/addresturant',(req,res)=>{
     let secondary_color = req.body.secondary_color;
     let app_name = req.body.app_name;
     let delivery_min = req.body.delivery_min
-    let location_search = req.body.location_search;
+    // let location_search = req.body.location_search;
     let stripe_connect = req.body.stripe_connect
     let enable_stripe = req.body.enable_stripe;
     let stripe_key = req.body.stripe_key;
@@ -48,17 +48,21 @@ router.post('/addresturant',(req,res)=>{
     let qr = `Select * from resturant where owner_email = "${owner_email}" or name = "${name}"`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
-            if (result.length <=0) {
-                let qr = `INSERT INTO resturant(owner_name, owner_email,owner_address,owner_phone, domain,primary_color,secondary_color,app_name,delivery_min,location_search,stripe_connect, enable_stripe,stripe_key,stripe_secret,map_api,analytics,client_id,client_secret,redirect, fclient_id,fclient_secret,fclient_redirect,app_id,rapi_key,sms,optomany_enabled,oclient_id, oclient_secret,oterminal_id,otest_mode,name,description,address,phone,charges,minimum_order,average_order,time,status) VALUES ('${owner_name}', '${owner_email}', '${owner_address}', '${owner_phone}', '${domain}', '${primary_color}', '${secondary_color}', '${app_name}', '${delivery_min}', '${location_search}', '${stripe_connect}', '${enable_stripe}', '${stripe_key}', '${stripe_secret}', '${map_api}', '${analytics}', '${client_id}', '${client_secret}', '${redirect}', '${fclient_id}', '${fclient_secret}', '${fclient_redirect}', '${app_id}', '${rapi_key}', '${sms}', '${optomany_enabled}', '${oclient_id}', '${oclient_secret}', '${oterminal_id}', '${otest_mode}','${name}','${description}','${address}','${phone}','${charges}',${minimum_order},${average_order},${time},'true');`
-                if (result.length > 0) {
-                    res.json({
-                        message:"data has been inserted"
-                    })
-                } else {
-                    res.status(404).json({
-                        error:err
-                    })
-                }   
+            if (result.length ===0) {
+                let qr = `INSERT INTO resturant(owner_name, owner_email,owner_address,owner_phone, domain,primary_color,secondary_color,app_name,delivery_min,location_search,stripe_connect, enable_stripe,stripe_key,stripe_secret,map_api,analytics,client_id,client_secret,redirect, fclient_id,fclient_secret,fclient_redirect,app_id,rapi_key,sms,optomany_enabled,oclient_id, oclient_secret,oterminal_id,otest_mode,name,description,address,phone,charges,minimum_order,average_order,time,status) VALUES ('${owner_name}', '${owner_email}', '${owner_address}', '${owner_phone}', '${domain}', '${primary_color}', '${secondary_color}', '${app_name}', '${delivery_min}', '', '${stripe_connect}', '${enable_stripe}', '${stripe_key}', '${stripe_secret}', '${map_api}', '${analytics}', '${client_id}', '${client_secret}', '${redirect}', '${fclient_id}', '${fclient_secret}', '${fclient_redirect}', '${app_id}', '${rapi_key}', '${sms}', '${optomany_enabled}', '${oclient_id}', '${oclient_secret}', '${oterminal_id}', '${otest_mode}','${name}','','','','','','','','true');`
+                dbconfig.query(qr,(err,result)=>{
+                    if (result.length > 0) {
+                        res.json({
+                            message:"data has been inserted"
+                        })
+                    } else {
+                        res.status(404).json({
+                            "message":"in",
+                            error:err
+                        })
+                    } 
+                })
+  
             } else {
                 res.json({
                     message:"Email already existed"
@@ -66,6 +70,7 @@ router.post('/addresturant',(req,res)=>{
             }
         } else {
             res.json({
+                "message":err,
                 error:err
             })
         }

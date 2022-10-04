@@ -388,7 +388,7 @@ router.get('/geteditresturant/:id',(req,res)=>{
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.status(200).json({
-                data:result
+                data:result[0]
             })
         } else {
             res.status(404).json({
