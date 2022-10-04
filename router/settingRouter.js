@@ -81,6 +81,39 @@ router.post('/addresturant',(req,res)=>{
 })
 
 
+// Router:
+// Status:
+router.post('/resturantmanagement',(req,res)=>{
+    let description  = req.body.description;
+    let address = req.body.address;
+    let phone = req.body.phone;
+    let charges = req.body.charges;
+    let minimum_order = req.body.minimum_order;
+    let average_order = req.body.average_order;
+    let time = req.body.time;
+    let id = req.body.id;
+
+    let qr = `update resturant
+    set minimum_order = '${minimum_order}', description ='${description}',
+    average_order = '${average_order}',
+    time = '${time}',
+    address = '${address}',
+    phone = '${phone}',
+    charges = '${charges}'
+    where ID = ${id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Data has been updated"
+            })
+        } else {
+            res.status(404).json({
+                error:err
+            })
+        }
+    })
+})
+
 // Router 2: https://apinodejs.creativeparkingsolutions.com/api/setting/loyality
 // Status
 router.post('/loyality',(req,res)=>{
