@@ -107,26 +107,26 @@ router.post('/deletemenu',(req,res)=>{
 
 
 // ROUTER 4: Creating the item of category by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/createitem
-// STATUS: WORKING
-router.post('/createitem',upload.single("photo"),(req,res)=>{
-    // let category_id = req.body.category_id
-    // let title = req.body.title;
+// STATUS: WORKING,upload.single("photo"),
+router.post('/createitem',(req,res)=>{
+    let category_id = req.body.category_id
+    let title = req.body.title;
     // const {filename} = req.file;
-    // let description = req.body.description;
-    console.log(req.file)
-    // let price = req.body.price;
-    // let qr = `insert into item(category_id,Title,Description,Price,Image)
-    //                values(${category_id},'${title}','${description}','${price}','${filename}')`;
+    let description = req.body.description;
+ 
+    let price = req.body.price;
+    let qr = `insert into item(category_id,Title,Description,Price,Image)
+                   values(${category_id},'${title}','${description}','${price}','')`;
 
-//         dbconfig.query(qr,(err,result)=>{
-//         if (err) {
-//         console.log(err)
-//         }
-//         res.send({
-//         message:'data inserted'
-//         });
+        dbconfig.query(qr,(err,result)=>{
+        if (err) {
+        console.log(err)
+        }
+        res.send({
+        message:'data inserted'
+        });
 
-// });
+});
 })
 
 // ROUTER 5: Get all the item of category by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getitem/:id
@@ -378,7 +378,7 @@ router.post('/loginadmin',(req,res)=>{
 
     
     let qr = `SELECT * FROM customer 
-                     where email = '${email}' and role = 1 or role = 2`
+                     where email = '${email}' and role !=0`
     
         dbconfig.query(qr,(err,result)=>{
         if (!err) { 

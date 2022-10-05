@@ -50,15 +50,42 @@ router.post('/addresturant',(req,res)=>{
         if (!err) {
             if (result.length ===0) {
                 let qr = `INSERT INTO resturant(owner_name, owner_email,owner_address,owner_phone, domain,primary_color,secondary_color,app_name,delivery_min,location_search,stripe_connect, enable_stripe,stripe_key,stripe_secret,map_api,analytics,client_id,client_secret,redirect, fclient_id,fclient_secret,fclient_redirect,app_id,rapi_key,sms,optomany_enabled,oclient_id, oclient_secret,oterminal_id,otest_mode,name,description,address,phone,charges,minimum_order,average_order,time,status) VALUES ('${owner_name}', '${owner_email}', '${owner_address}', '${owner_phone}', '${domain}', '${primary_color}', '${secondary_color}', '${app_name}', '${delivery_min}', '', '${stripe_connect}', '${enable_stripe}', '${stripe_key}', '${stripe_secret}', '${map_api}', '${analytics}', '${client_id}', '${client_secret}', '${redirect}', '${fclient_id}', '${fclient_secret}', '${fclient_redirect}', '${app_id}', '${rapi_key}', '${sms}', '${optomany_enabled}', '${oclient_id}', '${oclient_secret}', '${oterminal_id}', '${otest_mode}','${name}','','','','','','','','true');`
-                dbconfig.query(qr,(err,result)=>{
-                    if (result.length > 0) {
-                        res.json({
-                            message:"data has been inserted"
-                        })
+                dbconfig.query(qr,(err,result1)=>{
+                    if (result1.affectedRows > 0) {
+                        // res.json({
+                        //     message:"data has been inserted"
+                        // })
+                        let qr =  `SELECT * FROM customer
+                    WHERE email = '${owner_email}'`
+                    dbconfig.query(qr,(err,result)=>{
+                        if (!err) {
+                            if (result.length <=0) {
+                                let qr = `insert into customer(name,email,number,password,role,resturant_ID)
+                                        values('${owner_name}','${owner_email}','${owner_phone}','admin1234',1,${result1.insertId})`
+                                dbconfig.query(qr,(err,result)=>{
+                                        if (err) {
+                                            console.log(err,'errs');
+                                        }
+                                        else {  
+                                            res.send({
+                                            data:result
+                                            });
+                                        }
+                                    })
+                }
+                else {
+                    return res.status(400).json({message:"Email already exist"})
+                }
+            }
+            else {  
+                console.log(err,'errs');
+            }
+        })
                     } else {
                         res.status(404).json({
                             "message":"in",
                             error:err
+
                         })
                     } 
                 })
