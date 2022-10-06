@@ -27,6 +27,28 @@ var upload = multer({
     fileFilter:isImage
 })
 
+// Image check api test
+router.post('/imageuploadcheck',upload.single("photo"),(req,res)=>{
+    const {filename} = req.file;
+    if (filename) {
+        try {
+            res.status(200).json({
+                data:filename
+            })
+        } catch (error) {
+            res.status(404).json({
+                error:err
+            })
+        }
+    } else {
+        res.status(404).json({
+            message:"in the else",
+            error:err
+        })
+    }
+
+})
+
 // ROUTER 1: Getting all the menu by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu
 // STATUS: WORKING
 router.get('/getallmenu',(req,res)=>{
