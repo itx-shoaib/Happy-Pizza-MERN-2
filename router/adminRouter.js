@@ -5,10 +5,10 @@ const multer = require("multer")
 
 // Image storage connfig
 var imgconfig = multer.diskStorage({
-    destination:(req,file,callback)=>{
-        callback(null,"/uploads");
+    destination:function(req,file,callback){
+        callback(null,'/uploads');
     },
-    filename:(req,file,callback)=>{
+    filename:function(req,file,callback){
         callback(null,`image-${Date.now()}.${file.originalname}`)
     }
 });
@@ -29,23 +29,24 @@ var upload = multer({
 
 // Image check api test
 router.post('/imageuploadcheck',upload.single("photo"),(req,res)=>{
-    const {filename} = req.file;
-    if (filename) {
-        try {
-            res.status(200).json({
-                data:filename
-            })
-        } catch (error) {
-            res.status(404).json({
-                error:err
-            })
-        }
-    } else {
-        res.status(404).json({
-            message:"in the else",
-            error:err
-        })
-    }
+    // const {filename} = req.file;
+    // if (filename) {
+    //     try {
+    //         res.status(200).json({
+    //             data:filename
+    //         })
+    //     } catch (error) {
+    //         res.status(404).json({
+    //             error:err
+    //         })
+    //     }
+    // } else {
+    //     res.status(404).json({
+    //         message:"in the else",
+    //         error:err
+    //     })
+    // }
+    console.log(req.file)
 
 })
 
