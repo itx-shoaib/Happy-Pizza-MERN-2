@@ -132,19 +132,21 @@ router.post('/deletemenu',(req,res)=>{
 // ROUTER 4: Creating the item of category by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/createitem
 // STATUS: WORKING,
 router.post('/createitem',upload.single("photo"),(req,res)=>{
-    // let category_id = req.body.categoryID
-    // let title = req.body.title;
-    const {filename} = req.file;
-    // let description = req.body.description;
-    // let price = req.body.price;
+    
+    console.log(req.body);
+    let category_id = req.body.categoryID;
+    let title = req.body.title;
+    const filename = req.file.path;
+    let description = req.body.description;
+    let price = req.body.price;
 
     if(filename != undefined){
         try {
-            res.status(200).json({
+           return res.status(200).json({
                 data:filename
             })
         } catch (error) {
-            res.json({
+            return res.json({
                 error:err
             })
         }
@@ -156,18 +158,18 @@ router.post('/createitem',upload.single("photo"),(req,res)=>{
     }
 
 
-//     let qr = `insert into item(category_id,Title,Description,Price,Image)
-//                    values(${category_id},'${title}','${description}','${price}','${filename}')`;
+    let qr = `insert into item(category_id,Title,Description,Price,Image)
+                   values(${category_id},'${title}','${description}','${price}','${filename}')`;
 
-//         dbconfig.query(qr,(err,result)=>{
-//         if (err) {
-//         console.log(err)
-//         }
-//         res.send({
-//         message:'data inserted'
-//         });
+        dbconfig.query(qr,(err,result)=>{
+        if (err) {
+        console.log(err)
+        }
+       return res.send({
+        message:'data inserted'
+        });
 
-// });
+});
 })
 
 // ROUTER 5: Get all the item of category by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getitem/:id
