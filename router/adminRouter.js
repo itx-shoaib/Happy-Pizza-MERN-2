@@ -133,29 +133,12 @@ router.post('/deletemenu',(req,res)=>{
 // STATUS: WORKING,
 router.post('/createitem',upload.single("photo"),(req,res)=>{
     
-    console.log(req.body);
+    
     let category_id = req.body.categoryID;
     let title = req.body.title;
     const filename = req.file.path;
     let description = req.body.description;
     let price = req.body.price;
-
-    if(filename != undefined){
-        try {
-           return res.status(200).json({
-                data:filename
-            })
-        } catch (error) {
-            return res.json({
-                error:err
-            })
-        }
-    }
-    else{
-        res.json({
-            message:"error"
-        })
-    }
 
 
     let qr = `insert into item(category_id,Title,Description,Price,Image)
