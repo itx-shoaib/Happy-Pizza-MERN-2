@@ -1,6 +1,31 @@
 const express = require("express");
 const router = express.Router();
 const dbconfig = require('../db');
+const multer = require("multer")
+
+// Image storage connfig
+var imgconfig = multer.diskStorage({
+    destination:function(req,file,callback){
+        callback(null,'./uploads');
+    },
+    filename:function(req,file,callback){
+        callback(null,`image-${Date.now()}.${file.originalname}`)
+    }
+});
+
+// image filter
+const isImage =(req,file,callback)=>{
+    if (file.mimetype.startsWith("image")) {
+        callback(null,true)
+    } else {
+        callback(null,Error("only image is allowed"))
+    }
+}
+
+var upload = multer({
+    storage:imgconfig,
+    fileFilter:isImage
+})
 
 // Router 1 api is for super admin and admin for adding the resturnat.
 // Router 1 : Registering the resturant information https://apinodejs.creativeparkingsolutions.com/api/setting/addresturantmanagement
@@ -110,7 +135,10 @@ router.post('/addresturant',(req,res)=>{
 
 // Router:
 // Status:
-router.post('/resturantmanagement',(req,res)=>{
+router.post('/resturantmanagement',upload.fields([{name:"photo",maxCount:1},
+{name:"cimage",maxCount:1},
+{name:"rimage",maxCount:1}
+]),(req,res)=>{
     let description  = req.body.description;
     let address = req.body.address;
     let phone = req.body.phone;
@@ -119,6 +147,9 @@ router.post('/resturantmanagement',(req,res)=>{
     let average_order = req.body.average_order;
     let time = req.body.time;
     let id = req.body.id;
+    let photo = req.file.path;
+    let cimage = req.cimage.path;
+    let rimage = req.rimage.path;
 
     let qr = `update resturant
     set minimum_order = '${minimum_order}', description ='${description}',
@@ -126,7 +157,10 @@ router.post('/resturantmanagement',(req,res)=>{
     time = '${time}',
     address = '${address}',
     phone = '${phone}',
-    charges = '${charges}'
+    charges = '${charges}',
+    image = '${photo}',
+    cimage= '${cimage}',
+    rimage = '${rimage}'
     where ID = ${id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
