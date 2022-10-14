@@ -28,4 +28,13 @@
 .homecards{
     border-bottom: 1px solid silver;
 }
+.cardHeight {
+    /* background-color: red; */
+    /* border: 5px solid black; */
+    height: 60vh;
+}
+}
+
+.cardHeight {
+    margin-bottom: -60px;
 }

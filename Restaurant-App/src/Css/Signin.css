@@ -9,3 +9,38 @@
         margin: 10px;
     }
 }
+
+.welcomeText {
+    letter-spacing: 0.2em;
+  }
+  
+  .btnGoogle {
+    border: 1px solid #62C4ED;
+      color: #62C4ED;
+  }
+  
+  .btnGoogle:hover {
+    background-color: #62C4ED;
+      color: white;
+  }
+  
+  .btnFb {
+    border: 1px solid #3b5998;
+    color: #3b5998;
+  }
+  
+  .btnFb:hover {
+    background-color: #3b5998;
+    color: white;
+  }
+  
+  .btnSignColor {
+    background-color: #4650dd;
+    color: white;
+    border: 1px solid #4650dd;
+  }
+  
+  .btnSignColor:hover {
+    background-color: #3b44c2;
+    color: white;
+  }

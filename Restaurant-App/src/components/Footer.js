@@ -46,10 +46,22 @@ function Footer() {
           <br />
         </div>
         <div className="col-md-3 text-center mt-5">
+          <div className="row">
+            <div className="col-2">
+            
+            </div>
+            <div className="col-2"></div>
+            <div className="col-2"></div>
+            <div className="col-2"></div>
+            <div className="col-2"></div>
+            <div className="col-2"></div>
+            
+          </div>
           <img
             className="footerimg"
-            src="https://www.happyspizzaburger.co.uk/assets/img/cards.png"
+            src="https://happyspizzaburger.co.uk/assets/img/cards.png"
             alt=".."
+            style={{width: '70%'}}
           />
         </div>
       </div>
