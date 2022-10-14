@@ -242,14 +242,45 @@ router.post('/menutype',(req,res)=>{
     let lowercase = req.body.lowercase;
     let uppercase  = req.body.uppercase;
     let capitalized = req.body.capitalized;
+    let id = req.body.id
 
-    let qr = `insert into menutype(lowercase,uppercase,capitalized)
-    values('${lowercase}','${uppercase}','${capitalized}')`
+    // let qr = `insert into menutype(lowercase,uppercase,capitalized)
+    // values('${lowercase}','${uppercase}','${capitalized}')`
+    let qr = `Select * from menutype where resturant_ID = ${id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
-            res.json({
-                message:"data has been inserted"
-            })
+            if (result.length<=0) {
+                let qr = `insert into menutype(lowercase,uppercase,capitalized,resturant_ID)
+                values('${lowercase}','${uppercase}','${capitalized}',${id})`
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            message:"Data has been inserted"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            } else {
+                let qr = `update menutype set lowercase = '${lowercase}',
+                uppercase = '${uppercase}',
+                capitalized = '${capitalized}'
+                where resturant_ID = ${id}
+                `
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            message:"data has been updated"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            }
         } else {
             console.log(err,"err")
         }
