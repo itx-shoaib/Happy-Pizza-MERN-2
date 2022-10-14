@@ -268,14 +268,52 @@ router.post("/apps",(req,res)=>{
     let standard_print = req.body.standard_print;
     let main_print = req.body.main_print;
     let kitchen_print = req.body.kitchen_print;
+    let id = req.body.id
 
-    let qr = `Insert into app(title,description,api_key,main_printer,kitchen_printer,standard_printer,standard_print,main_print,kitchen_print)
-    values('${title}','${description}','${api_key}','${main_printer}','${kitchen_printer}','${standard_printer}','${standard_print}','${main_print}','${kitchen_print}')`
+    // let qr = `Insert into app(title,description,api_key,main_printer,kitchen_printer,standard_printer,standard_print,main_print,kitchen_print)
+    // values('${title}','${description}','${api_key}','${main_printer}','${kitchen_printer}','${standard_printer}','${standard_print}','${main_print}','${kitchen_print}')`
+    let qr = `Select * from app where resturant_ID = ${id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
-            res.json({
-                message:"Data has been inserted"
-            })
+            if(result.length<=0){
+                let qr = `Insert into app(title,description,api_key,main_printer,kitchen_printer,standard_printer,standard_print,main_print,kitchen_print,resturant_ID)
+                    values('${title}','${description}','${api_key}','${main_printer}','${kitchen_printer}','${standard_printer}','${standard_print}','${main_print}','${kitchen_print}',${id})`
+                    dbconfig.query(qr,(err,result)=>{
+                        if (!err) {
+                            res.status(200).json({
+                                message:"Data has been insterted"
+                            })
+                        } else {
+                            res.status(404).json({
+                                error:err
+                            })
+                        }
+                    })
+            }
+            else{
+                let qr = `update app set  title='${title}',
+                description = '${description}',
+                api_key='${api_key}',
+                main_printer='${main_printer}',
+                kitchen_printer='${kitchen_printer}',
+                standard_printer = '${standard_printer}',
+                standard_print = '${standard_print}',
+                main_print = '${main_print}',
+                kitchen_print = '${kitchen_print}'
+                where resturant_ID = ${id}
+                `
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            message:"Data has been updated"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            }
         } else {
             console.log(err,"err")
         }
