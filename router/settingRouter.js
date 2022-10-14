@@ -284,14 +284,44 @@ router.post('/referral',(req,res)=>{
 router.post('/config',(req,res)=>{
     let order_time = req.body.order_time;
     let otp = req.body.otp;
+    let id = req.body.id
 
-    let qr = `Insert into config(order_time,otp)
-    values('${order_time}','${otp}')`
+    // let qr = `Insert into config(order_time,otp)
+    // values('${order_time}','${otp}')`
+    let qr = `Select * from config where resturant_ID = ${id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
-            res.json({
-                message:"data has been inserted"
-            })
+            if (result.length<=0) {
+                let qr = `Insert into config(order_time,otp,resturant_ID)
+                values('${order_time}','${otp}',${id})`
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            messgae:"data has been inserted"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            } else {
+                let qr = `update config set order_time= '${order_time}',
+                otp = '${otp}'
+                where resturant_ID = ${id}
+                `
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            message:"Data has been updeted"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            }
         } else {
             console.log(err,"err")
         }
