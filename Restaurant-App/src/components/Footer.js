@@ -6,16 +6,16 @@ function Footer() {
       <div className="row footer justify-content-center responsiveness">
         <div className="col-md-3 text-center">
           <h4 className="boldtext">Information</h4>
-          <a href="/">Privacy Policy</a>
+          <a href="/privacy-policy">Privacy Policy</a>
           <br />
           <br />
-          <a href="/">Terms of Use</a>
+          <a href="/term-of-use">Terms of Use</a>
           <br />
           <br />
-          <a href="/">Terms & Conditions</a>
+          <a href="/terms-and-conditions">Terms & Conditions</a>
           <br />
           <br />
-          <a href="/">Allergy Information</a>
+          <a href="/allergy-information">Allergy Information</a>
           <br />
           <br />
         </div>
@@ -46,17 +46,6 @@ function Footer() {
           <br />
         </div>
         <div className="col-md-3 text-center mt-5">
-          <div className="row">
-            <div className="col-2">
-            
-            </div>
-            <div className="col-2"></div>
-            <div className="col-2"></div>
-            <div className="col-2"></div>
-            <div className="col-2"></div>
-            <div className="col-2"></div>
-            
-          </div>
           <img
             className="footerimg"
             src="https://happyspizzaburger.co.uk/assets/img/cards.png"
