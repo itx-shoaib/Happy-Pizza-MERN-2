@@ -234,14 +234,45 @@ router.post('/referral',(req,res)=>{
     let status = req.body.status;
     let new_customer = req.body.new_customer;
     let existing_customer = req.body.existing_customer;
+    let id = req.body.id;
 
-    let qr = `Insert into referral(status,new_customer,existing_customer)
-    values('${status}','${new_customer}','${existing_customer}')`
+    let qr = `Select * from referral where resturant_ID = ${id}`
+    // let qr = `Insert into referral(status,new_customer,existing_customer)
+    // values('${status}','${new_customer}','${existing_customer}')`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
-            res.json({
-                message:"data has been inserted"
-            })
+            if (result.length <= 0) {
+                let qr = `Insert into referral(status,new_customer,existing_customer,resturant_ID)
+                values('${status}','${new_customer}','${existing_customer}',${id})`
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            message:"data has been inserted"
+                        })   
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            } else {
+                let qr = `update referral set status= '${status}',
+                new_customer = '${new_customer}',
+                existing_customer = '${existing_customer}'
+                where resturant_ID = ${id}
+                `
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            message:"data has been updated"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            }
         } else {
             console.log(err,"err")
         }
