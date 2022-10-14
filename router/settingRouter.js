@@ -182,14 +182,45 @@ router.post('/loyality',(req,res)=>{
     let redeem = req.body.redeem;
     let points = req.body.points;
     let currency_points= req.body.currency_points;
+    let id = req.body.id;
 
-    let qr = `insert into loyality(status,redeem,points,currency_points)
-    values('${status}','${redeem}','${points}','${currency_points}')`
+    // let qr = `insert into loyality(status,redeem,points,currency_points)
+    // values('${status}','${redeem}','${points}','${currency_points}')`
+    let qr = `Select * from loyality where resturant_ID = ${id}`
     dbconfig.query(qr,(err,result)=>{
         if(!err){
-            res.json({
-                message:"Data has been enter"
-            })
+            if (result.length <= 0) {
+                let qr = `insert into loyality(status,redeem,points,currency_points,resturant_ID)
+                values('${status}','${redeem}','${points}','${currency_points}',${id})`
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            message:"Data has been inserted"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            } else {
+                let qr = `update loyality set status = '${status}',
+                redeem = '${redeem}',
+                points = '${points}',
+                currency_points = '${currency_points}'
+                where resturant_ID = ${id}`
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            message:"data has been updated"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error:err
+                        })
+                    }
+                })
+            }
         }
         else{
             console.log(err,"err")
