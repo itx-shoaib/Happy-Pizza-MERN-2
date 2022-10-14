@@ -497,7 +497,7 @@ router.post('/registeradmin',async(req,res)=>{
 router.get('/getorderdetails/:id/:cid',(req,res)=>{
     let id = req.params.id
 
-    let qr = `SELECT *,address.resturant_ID as "rID" FROM address INNER JOIN cart on cart.address_Id = address.ID INNER JOIN customer on customer.customer_Id = cart.customer_Id INNER JOIN resturant on resturant.ID = address.resturant_ID WHERE cart.cart_Id = ${id};`
+    let qr = `SELECT *,customer.name as "cname" FROM address INNER JOIN cart on cart.address_Id = address.ID INNER JOIN customer on customer.customer_Id = cart.customer_Id INNER JOIN resturant on resturant.ID = address.resturant_ID WHERE cart.cart_Id = ${id};`
     // WHERE address.address_status = 1
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
