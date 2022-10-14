@@ -7,6 +7,7 @@ const db = mysql.createConnection({
     password:'',
     database:'happy-pizza',
     port:3307
+    // port:3306
 });
 
 // Check DB
