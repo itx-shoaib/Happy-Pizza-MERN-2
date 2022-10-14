@@ -5,10 +5,10 @@ const multer = require("multer")
 
 // Image storage connfig
 var imgconfig = multer.diskStorage({
-    destination:(req,file,callback)=>{
-        callback(null,"/uploads");
+    destination:function(req,file,callback){
+        callback(null,'./uploads');
     },
-    filename:(req,file,callback)=>{
+    filename:function(req,file,callback){
         callback(null,`image-${Date.now()}.${file.originalname}`)
     }
 });
@@ -25,6 +25,29 @@ const isImage =(req,file,callback)=>{
 var upload = multer({
     storage:imgconfig,
     fileFilter:isImage
+})
+
+// Image check api test
+router.post('/imageuploadcheck',upload.single("photo"),(req,res)=>{
+    const {filename} = req.file;
+    if (filename) {
+        try {
+            res.status(200).json({
+                data:filename
+            })
+        } catch (error) {
+            res.status(404).json({
+                error:err
+            })
+        }
+    } else {
+        res.status(404).json({
+            message:"in the else",
+            error:err
+        })
+    }
+    console.log(req.file)
+
 })
 
 // ROUTER 1: Getting all the menu by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu
@@ -107,26 +130,29 @@ router.post('/deletemenu',(req,res)=>{
 
 
 // ROUTER 4: Creating the item of category by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/createitem
-// STATUS: WORKING
+// STATUS: WORKING,
 router.post('/createitem',upload.single("photo"),(req,res)=>{
-    // let category_id = req.body.category_id
-    // let title = req.body.title;
-    // const {filename} = req.file;
-    // let description = req.body.description;
-    console.log(req.file)
-    // let price = req.body.price;
-    // let qr = `insert into item(category_id,Title,Description,Price,Image)
-    //                values(${category_id},'${title}','${description}','${price}','${filename}')`;
+    
+    
+    let category_id = req.body.categoryID;
+    let title = req.body.title;
+    const filename = req.file.path;
+    let description = req.body.description;
+    let price = req.body.price;
 
-//         dbconfig.query(qr,(err,result)=>{
-//         if (err) {
-//         console.log(err)
-//         }
-//         res.send({
-//         message:'data inserted'
-//         });
 
-// });
+    let qr = `insert into item(category_id,Title,Description,Price,Image)
+                   values(${category_id},'${title}','${description}','${price}','${filename}')`;
+
+        dbconfig.query(qr,(err,result)=>{
+        if (err) {
+        console.log(err)
+        }
+       return res.send({
+        message:'data inserted'
+        });
+
+});
 })
 
 // ROUTER 5: Get all the item of category by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getitem/:id
@@ -378,7 +404,7 @@ router.post('/loginadmin',(req,res)=>{
 
     
     let qr = `SELECT * FROM customer 
-                     where email = '${email}' and role = 1 or role = 2`
+                     where email = '${email}' and role !=0`
     
         dbconfig.query(qr,(err,result)=>{
         if (!err) { 
