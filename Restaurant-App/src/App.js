@@ -9,6 +9,10 @@ import Orders from './components/Orders';
 import Addresses from './components/Addresses';
 import ChangePassword from './components/ChangePassword';
 import CartCheckout from './components/CartCheckout';
+import PrivacPolicy from './components/PrivacPolicy';
+import TermsOfUse from './components/TermsOfUse';
+import TermsAndConditions from './components/TermsAndConditions';
+import AllergyInformation from './components/AllergyInformation';
 
 function App() {
   return (
@@ -22,6 +26,10 @@ function App() {
       <Route path='/addresses' element={<Addresses/>}/>
       <Route path='/change-password' element={<ChangePassword/>}/>
       <Route path='/cart-checkout' element={<CartCheckout/>}/>
+      <Route path='/privacy-policy' element={<PrivacPolicy/>}/>
+      <Route path='/term-of-use' element={<TermsOfUse/>}/>
+      <Route path='/terms-and-conditions' element={<TermsAndConditions/>}/>
+      <Route path='/allergy-information' element={<AllergyInformation/>}/>
       <Route path="*" element={<main><p>There's nothing here!</p></main>}></Route>
     </Routes>
   );
