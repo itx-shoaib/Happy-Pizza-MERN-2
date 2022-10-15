@@ -290,13 +290,13 @@ router.get('/getliveorders',(req,res)=>{
 
 // Router: https://apinodejs.creativeparkingsolutions.com/api/admin/getliveorderscount
 // Status: Working
-router.get('/getliveorderscount',(req,res)=>{
+router.post('/getliveorderscount',(req,res)=>{
 
-    let customer_Id = req.body.customer_Id
+    let id = req.body.id
 
     // Main query
     let qr  = `SELECT count(*) as 'total' FROM cart 
-    Where 	Orderstatus='1'
+    Where 	Orderstatus='1' and resturant_ID = ${id}
    `;
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
