@@ -6,7 +6,7 @@ const multer = require("multer")
 // Image storage connfig
 var imgconfig = multer.diskStorage({
     destination:function(req,file,callback){
-        callback(null,'./uploads');
+        callback(null,'./upload');
     },
     filename:function(req,file,callback){
         callback(null,`image-${Date.now()}.${file.originalname}`)
@@ -147,9 +147,9 @@ router.post('/resturantmanagement',upload.fields([{name:"photo",maxCount:1},
     let average_order = req.body.average_order;
     let time = req.body.time;
     let id = req.body.id;
-    let photo = req.file.path;
-    let cimage = req.cimage.path;
-    let rimage = req.rimage.path;
+    let photo = req.files.photo[0].path;
+    let cimage = req.files.cimage[0].path;
+    let rimage = req.files.rimage[0].path;
 
     let qr = `update resturant
     set minimum_order = '${minimum_order}', description ='${description}',
