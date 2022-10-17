@@ -492,4 +492,56 @@ router.post('/getopenclose',(req,res)=>{
     })
 })
 
+
+// Router: https://apinodejs.creativeparkingsolutions.com/api/superadmin/closeshift
+// Status:
+router.post('/closeshift',(req,res)=>{
+    let status = "false";
+    let id = req.body.id;
+
+    let qr = `Select * from open 
+    Where resturant_ID = ${id}`
+    dbconfig.query(qr,(err,result1)=>{
+
+        if (!err) {
+            if (result1.lenght<=0) {
+                            let qr = `Insert into open(online,offline,statement,dateto,datefrom,resturant_ID)
+            values('false','${status}','Nil','Nil','Nil',${id})`
+            dbconfig.query(qr,(err,result)=>{
+                if (!err) {
+                    res.status(200).json({
+                        data:result
+                    })
+                } else {
+                    res.status(404).json({
+                        error:err
+                    })
+                }
+            })
+            } else {
+                            let qr = `Update open set offline='${status}'
+            where resturant_ID = ${id}`
+            dbconfig.query(qr,(err,result)=>{
+                if (!err) {
+                    res.status(200).json({
+                        data:result
+                    })
+                } else {
+                    res.status(404).json({
+                        error:err
+                    }) 
+                }
+            })
+
+        } 
+    }
+    else {
+          res.status(404).json({
+            error:err
+          })  
+
+        }
+    })
+})
+
 module.exports = router
