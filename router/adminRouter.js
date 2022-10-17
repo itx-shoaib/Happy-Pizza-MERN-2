@@ -6,7 +6,7 @@ const multer = require("multer")
 // Image storage connfig
 var imgconfig = multer.diskStorage({
     destination:function(req,file,callback){
-        callback(null,'./uploads');
+        callback(null,'./upload');
     },
     filename:function(req,file,callback){
         callback(null,`image-${Date.now()}.${file.originalname}`)
@@ -262,13 +262,12 @@ router.delete('/deleteitem/:id',(req,res)=>{
 
 // Router: https://apinodejs.creativeparkingsolutions.com/api/admin/getliveorders
 // Status: Working
-router.get('/getliveorders',(req,res)=>{
+router.post('/getliveorders',(req,res)=>{
 
-    let customer_Id = req.body.customer_Id
+    let id = req.body.id
 
     // Main query
-    let qr  = `SELECT * FROM cart INNER JOIN address on cart.customer_Id = address.customer_Id INNER JOIN customer on customer.customer_Id = address.customer_Id WHERE cart.address_Id = address.ID;
-   `;
+    let qr  = `SELECT * FROM cart INNER JOIN address on cart.customer_Id = address.customer_Id INNER JOIN customer on customer.customer_Id = address.customer_Id WHERE cart.address_Id = address.ID and cart.resturant_ID = ${id}`;
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             if(result.length>0){
@@ -376,10 +375,12 @@ router.get('/getcustomers',(req,res)=>{
 
 // Router 9 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getallorders
 // STATUS:
-router.get('/getallorders',(req,res)=>{
+router.post('/getallorders',(req,res)=>{
+    let id = req.body.id;
     let qr = `SELECT cart.*,address.*,customer.name FROM address 
     INNER JOIN cart on address.ID = cart.address_Id
-    INNER join customer on customer.customer_Id = cart.customer_Id;`
+    INNER join customer on customer.customer_Id = cart.customer_Id
+    where cart.resturant_ID = ${id}`
     // WHERE address.address_status = 1
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
