@@ -544,4 +544,62 @@ router.post('/closeshift',(req,res)=>{
     })
 })
 
+// Login as route path: http://localhost:5000/api/superadmin/loginas
+router.post("/loginas",(req,res)=>{
+    let id = req.body.id;
+
+    let qr = `Select count(*) as 'total' from customer where resturant_ID = ${id} `
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            // res.json({
+            //     data:result[0]['total']
+            // })
+            if (result[0]['total'] > 0) {
+                let qr = `Select * from customer where resturant_ID = ${id}`
+    dbconfig.query(qr,(err,results)=>{
+        if (!err) {
+            if(results.lenght === 0){
+                res.status(404).json({
+                    message:"You are not allowed"
+                })
+            }
+            else{
+                let qr = `SELECT * FROM customer 
+                where email = '${results[0]['email']}' and password = '${results[0]["password"]}'`
+                dbconfig.query(qr,(err,result)=>{
+                    if (!err) {
+                        res.status(200).json({
+                            loginas:"true",
+                            data:result
+                        })
+                    } else {
+                        res.status(404).json({
+                            message:"Credentials are not correct"
+                        })
+                    }
+                })
+            }
+
+        } else {
+            res.status(404).json({
+                message:"No data found"
+            })
+        }
+    })
+            } else {
+                res.status(404).json({
+                    loginas:"false",
+                    message:"No data found"
+                })
+            }
+        } else {
+            res.status(404).json({
+                message:"No data found"
+            })
+        }
+    })
+
+    
+})
+
 module.exports = router
