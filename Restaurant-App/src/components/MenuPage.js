@@ -2379,59 +2379,102 @@ function MenuPage() {
         </div>
       ) : (
         <>
-            <Navbar />
-            <div className="row justify-content-center">
-              <div className="col-xl-12 text-center" style={{ padding: "0px" }}>
+          <Navbar />
+          <div className="row justify-content-center">
+            <div className="col-xl-12 text-center" style={{ padding: "0px" }}>
+
+              <div class="card text-white">
                 <img
                   className="menutitleimg"
                   src="https://www.happyspizzaburger.co.uk/uploads/restorants/751msq61654252482.jpg"
                 />
+                <div class="card-img-overlay textOnImg text-start ms-5">
+                  <h2 class="card-title">Rupyal Spice</h2>
+                  <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p>
+                  <p class="card-text"><small>Here are details</small></p>
+                </div>
               </div>
             </div>
-            <ul className="nav nav-pills nav-fill stick flex-column">
-              {category &&
-                category.map((categorys) => {
-                  return (
-                    <>
-                      <li className="nav-item">
-                        <a
-                          className="nav-link"
-                          aria-current="page"
-                          href={`#${categorys.Name}`}
-                        >
-                          {categorys.Name}
-                        </a>
-                      </li>
-                    </>
-                  );
-                })}
-            </ul>
+          </div>
 
+          <ul className="nav nav-pills nav-fill stick flex-column">
             {category &&
               category.map((categorys) => {
                 return (
                   <>
-                    <div className="row productrow" id={`${categorys.Name}`}>
-                      <div className="col-xl-12 responsiveness">
-                        <h3 className="boldtext ms-2 mt-5 nomargin">
-                          {categorys.Name}
-                        </h3>
-                        <div className="row centeritems">
-                          {item &&
-                            item.map((items) => {
-                              return (
-                                <>
-                                  <Items items={items} categorys={categorys} />
-                                </>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    </div>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link"
+                        aria-current="page"
+                        href={`#${categorys.Name}`}
+                      >
+                        {categorys.Name}
+                      </a>
+                    </li>
                   </>
                 );
               })}
-            <Footer />
+          </ul>
+
+          {/* <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <ul className="nav nav-pills nav-fill stick flex-column">
+              {category &&
+                category.map((categorys) => {
+                  return (
+                    <>
+                        <div class="carousel-item active">
+                          <li className="nav-item d-flex flex-row">
+                            <a
+                              className="nav-link"
+                              aria-current="page"
+                              href={`#${categorys.Name}`}
+                            >
+                              {categorys.Name}
+                            </a>
+                          </li>
+                        </div>
+                    </>
+                  );
+                })}
+                </ul>
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div> */}
+
+          {category &&
+            category.map((categorys) => {
+              return (
+                <>
+                  <div className="row productrow" id={`${categorys.Name}`}>
+                    <div className="col-xl-12 responsiveness">
+                      <h3 className="boldtext ms-2 mt-5 nomargin">
+                        {categorys.Name}
+                      </h3>
+                      <div className="row centeritems">
+                        {item &&
+                          item.map((items) => {
+                            return (
+                              <>
+                                <Items items={items} categorys={categorys} />
+                              </>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          <Footer />
         </>
       )}
 

@@ -6,7 +6,9 @@ const db = mysql.createConnection({
     user:'root',
     password:'',
     database:'happy-pizza',
+    // Shoaib Jamil
     port:3307
+    // Shees 
     // port:3306
 });
 
