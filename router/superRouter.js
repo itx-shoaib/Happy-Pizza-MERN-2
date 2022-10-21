@@ -602,4 +602,27 @@ router.post("/loginas",(req,res)=>{
     
 })
 
+// Router for addrank / Path:
+router.post("/addrank",(req,res)=>{
+    let id = req.body.id;
+    let name = req.body.name;
+    let value = req.body.value;
+    let status = req.body.status;
+
+    let qr = `INSERT INTO rank(resturant_ID,name,value,status) 
+    VALUES (${id},'${name}','${value}','${status}')`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Data has been saved"
+            })
+            
+        } else {
+            res.status(500).json({
+                message:"Something went wrong"
+            })
+        }
+    })
+})
+
 module.exports = router
