@@ -587,7 +587,7 @@ router.post("/addcontent",upload.fields([{name:"menu",maxCount:1},
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             if (result[0]['total'] === 0) {
-                let qr = `INSERT INTO content(resturant_ID,frontendtemplate,fadmintemplate,pcolor,scolor, title1,title2,description1,bannertext1,box1title,box1link,box2description,box3title, box3link, box3link2,menu,banner1,banner2,banner3,banner4,banner5,box1icon,box2icon,box3icon, description2,bannertext2,box1description,box2title,box2link,box3description) VALUES ('${id}','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]','[value-22]','[value-23]','[value-24]','[value-25]','[value-26]','[value-27]','[value-28]','[value-29]','[value-30]','[value-31]')`
+                let qr = `INSERT INTO content(resturant_ID,frontendtemplate,fadmintemplate,pcolor,scolor, title1,title2,description1,bannertext1,box1title,box1link,box2description,box3title, box3link, box3link2,menu,banner1,banner2,banner3,banner4,banner5,box1icon,box2icon,box3icon, description2,bannertext2,box1description,box2title,box2link,box3description) VALUES ('${id}','${frontendtemplate}','${fadmintemplate}','${pcolor}','${scolor}','${title1}','${title2}','${description1}','${bannertext1}','${box1title}','${box1link}','${box2description}','${box3title}','${box3link}','${box3link2}','${menu}','${banner1}','${banner2}','${banner3}','${banner4}','${banner5}','${box1icon}','${box2icon}','${box3icon}','${description2}','${bannertext2}','${box1description}','${box2title}','${box2link}','${box3description}')`
                 dbconfig.query(qr,(err,result)=>{
                     if (!err) {
                         res.status(200).json({
@@ -601,34 +601,34 @@ router.post("/addcontent",upload.fields([{name:"menu",maxCount:1},
                 })
             } else {
                 let qr = `UPDATE content SET frontendtemplate='[value-3]',
-                fadmintemplate='[value-4]',
-                pcolor='[value-5]',
-                scolor='[value-6]',
-                title1='[value-7]',
-                title2='[value-8]',
-                description1='[value-9]',
-                bannertext1='[value-10]',
-                box1title='[value-11]',
-                box1link='[value-12]',
-                box2description='[value-13]',
-                box3title='[value-14]',
-                box3link='[value-15]',
-                box3link2='[value-16]',
-                menu='[value-17]',
-                banner1='[value-18]',
-                banner2='[value-19]',
-                banner3='[value-20]',
-                banner4='[value-21]',
-                banner5='[value-22]',
-                box1icon='[value-23]',
-                box2icon='[value-24]',
-                box3icon='[value-25]',
-                description2='[value-26]',
-                bannertext2='[value-27]',
-                box1description='[value-28]',
-                box2title='[value-29]',
-                box2link='[value-30]',
-                box3description='[value-31]' 
+                fadmintemplate='${fadmintemplate}',
+                pcolor='${pcolor}',
+                scolor='${scolor}',
+                title1='${title1}',
+                title2='${title2}',
+                description1='${description1}',
+                bannertext1='${bannertext1}',
+                box1title='${box1title}',
+                box1link='${box1link}',
+                box2description='${box2description}',
+                box3title='${box3title}',
+                box3link='${box3link}',
+                box3link2='${box3link2}',
+                menu='${menu}',
+                banner1='${banner1}',
+                banner2='${banner2}',
+                banner3='${banner3}',
+                banner4='${banner4}',
+                banner5='${banner5}',
+                box1icon='${box1icon}',
+                box2icon='${box2icon}',
+                box3icon='${box3icon}',
+                description2='${description2}',
+                bannertext2='${bannertext2}',
+                box1description='${box1description}',
+                box2title='${box2title}',
+                box2link='${box2link}',
+                box3description='${box3description}' 
                 WHERE resturant_ID=${id}`
                 dbconfig.query(qr,(err,result)=>{
                     if (!err) {
