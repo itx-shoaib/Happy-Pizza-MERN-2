@@ -728,4 +728,22 @@ router.post("/addlanguage",(req,res)=>{
     })
 })
 
+// router for getlangauges
+router.post("/getlanguage",(req,res)=>{
+    let id = req.body.id;
+
+    let qr = `Select * from language where resturant_ID = ${id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                data:result
+            })
+        } else {
+            res.status(500).json({
+                message:"Something went wrong"
+            })
+        }
+    })
+})
+
 module.exports = router
