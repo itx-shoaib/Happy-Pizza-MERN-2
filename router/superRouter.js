@@ -708,4 +708,24 @@ router.post("/edittranslation",(req,res)=>{
     })
 })
 
+// Router for addlanguage
+router.post("/addlanguage",(req,res)=>{
+    let id = req.body.id;
+    let name = req.body.name;
+    let locale = req.body.locale;
+
+    let qr =`INSERT INTO language(resturant_ID, name, locale) VALUES (${id},'${name}','${locale}')`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Data has been added"
+            })
+        } else {
+            res.status(500).json({
+                message:"Something went wrong"
+            })
+        }
+    })
+})
+
 module.exports = router
