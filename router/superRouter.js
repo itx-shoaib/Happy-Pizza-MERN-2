@@ -428,12 +428,12 @@ router.post('/openclose',(req,res)=>{
     let from = req.body.from;
     let id = req.body.id;
 
-    let qr = `Select * from open 
+    let qr = `Select count(*) as 'total' from open 
     Where resturant_ID = ${id}`
     dbconfig.query(qr,(err,result1)=>{
 
         if (!err) {
-            if (result1.lenght<=0) {
+            if (result1[0]['total']=== 0) {
                             let qr = `Insert into open(online,offline,statement,dateto,datefrom,resturant_ID)
             values('${online}','${offline}','${statement}','${to}','${from}',${id})`
             dbconfig.query(qr,(err,result)=>{
