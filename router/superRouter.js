@@ -689,4 +689,23 @@ router.post("/addtranslation",(req,res)=>{
     })
 })
 
+// Router for edittranslation
+router.post("/edittranslation",(req,res)=>{
+    let id = req.body.id;
+    let value = req.body.value;
+
+    let qr = `UPDATE translation SET value='[value-5]' WHERE ID=${id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Data has been updated"
+            })
+        } else {
+            res.status(500).json({
+                message:"Something went wrong"
+            })
+        }
+    })
+})
+
 module.exports = router
