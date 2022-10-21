@@ -643,4 +643,28 @@ router.post("/getranks",(req,res)=>{
     })
 })
 
+// Router for editrank / path:
+router.post("/editrank",(req,res)=>{
+    let id = req.body.id;
+    let name = req.body.name;
+    let value = req.body.value;
+    let status = req.body.status;
+
+    let qr = `UPDATE rank SET name='${name}',
+    value='${value}',
+    status='${status}'
+    WHERE ID=${id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                message:"Data has been updated"
+            })
+        } else {
+            res.status(500).json({
+                message:"Something went wrong"
+            })
+        }
+    })
+})
+
 module.exports = router
