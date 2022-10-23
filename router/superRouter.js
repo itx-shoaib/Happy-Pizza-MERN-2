@@ -675,7 +675,7 @@ router.post("/addtranslation",(req,res)=>{
     let value = req.body.value;
     let namespace = req.body.namespace;
 
-    let qr = `INSERT INTO translation(resturant_ID, groupvalidation, keyinvalid, value, namespac) VALUES ('${id}','${groupvalidation}','${keyinvalid}','${value}','${namespace}')`
+    let qr = `INSERT INTO translation(resturant_ID, groupvalidation, keyinvalid, value, namespace) VALUES (${id},'${groupvalidation}','${keyinvalid}','${value}','${namespace}')`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.status(200).json({
