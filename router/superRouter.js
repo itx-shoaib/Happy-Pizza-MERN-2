@@ -4,6 +4,18 @@ const { body } = require("express-validator");
 const { off } = require("../db");
 const router = express.Router();
 const dbconfig = require('../db');
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    port:993,
+    auth: {
+      user: 'shoaibjamil43@gmail.com',
+      pass: 'ohplalyerexxexif'
+    }
+  });
+
+
 
 // Router 1: https://apinodejs.creativeparkingsolutions.com/api/superadmin/getliveresturants
 // Status:
@@ -787,5 +799,64 @@ router.post("/gettranslation",(req,res)=>{
         }
     })
 })
+
+// Router for forget password
+router.post("/forgetpassword",(req,res)=>{
+    let email = req.body.email
+    let qr = `Select * from customer where email = '${email}'`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            if (result.length > 0) {
+                      
+     let mailOptions = {
+        from: 'shoaibjamil43@gmail.com',
+        to: email,
+        subject: 'Reset your password',
+        text: `Please open this link for verification http://localhost:3000/resetpassword/${result[0]['email']}`
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+                res.status(200).json({
+                    data:result
+                })
+            } else {
+                res.status(404).json({
+                    message:"Email doesn't exist"
+                })
+            }
+           
+        } else {
+            res.status(500).json({
+                error:err
+            })
+        }
+    })
+})
+
+//  router for reset password
+router.post("/resetpassword/:email",(req,res)=>{
+    let email = req.body.email;
+    let password = req.body.password;
+
+    let qr = `update customer 
+                set password = '${password}'
+                where email = '${email}'`;
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+        res.json({
+            message:"Your password has been updated"
+        })
+        } else {
+            console.log(err,"err")
+        }
+    })
+})
+
 
 module.exports = router
