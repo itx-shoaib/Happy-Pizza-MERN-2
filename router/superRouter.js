@@ -609,8 +609,10 @@ router.post("/addrank",(req,res)=>{
     let value = req.body.value;
     let status = req.body.status;
 
-    let qr = `INSERT INTO rank(resturant_ID,name,value,status) 
-    VALUES (${id},'${name}','${value}','${status}')`
+    // let qr = `INSERT INTO rank(ID,resturant_ID,name,value,status) 
+    // VALUES (Null,'${id}','${name}','${value}','${status}')`
+    let qr = `INSERT INTO rank(resturant_ID, name, value,status) VALUES (${id},'${name}','${value}','${status}')`
+    // let qr ='INSERT INTO `rank` (`ID`, `resturant_ID`, `name`, `value`, `status`) VALUES (NULL,''.'','','');';
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.status(200).json({
@@ -619,7 +621,11 @@ router.post("/addrank",(req,res)=>{
             
         } else {
             res.status(500).json({
-                message:"Something went wrong"
+                // message:"Something went wrong"
+                error:err
+                // sql
+// "INSERT INTO rank(resturant_ID,name,value,status) \n    VALUES (0,'Silver','10','true')"
+// sqlMessage
             })
         }
     })
@@ -662,6 +668,24 @@ router.post("/editrank",(req,res)=>{
         } else {
             res.status(500).json({
                 message:"Something went wrong"
+            })
+        }
+    })
+})
+
+// Router for geteditrank
+router.get('/geteditrank/:id',(req,res)=>{
+    let id = req.params.id;
+
+    let qr = `Select * from rank where ID = ${id}`
+    dbconfig.query(qr,(err,result)=>{
+        if (!err) {
+            res.status(200).json({
+                data:result[0]
+            })
+        } else {
+            res.status(404).json({
+                error:err
             })
         }
     })
