@@ -621,23 +621,19 @@ router.post("/addrank",(req,res)=>{
     let value = req.body.value;
     let status = req.body.status;
 
-    // let qr = `INSERT INTO rank(ID,resturant_ID,name,value,status) 
-    // VALUES (Null,'${id}','${name}','${value}','${status}')`
-    let qr = `INSERT INTO rank(resturant_ID, name, value,status) VALUES (${id},'${name}','${value}','${status}')`
-    // let qr ='INSERT INTO `rank` (`ID`, `resturant_ID`, `name`, `value`, `status`) VALUES (NULL,''.'','','');';
-    dbconfig.query(qr,(err,result)=>{
+
+    let qr = `INSERT INTO ranking(resturant_ID,name,value1,status1) VALUES (${id},'${name}','${value}','${status}')` 
+   
+   dbconfig.query(qr,(err,result)=>{
         if (!err) {
-            res.status(200).json({
-                message:"Data has been saved"
-            })
-            
+            if(result){
+                res.status(200).json({
+                    message:"Data has been saved"
+                })
+            }
         } else {
             res.status(500).json({
-                // message:"Something went wrong"
-                error:err
-                // sql
-// "INSERT INTO rank(resturant_ID,name,value,status) \n    VALUES (0,'Silver','10','true')"
-// sqlMessage
+                error:err                
             })
         }
     })
@@ -647,7 +643,7 @@ router.post("/addrank",(req,res)=>{
 router.post("/getranks",(req,res)=>{
     let id = req.body.id;
 
-    let qr = `Select * from rank where resturant_ID = ${id}`
+    let qr = `Select * from ranking where resturant_ID = ${id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.status(200).json({
@@ -668,9 +664,9 @@ router.post("/editrank",(req,res)=>{
     let value = req.body.value;
     let status = req.body.status;
 
-    let qr = `UPDATE rank SET name='${name}',
-    value='${value}',
-    status='${status}'
+    let qr = `UPDATE ranking SET name='${name}',
+    value1='${value}',
+    status1='${status}'
     WHERE ID=${id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
@@ -689,7 +685,7 @@ router.post("/editrank",(req,res)=>{
 router.get('/geteditrank/:id',(req,res)=>{
     let id = req.params.id;
 
-    let qr = `Select * from rank where ID = ${id}`
+    let qr = `Select * from ranking where ID = ${id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
             res.status(200).json({
