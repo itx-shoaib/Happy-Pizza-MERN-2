@@ -92,10 +92,28 @@ router.post('/createmenu',(req,res)=>{
 router.post('/updatemenu',(req,res)=>{
     let ID = req.body.ID;
     let title = req.body.title;
+    let editdiscountable = req.body.editdiscountable;
+    let sunday = req.body.sunday
+    let monday = req.body.monday;
+    let tuesday = req.body.tuesday;
+    let wednesday = req.body.wednesday;
+    let thursday = req.body.thursday;
+    let friday = req.body.friday;
+    let saturday = req.body.saturday;
+
+
     
 
     let qr = `update category 
-                    set Name = '${title}'
+                    set Name = '${title}',
+                    set discountable = '${editdiscountable}',
+                    set sunday = '${sunday}',
+                    set monday = '${monday}',
+                    set tuesday = '${tuesday}',
+                    set wednesday = '${wednesday}',
+                    set thursday = '${thursday}',
+                    set friday = '${friday}',
+                    set saturday = '${saturday}'
                     where id = ${ID}`;
 
     dbconfig.query(qr,(err,result)=>{
