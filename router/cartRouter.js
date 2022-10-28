@@ -4,6 +4,32 @@ const { check, validationResult  } = require('express-validator');
 const bcrypt = require('bcryptjs')
 const JWT = require('jsonwebtoken')
 const dbconfig = require('../db');
+const multer = require("multer")
+
+// Image storage connfig
+var imgconfig = multer.diskStorage({
+    destination:function(req,file,callback){
+        callback(null,'./upload');
+    },
+    filename:function(req,file,callback){
+        callback(null,`image-${Date.now()}.${file.originalname}`)
+    }
+});
+
+// image filter
+const isImage =(req,file,callback)=>{
+    if (file.mimetype.startsWith("image")) {
+        callback(null,true)
+    } else {
+        callback(null,Error("only image is allowed"))
+    }
+}
+
+var upload = multer({
+    storage:imgconfig,
+    fileFilter:isImage
+})
+
 
 
 // ROUTER 2: Creating orders by cart by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/cart/:id
@@ -401,19 +427,44 @@ router.get('/getitemmanagement/:itemid/:categoryid',(req,res)=>{
 
 // ROUTER : https://apinodejs.creativeparkingsolutions.com/api/admin/updateitemmanagement/:itemid/:categoryid
 // STATUS:
-router.post('/updateitemmanagement/:itemid/:categoryid',(req,res)=>{
+router.post('/updateitemmanagement/:itemid/:categoryid',upload.single("photo"),(req,res)=>{
     let categoryid = req.params.categoryid
     let itemid = req.params.itemid
     let title = req.body.title
     let Description = req.body.Description
     let Price = req.body.Price
+    const filename = req.file.path;
+    let discountableitem = req.body.discountableitem;
+    let available = req.body.available;
+    let variant = req.body.variant;
+    let sunday = req.body.sunday;
+    let monday = req.body.monday;
+    let tuesday = req.body.tuesday;
+    let wednesday = req.body.wednesday;
+    let thursday = req.body.thursday;
+    let friday = req.body.friday;
+    let saturday = req.body.saturday;
+    let vat = req.body.vat;
+
 
 
 
     let qr = `update item 
     set Title = "${title}"
     , Description = "${Description}"
-    , Price = "${Price}"
+    , Price = "${Price}",
+    Image = '${filename}',
+    discountableitem = '${discountableitem}',
+    available = '${available}',
+    variant = '${variant}',
+    sunday = '${sunday}',
+    monday = '${monday}',
+    tuesday = '${tuesday}',
+    wednesday = '${wednesday}',
+    thursday = '${thursday}',
+    friday = '${friday}',
+    saturday = '${saturday}',
+    vat = '${vat}'
     WHERE category_id = ${categoryid} and ID = ${itemid}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
