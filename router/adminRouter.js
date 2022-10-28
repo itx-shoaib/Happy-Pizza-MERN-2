@@ -71,9 +71,10 @@ router.get('/getallmenu',(req,res)=>{
 // STATUS: WORKING
 router.post('/createmenu',(req,res)=>{
     let name = req.body.name;
+    let discountable = req.body.discountable
 
-    let qr = `insert into category(Name)
-                    values('${name}')`
+    let qr = `insert into category(Name,discountable)
+                    values('${name}','${discountable}')`
 
     dbconfig.query(qr,(err,result)=>{
         if (err) {
