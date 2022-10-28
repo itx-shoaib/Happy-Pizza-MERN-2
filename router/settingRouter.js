@@ -150,6 +150,9 @@ router.post('/resturantmanagement',upload.fields([{name:"photo",maxCount:1},
     let photo = req.files.photo[0].path;
     let cimage = req.files.cimage[0].path;
     let rimage = req.files.rimage[0].path;
+    let cash = req.body.cash;
+    let pickup = req.body.pickup;
+    let delivery = req.body.delivery;
 
     let qr = `update resturant
     set minimum_order = '${minimum_order}', description ='${description}',
@@ -160,7 +163,10 @@ router.post('/resturantmanagement',upload.fields([{name:"photo",maxCount:1},
     charges = '${charges}',
     image = '${photo}',
     cimage= '${cimage}',
-    rimage = '${rimage}'
+    rimage = '${rimage}',
+    cash = '${cash}',
+    pickup = '${pickup}',
+    delivery = '${delivery}'
     where ID = ${id}`
     dbconfig.query(qr,(err,result)=>{
         if (!err) {
