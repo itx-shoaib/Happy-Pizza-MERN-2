@@ -137,13 +137,14 @@ router.post('/createitem',upload.single("photo"),(req,res)=>{
     
     let category_id = req.body.categoryID;
     let title = req.body.title;
+    let discountableitem = req.body.discountableitem;
     const filename = req.file.path;
     let description = req.body.description;
     let price = req.body.price;
 
 
-    let qr = `insert into item(category_id,Title,Description,Price,Image)
-                   values(${category_id},'${title}','${description}','${price}','${filename}')`;
+    let qr = `insert into item(category_id,Title,Description,Price,Image,discountableitem)
+                   values(${category_id},'${title}','${description}','${price}','${filename}','${discountableitem}')`;
 
         dbconfig.query(qr,(err,result)=>{
         if (err) {
