@@ -76,14 +76,14 @@ function SigninPage() {
                 required
               />
               <div className='row mb-2'>
-                  <div className='col-5'>
-                    <label for="password">Password</label>
+                <div className='col-5'>
+                  <label for="password">Password</label>
 
-                  </div>
-                  <div className='col-7 ps-4'>
-                    <Link to="/" className='text-muted'>Forgot your password?</Link>
-                  </div>
                 </div>
+                <div className='col-7 ps-4'>
+                  <Link to="/" className='text-muted'>Forgot your password?</Link>
+                </div>
+              </div>
               <input
                 id="password"
                 type="password"
