@@ -5,32 +5,32 @@ const multer = require("multer")
 
 // Image storage connfig
 var imgconfig = multer.diskStorage({
-    destination:function(req,file,callback){
-        callback(null,'./upload');
+    destination: function (req, file, callback) {
+        callback(null, './upload');
     },
-    filename:function(req,file,callback){
-        callback(null,`image-${Date.now()}.${file.originalname}`)
+    filename: function (req, file, callback) {
+        callback(null, `image-${Date.now()}.${file.originalname}`)
     }
 });
 
 // image filter
-const isImage =(req,file,callback)=>{
+const isImage = (req, file, callback) => {
     if (file.mimetype.startsWith("image")) {
-        callback(null,true)
+        callback(null, true)
     } else {
-        callback(null,Error("only image is allowed"))
+        callback(null, Error("only image is allowed"))
     }
 }
 
 var upload = multer({
-    storage:imgconfig,
-    fileFilter:isImage
+    storage: imgconfig,
+    fileFilter: isImage
 })
 
 // Router 1 api is for super admin and admin for adding the resturnat.
 // Router 1 : Registering the resturant information https://apinodejs.creativeparkingsolutions.com/api/setting/addresturantmanagement
 // Status
-router.post('/addresturant',(req,res)=>{
+router.post('/addresturant', (req, res) => {
     let name = req.body.name;
     // let description = req.body.description;
     // let address = req.body.address;
@@ -69,61 +69,61 @@ router.post('/addresturant',(req,res)=>{
     let oclient_secret = req.body.oclient_secret;
     let oterminal_id = req.body.oterminal_id;
     let otest_mode = req.body.otest_mode;
-    
+
     let qr = `Select * from resturant where owner_email = "${owner_email}" or name = "${name}"`
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
-            if (result.length ===0) {
+            if (result.length === 0) {
                 let qr = `INSERT INTO resturant(owner_name, owner_email,owner_address,owner_phone, domain,primary_color,secondary_color,app_name,delivery_min,location_search,stripe_connect, enable_stripe,stripe_key,stripe_secret,map_api,analytics,client_id,client_secret,redirect, fclient_id,fclient_secret,fclient_redirect,app_id,rapi_key,sms,optomany_enabled,oclient_id, oclient_secret,oterminal_id,otest_mode,name,description,address,phone,charges,minimum_order,average_order,time,status) VALUES ('${owner_name}', '${owner_email}', '${owner_address}', '${owner_phone}', '${domain}', '${primary_color}', '${secondary_color}', '${app_name}', '${delivery_min}', '', '${stripe_connect}', '${enable_stripe}', '${stripe_key}', '${stripe_secret}', '${map_api}', '${analytics}', '${client_id}', '${client_secret}', '${redirect}', '${fclient_id}', '${fclient_secret}', '${fclient_redirect}', '${app_id}', '${rapi_key}', '${sms}', '${optomany_enabled}', '${oclient_id}', '${oclient_secret}', '${oterminal_id}', '${otest_mode}','${name}','','','','','','','','true');`
-                dbconfig.query(qr,(err,result1)=>{
+                dbconfig.query(qr, (err, result1) => {
                     if (result1.affectedRows > 0) {
                         // res.json({
                         //     message:"data has been inserted"
                         // })
-                        let qr =  `SELECT * FROM customer
+                        let qr = `SELECT * FROM customer
                     WHERE email = '${owner_email}'`
-                    dbconfig.query(qr,(err,result)=>{
-                        if (!err) {
-                            if (result.length <=0) {
-                                let qr = `insert into customer(name,email,number,password,role,resturant_ID)
+                        dbconfig.query(qr, (err, result) => {
+                            if (!err) {
+                                if (result.length <= 0) {
+                                    let qr = `insert into customer(name,email,number,password,role,resturant_ID)
                                         values('${owner_name}','${owner_email}','${owner_phone}','admin1234',1,${result1.insertId})`
-                                dbconfig.query(qr,(err,result)=>{
+                                    dbconfig.query(qr, (err, result) => {
                                         if (err) {
-                                            console.log(err,'errs');
+                                            console.log(err, 'errs');
                                         }
-                                        else {  
+                                        else {
                                             res.send({
-                                            data:result
+                                                data: result
                                             });
                                         }
                                     })
-                }
-                else {
-                    return res.status(400).json({message:"Email already exist"})
-                }
-            }
-            else {  
-                console.log(err,'errs');
-            }
-        })
+                                }
+                                else {
+                                    return res.status(400).json({ message: "Email already exist" })
+                                }
+                            }
+                            else {
+                                console.log(err, 'errs');
+                            }
+                        })
                     } else {
                         res.status(404).json({
-                            "message":"in",
-                            error:err
+                            "message": "in",
+                            error: err
 
                         })
-                    } 
+                    }
                 })
-  
+
             } else {
                 res.json({
-                    message:"Email already existed"
+                    message: "Email already existed"
                 })
             }
         } else {
             res.json({
-                "message":err,
-                error:err
+                "message": err,
+                error: err
             })
         }
     })
@@ -135,11 +135,11 @@ router.post('/addresturant',(req,res)=>{
 
 // Router:
 // Status:
-router.post('/resturantmanagement',upload.fields([{name:"photo",maxCount:1},
-{name:"cimage",maxCount:1},
-{name:"rimage",maxCount:1}
-]),(req,res)=>{
-    let description  = req.body.description;
+router.post('/resturantmanagement', upload.fields([{ name: "photo", maxCount: 1 },
+{ name: "cimage", maxCount: 1 },
+{ name: "rimage", maxCount: 1 }
+]), (req, res) => {
+    let description = req.body.description;
     let address = req.body.address;
     let phone = req.body.phone;
     let charges = req.body.charges;
@@ -168,14 +168,14 @@ router.post('/resturantmanagement',upload.fields([{name:"photo",maxCount:1},
     pickup = '${pickup}',
     delivery = '${delivery}'
     where ID = ${id}`
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
             res.status(200).json({
-                message:"Data has been updated"
+                message: "Data has been updated"
             })
         } else {
             res.status(404).json({
-                error:err
+                error: err
             })
         }
     })
@@ -183,29 +183,29 @@ router.post('/resturantmanagement',upload.fields([{name:"photo",maxCount:1},
 
 // Router 2: https://apinodejs.creativeparkingsolutions.com/api/setting/loyality
 // Status
-router.post('/loyality',(req,res)=>{
+router.post('/loyality', (req, res) => {
     let status = req.body.status;
     let redeem = req.body.redeem;
     let points = req.body.points;
-    let currency_points= req.body.currency_points;
+    let currency_points = req.body.currency_points;
     let id = req.body.id;
 
     // let qr = `insert into loyality(status,redeem,points,currency_points)
     // values('${status}','${redeem}','${points}','${currency_points}')`
     let qr = `Select * from loyality where resturant_ID = ${id}`
-    dbconfig.query(qr,(err,result)=>{
-        if(!err){
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
             if (result.length <= 0) {
                 let qr = `insert into loyality(status,redeem,points,currency_points,resturant_ID)
                 values('${status}','${redeem}','${points}','${currency_points}',${id})`
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been inserted"
+                            message: "Data has been inserted"
                         })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
@@ -215,28 +215,28 @@ router.post('/loyality',(req,res)=>{
                 points = '${points}',
                 currency_points = '${currency_points}'
                 where resturant_ID = ${id}`
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"data has been updated"
+                            message: "data has been updated"
                         })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
             }
         }
-        else{
-            console.log(err,"err")
+        else {
+            console.log(err, "err")
         }
     })
 })
 
 // Router 3: https://apinodejs.creativeparkingsolutions.com/api/setting/referral
 // Status:
-router.post('/referral',(req,res)=>{
+router.post('/referral', (req, res) => {
     let status = req.body.status;
     let new_customer = req.body.new_customer;
     let existing_customer = req.body.existing_customer;
@@ -245,19 +245,19 @@ router.post('/referral',(req,res)=>{
     let qr = `Select * from referral where resturant_ID = ${id}`
     // let qr = `Insert into referral(status,new_customer,existing_customer)
     // values('${status}','${new_customer}','${existing_customer}')`
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
             if (result.length <= 0) {
                 let qr = `Insert into referral(status,new_customer,existing_customer,resturant_ID)
                 values('${status}','${new_customer}','${existing_customer}',${id})`
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"data has been inserted"
-                        })   
+                            message: "data has been inserted"
+                        })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
@@ -267,27 +267,27 @@ router.post('/referral',(req,res)=>{
                 existing_customer = '${existing_customer}'
                 where resturant_ID = ${id}
                 `
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"data has been updated"
+                            message: "data has been updated"
                         })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
             }
         } else {
-            console.log(err,"err")
+            console.log(err, "err")
         }
     })
 })
 
 // Router 4: https://apinodejs.creativeparkingsolutions.com/api/setting/config
 // Status:
-router.post('/config',(req,res)=>{
+router.post('/config', (req, res) => {
     let order_time = req.body.order_time;
     let otp = req.body.otp;
     let id = req.body.id
@@ -295,19 +295,19 @@ router.post('/config',(req,res)=>{
     // let qr = `Insert into config(order_time,otp)
     // values('${order_time}','${otp}')`
     let qr = `Select * from config where resturant_ID = ${id}`
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
-            if (result.length<=0) {
+            if (result.length <= 0) {
                 let qr = `Insert into config(order_time,otp,resturant_ID)
                 values('${order_time}','${otp}',${id})`
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            messgae:"data has been inserted"
+                            messgae: "data has been inserted"
                         })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
@@ -316,48 +316,48 @@ router.post('/config',(req,res)=>{
                 otp = '${otp}'
                 where resturant_ID = ${id}
                 `
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been updeted"
+                            message: "Data has been updeted"
                         })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
             }
         } else {
-            console.log(err,"err")
+            console.log(err, "err")
         }
     })
 })
 
 // router 5: https://apinodejs.creativeparkingsolutions.com/api/setting/menutype
 // status:
-router.post('/menutype',(req,res)=>{
+router.post('/menutype', (req, res) => {
     let lowercase = req.body.lowercase;
-    let uppercase  = req.body.uppercase;
+    let uppercase = req.body.uppercase;
     let capitalized = req.body.capitalized;
     let id = req.body.id
 
     // let qr = `insert into menutype(lowercase,uppercase,capitalized)
     // values('${lowercase}','${uppercase}','${capitalized}')`
     let qr = `Select * from menutype where resturant_ID = ${id}`
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
-            if (result.length<=0) {
+            if (result.length <= 0) {
                 let qr = `insert into menutype(lowercase,uppercase,capitalized,resturant_ID)
                 values('${lowercase}','${uppercase}','${capitalized}',${id})`
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been inserted"
+                            message: "Data has been inserted"
                         })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
@@ -367,27 +367,27 @@ router.post('/menutype',(req,res)=>{
                 capitalized = '${capitalized}'
                 where resturant_ID = ${id}
                 `
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"data has been updated"
+                            message: "data has been updated"
                         })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
             }
         } else {
-            console.log(err,"err")
+            console.log(err, "err")
         }
     })
 })
 
 // Router 6: https://apinodejs.creativeparkingsolutions.com/api/setting/apps
 // Status:
-router.post("/apps",(req,res)=>{
+router.post("/apps", (req, res) => {
     let title = req.body.title;
     let description = req.body.description;
     let api_key = req.body.api_key;
@@ -402,24 +402,24 @@ router.post("/apps",(req,res)=>{
     // let qr = `Insert into app(title,description,api_key,main_printer,kitchen_printer,standard_printer,standard_print,main_print,kitchen_print)
     // values('${title}','${description}','${api_key}','${main_printer}','${kitchen_printer}','${standard_printer}','${standard_print}','${main_print}','${kitchen_print}')`
     let qr = `Select * from app where resturant_ID = ${id}`
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
-            if(result.length<=0){
+            if (result.length <= 0) {
                 let qr = `Insert into app(title,description,api_key,main_printer,kitchen_printer,standard_printer,standard_print,main_print,kitchen_print,resturant_ID)
                     values('${title}','${description}','${api_key}','${main_printer}','${kitchen_printer}','${standard_printer}','${standard_print}','${main_print}','${kitchen_print}',${id})`
-                    dbconfig.query(qr,(err,result)=>{
-                        if (!err) {
-                            res.status(200).json({
-                                message:"Data has been insterted"
-                            })
-                        } else {
-                            res.status(404).json({
-                                error:err
-                            })
-                        }
-                    })
+                dbconfig.query(qr, (err, result) => {
+                    if (!err) {
+                        res.status(200).json({
+                            message: "Data has been insterted"
+                        })
+                    } else {
+                        res.status(404).json({
+                            error: err
+                        })
+                    }
+                })
             }
-            else{
+            else {
                 let qr = `update app set  title='${title}',
                 description = '${description}',
                 api_key='${api_key}',
@@ -431,91 +431,91 @@ router.post("/apps",(req,res)=>{
                 kitchen_print = '${kitchen_print}'
                 where resturant_ID = ${id}
                 `
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been updated"
+                            message: "Data has been updated"
                         })
                     } else {
                         res.status(404).json({
-                            error:err
+                            error: err
                         })
                     }
                 })
             }
         } else {
-            console.log(err,"err")
+            console.log(err, "err")
         }
     })
 })
 
 // Router for add timings / Path: http://localhost:5000/api/setting/addtimings
-router.post("/addtimings",(req,res)=>{
+router.post("/addtimings", (req, res) => {
     let id = req.body.id;
     let description = req.body.description;
 
     let qr = `Select count(*) as 'total' from timing where resturant_ID = ${id}`
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
-            if(result[0]['total'] === 0){
+            if (result[0]['total'] === 0) {
                 let qr = `Insert into timing (resturant_ID,description)
                 values (${id},'${description}') `
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been inserted"
+                            message: "Data has been inserted"
                         })
                     } else {
                         res.status(404).json({
-                            message:"Something went wrong"
+                            message: "Something went wrong"
                         })
                     }
                 })
             }
-            else{
+            else {
                 let qr = `Update timing 
                 set description = '${description}'
                 where resturant_ID = ${id}`
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been updated"
+                            message: "Data has been updated"
                         })
                     } else {
                         res.status(500).json({
-                            message:"Something went wrong"
+                            message: "Something went wrong"
                         })
                     }
                 })
             }
         } else {
             res.status(500).json({
-                message:"Something went wrong"
+                message: "Something went wrong"
             })
         }
     })
 })
 
 // Router for Gallery / Path: http://localhost:5000/api/setting/addgallery
-router.post("/addgallery",upload.single("image"),(req,res)=>{
+router.post("/addgallery", upload.single("image"), (req, res) => {
     let id = req.body.id;
     let link = req.body.link;
     const filename = req.file.path;
 
     let qr = `Select count(*) as 'total' from gallery where resturant_ID = ${id} `
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
             if (result[0]['total'] === 0) {
                 let qr = `Insert into gallery (resturant_ID,link,image)
                 values (${id},'${link}','${filename}') `
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been inserted"
+                            message: "Data has been inserted"
                         })
                     } else {
                         res.status(404).json({
-                            message:"Incomplete requirements"
+                            message: "Incomplete requirements"
                         })
                     }
                 })
@@ -524,43 +524,43 @@ router.post("/addgallery",upload.single("image"),(req,res)=>{
                 set link = '${link}',
                 image ='${filename}'
                 where resturant_ID = ${id} `
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been updated"
+                            message: "Data has been updated"
                         })
                     } else {
                         res.status(404).json({
-                            message:"Invalid requirements"
+                            message: "Invalid requirements"
                         })
                     }
                 })
             }
         } else {
             res.status(500).json({
-                message:"Something went wrong with this link"
+                message: "Something went wrong with this link"
             })
         }
     })
 })
 
 // Router for addcontent / Path: http://localhost:5000/api/setting/addcontent
-router.post("/addcontent",upload.fields([{name:"menu",maxCount:1},
-{name:"banner1",maxCount:1},
-{name:"banner2",maxCount:1},
-{name:"banner3",maxCount:1},
-{name:"banner4",maxCount:1},
-{name:"banner5",maxCount:1},
-{name:"box1icon",maxCount:1},
-{name:"box2icon",maxCount:1},
-{name:"box3icon",maxCount:1}
-]),(req,res)=>{
+router.post("/addcontent", upload.fields([{ name: "menu", maxCount: 1 },
+{ name: "banner1", maxCount: 1 },
+{ name: "banner2", maxCount: 1 },
+{ name: "banner3", maxCount: 1 },
+{ name: "banner4", maxCount: 1 },
+{ name: "banner5", maxCount: 1 },
+{ name: "box1icon", maxCount: 1 },
+{ name: "box2icon", maxCount: 1 },
+{ name: "box3icon", maxCount: 1 }
+]), (req, res) => {
     let id = req.body.id;
     let frontendtemplate = req.body.frontendtemplate;
     let fadmintemplate = req.body.fadmintemplate;
     let pcolor = req.body.pcolor;
     let scolor = req.body.scolor;
-    let title1 = req.body .title1;
+    let title1 = req.body.title1;
     let title2 = req.body.title2;
     let description1 = req.body.description1;
     let bannertext1 = req.body.bannertext1;
@@ -576,7 +576,7 @@ router.post("/addcontent",upload.fields([{name:"menu",maxCount:1},
     let box2title = req.body.box2title;
     let box2link = req.body.box2link;
     let box3description = req.body.box3description;
-    
+
 
     // images
     let menu = req.files.menu[0].path;
@@ -590,18 +590,18 @@ router.post("/addcontent",upload.fields([{name:"menu",maxCount:1},
     let box3icon = req.files.box3icon[0].path;
 
     let qr = `Select count(*) as 'total' from content where resturant_ID = ${id}`
-    dbconfig.query(qr,(err,result)=>{
+    dbconfig.query(qr, (err, result) => {
         if (!err) {
             if (result[0]['total'] === 0) {
                 let qr = `INSERT INTO content(resturant_ID,frontendtemplate,fadmintemplate,pcolor,scolor, title1,title2,description1,bannertext1,box1title,box1link,box2description,box3title, box3link, box3link2,menu,banner1,banner2,banner3,banner4,banner5,box1icon,box2icon,box3icon, description2,bannertext2,box1description,box2title,box2link,box3description) VALUES ('${id}','${frontendtemplate}','${fadmintemplate}','${pcolor}','${scolor}','${title1}','${title2}','${description1}','${bannertext1}','${box1title}','${box1link}','${box2description}','${box3title}','${box3link}','${box3link2}','${menu}','${banner1}','${banner2}','${banner3}','${banner4}','${banner5}','${box1icon}','${box2icon}','${box3icon}','${description2}','${bannertext2}','${box1description}','${box2title}','${box2link}','${box3description}')`
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"Data has been added"
+                            message: "Data has been added"
                         })
                     } else {
                         res.status(404).json({
-                            message:"Invalid requirements"
+                            message: "Invalid requirements"
                         })
                     }
                 })
@@ -636,21 +636,46 @@ router.post("/addcontent",upload.fields([{name:"menu",maxCount:1},
                 box2link='${box2link}',
                 box3description='${box3description}' 
                 WHERE resturant_ID=${id}`
-                dbconfig.query(qr,(err,result)=>{
+                dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
-                            message:"data has been updated successfully"
+                            message: "data has been updated successfully"
                         })
                     } else {
                         res.status(404).json({
-                            message:"Failed! try again"
+                            message: "Failed! try again"
                         })
                     }
                 })
             }
         } else {
             res.status(500).json({
-                message:"Something went wrong"
+                message: "Something went wrong"
+            })
+        }
+    })
+})
+
+// Router for Delivery area zone form 
+router.post("/addzone", (req, res) => {
+    let name = req.body.name;
+    let discount = req.body.discount;
+    let delivery = req.body.delivery;
+    let delay = req.body.delay;
+    let radius = req.body.radius;
+    let active = req.body.active;
+    let resturant_ID = req.body.resturant_ID;
+
+    let qr = `INSERT INTO zone(name, discount, delivery, delay, radius, active, resturant_ID) VALUES ('${name}' ,'${discount}','${delivery}','${delay}','${radius}','${active}','${resturant_ID}')`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                message: "Data has been inserted"
+            })
+        } else {
+            res.status(500).json({
+                message: "Something went wrong",
+                error: err
             })
         }
     })
