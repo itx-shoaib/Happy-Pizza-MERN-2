@@ -700,4 +700,23 @@ router.post('/showzones', (req, res) => {
     })
 })
 
+// Router to delete zone
+router.post('/deletezone', (req, res) => {
+    let ID = req.body.ID;
+
+    let qr = `DELETE FROM zone WHERE ID = ${ID}`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                message: "Zone has been deleted"
+            })
+        } else {
+            res.status(500).json({
+                message: "something went wrong",
+                error: err
+            })
+        }
+    })
+})
+
 module.exports = router
