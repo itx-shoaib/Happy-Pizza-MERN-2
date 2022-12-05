@@ -681,4 +681,23 @@ router.post("/addzone", (req, res) => {
     })
 })
 
+// Router for showing Zones
+router.post('/showzones', (req, res) => {
+    let resturant_ID = req.body.resturant_ID;
+
+    let qr = `Select * from zone where resturant_ID = ${resturant_ID}`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(500).json({
+                message: "something went wrong",
+                error: err
+            })
+        }
+    })
+})
+
 module.exports = router
