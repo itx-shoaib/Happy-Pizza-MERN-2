@@ -719,4 +719,31 @@ router.post('/deletezone', (req, res) => {
     })
 })
 
+
+// Router to update  zone
+router.post('/updatezone', (req, res) => {
+    let ID = req.body.ID;
+    let name = req.body.name;
+    let discount = req.body.discount;
+    let delivery = req.body.delivery;
+    let delay = req.body.delay;
+    let radius = req.body.radius;
+    let active = req.body.active
+
+    let qr = `UPDATE zone SET name='${name}',discount='${discount}',delivery='${delivery}',delay='${delay}',radius='${radius}',active='${active}' WHERE ID = ${ID}`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                message: "Zone has been updated"
+            })
+        } else {
+            res.status(500).json({
+                message: "something went wrong",
+                error: err
+            })
+        }
+    })
+})
+
+
 module.exports = router
