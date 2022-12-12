@@ -655,6 +655,26 @@ router.post('/myprofile', (req, res) => {
     })
 })
 
+// Router: http://localhost:5000/api/admin/salesvloume
+// Status:
+router.post("/getprofile", (req, res) => {
+    let ID = req.body.ID
+
+    let qr = `Select * from customer where customer_Id = ${ID}`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(404).json({
+                message: "Data not found",
+                error: err
+            })
+        }
+    })
+})
+
 // Router : http://localhost:5000/api/admin/salesvloume
 // status:
 router.get('/salesvloume', (req, res) => {
