@@ -32,7 +32,8 @@ function Items({ items, categorys }) {
 
     console.log(cartDetail)
     try {
-      const result = await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/cart', cartDetail)
+      // http://localhost:5000
+      const result = await axios.post('http://localhost:5000/api/admin/cart', cartDetail)
       console.log(result)
       toast.success("Item has been added to cart")
       setQuantity('')

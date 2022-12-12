@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
@@ -27,7 +27,7 @@ function Addresses() {
       customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
     }
     try {
-      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/addaddress', info)).data
+      const data = (await axios.post('http://localhost:5000/api/user/addaddress', info)).data
       console.log(data.data)
       refClose.current.click();
       updateAddress();
@@ -51,7 +51,7 @@ function Addresses() {
       ID
     }
     try {
-      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/setaddressprimary', info)).data
+      const data = (await axios.post('http://localhost:5000/api/user/setaddressprimary', info)).data
       update()
       toast.success("Address successfully updated.")
       // window.location.reload();
@@ -63,18 +63,17 @@ function Addresses() {
     }
   }
 
-  async function update(){
-    if(getstatus==="true")
-  {
-   const user =JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
-   
+  async function update() {
+    if (getstatus === "true") {
+      const user = JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id;
+
 
       const temp = {
-        customer_Id:user
+        customer_Id: user
       }
       try {
 
-        const data = ( await axios.post("https://apinodejs.creativeparkingsolutions.com/api/user/getaddress",temp)).data;
+        const data = (await axios.post("http://localhost:5000/api/user/getaddress", temp)).data;
         console.log(data.data)
         setAddress(data.data)
 
@@ -85,12 +84,12 @@ function Addresses() {
     }
   }
 
-  async function updateAddress(){
+  async function updateAddress() {
     const user = {
       customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
     }
     try {
-      const data = await (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/getaddress', user)).data
+      const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
       setAddress(data.data)
 
     } catch (error) {
@@ -104,7 +103,7 @@ function Addresses() {
       ID
     }
     try {
-      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/deleteaddress', info)).data
+      const data = (await axios.post('http://localhost:5000/api/user/deleteaddress', info)).data
       update()
       toast.success("Address successfully deactivated.")
       // window.location.reload();
@@ -121,7 +120,7 @@ function Addresses() {
         customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
       }
       try {
-        const data = await (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/user/getaddress', user)).data
+        const data = await (await axios.post('http://localhost:5000/api/user/getaddress', user)).data
         setAddress(data.data)
 
       } catch (error) {
@@ -226,24 +225,24 @@ function Addresses() {
                               return <>
                                 <tr>
                                   <td>{item.house},{item.flat},{item.street},{item.postcode},{item.town}
-                                  {item.address_status === 1 && (<><span class="badge text-bg-info info">Primary Address</span></>) }
+                                    {item.address_status === 1 && (<><span class="badge text-bg-info info">Primary Address</span></>)}
                                   </td>
                                   <td></td>
                                   <td></td>
                                   <td>
                                     <div class="dropdown">
                                       <button class="btn btn-info customRadius" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                      <AiOutlineUnorderedList />
+                                        <AiOutlineUnorderedList />
                                       </button>
                                       <ul class="dropdown-menu">
                                         {item.address_status === 1 ? (<>
-                                          <li><button class="dropdown-item" type="button" onClick={()=>{del(item.ID)}}>Delete</button></li>
-                                        </>):(<>
-                                          <li><button class="dropdown-item" type="button" onClick={()=>{primary(item.ID)}}>Set as primary</button></li>
-                                          <li><button class="dropdown-item" type="button" onClick={()=>{del(item.ID)}}>Delete</button></li>
-                                          </>)}
-                                        
-                                        
+                                          <li><button class="dropdown-item" type="button" onClick={() => { del(item.ID) }}>Delete</button></li>
+                                        </>) : (<>
+                                          <li><button class="dropdown-item" type="button" onClick={() => { primary(item.ID) }}>Set as primary</button></li>
+                                          <li><button class="dropdown-item" type="button" onClick={() => { del(item.ID) }}>Delete</button></li>
+                                        </>)}
+
+
                                       </ul>
                                     </div>
                                   </td>
@@ -255,7 +254,7 @@ function Addresses() {
                           </tbody>
                         </table>
                       </div>
-                    </>):  address.length === 1 ? (<>
+                    </>) : address.length === 1 ? (<>
                       <table class="table">
                         <thead>
                           <tr>
@@ -278,7 +277,7 @@ function Addresses() {
                       <h4>You dont have any addresses...</h4></>)}
                     {/* {address ? (<> */}
 
-                      {/* <h4> {address.house},{address.flat},{address.street},{address.postcode},{address.town}</h4> */}
+                    {/* <h4> {address.house},{address.flat},{address.street},{address.postcode},{address.town}</h4> */}
                     {/* </>) : (<>
                       
                     </>)} */}

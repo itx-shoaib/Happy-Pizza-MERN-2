@@ -28,7 +28,7 @@ var upload = multer({
 })
 
 // Router 1 api is for super admin and admin for adding the resturnat.
-// Router 1 : Registering the resturant information https://apinodejs.creativeparkingsolutions.com/api/setting/addresturantmanagement
+// Router 1 : Registering the resturant information http://localhost:5000/api/setting/addresturantmanagement
 // Status
 router.post('/addresturant', (req, res) => {
     let name = req.body.name;
@@ -181,7 +181,7 @@ router.post('/resturantmanagement', upload.fields([{ name: "photo", maxCount: 1 
     })
 })
 
-// Router 2: https://apinodejs.creativeparkingsolutions.com/api/setting/loyality
+// Router 2: http://localhost:5000/api/setting/loyality
 // Status
 router.post('/loyality', (req, res) => {
     let status = req.body.status;
@@ -234,7 +234,7 @@ router.post('/loyality', (req, res) => {
     })
 })
 
-// Router 3: https://apinodejs.creativeparkingsolutions.com/api/setting/referral
+// Router 3: http://localhost:5000/api/setting/referral
 // Status:
 router.post('/referral', (req, res) => {
     let status = req.body.status;
@@ -285,7 +285,7 @@ router.post('/referral', (req, res) => {
     })
 })
 
-// Router 4: https://apinodejs.creativeparkingsolutions.com/api/setting/config
+// Router 4: http://localhost:5000/api/setting/config
 // Status:
 router.post('/config', (req, res) => {
     let order_time = req.body.order_time;
@@ -334,7 +334,7 @@ router.post('/config', (req, res) => {
     })
 })
 
-// router 5: https://apinodejs.creativeparkingsolutions.com/api/setting/menutype
+// router 5: http://localhost:5000/api/setting/menutype
 // status:
 router.post('/menutype', (req, res) => {
     let lowercase = req.body.lowercase;
@@ -385,7 +385,7 @@ router.post('/menutype', (req, res) => {
     })
 })
 
-// Router 6: https://apinodejs.creativeparkingsolutions.com/api/setting/apps
+// Router 6: http://localhost:5000/api/setting/apps
 // Status:
 router.post("/apps", (req, res) => {
     let title = req.body.title;
@@ -701,8 +701,8 @@ router.post('/showzones', (req, res) => {
 })
 
 // Router to delete zone
-router.post('/deletezone', (req, res) => {
-    let ID = req.body.ID;
+router.post('/deletezone/:ID', (req, res) => {
+    let ID = req.params.ID;
 
     let qr = `DELETE FROM zone WHERE ID = ${ID}`
     dbconfig.query(qr, (err, result) => {
@@ -719,16 +719,15 @@ router.post('/deletezone', (req, res) => {
     })
 })
 
-
 // Router to update  zone
 router.post('/updatezone', (req, res) => {
     let ID = req.body.ID;
-    let name = req.body.name;
-    let discount = req.body.discount;
-    let delivery = req.body.delivery;
-    let delay = req.body.delay;
-    let radius = req.body.radius;
-    let active = req.body.active
+    let name = req.body.name1;
+    let discount = req.body.discount1;
+    let delivery = req.body.delivery1;
+    let delay = req.body.delay1;
+    let radius = req.body.radius1;
+    let active = req.body.active1
 
     let qr = `UPDATE zone SET name='${name}',discount='${discount}',delivery='${delivery}',delay='${delay}',radius='${radius}',active='${active}' WHERE ID = ${ID}`
     dbconfig.query(qr, (err, result) => {
@@ -739,6 +738,25 @@ router.post('/updatezone', (req, res) => {
         } else {
             res.status(500).json({
                 message: "something went wrong",
+                error: err
+            })
+        }
+    })
+})
+
+// Router to get a zone detail by ID
+router.post('/showzonebyid/:ID', (req, res) => {
+    let ID = req.params.ID
+    let qr = `Select * from zone where ID = ${ID}`
+
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(500).json({
+                message: "Something went wrong",
                 error: err
             })
         }

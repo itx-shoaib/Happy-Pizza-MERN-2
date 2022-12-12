@@ -46,7 +46,7 @@ function MenuPage() {
         setloading(true);
         const data = await (
           await axios.get(
-            "https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu"
+            "http://localhost:5000/api/admin/getallmenu"
           )
         ).data;
         setcategory(data.data);
@@ -65,7 +65,7 @@ function MenuPage() {
       try {
         const data = await (
           await axios.get(
-            "https://apinodejs.creativeparkingsolutions.com/api/admin/getallitems"
+            "http://localhost:5000/api/admin/getallitems"
           )
         ).data;
         setItem(data.data);

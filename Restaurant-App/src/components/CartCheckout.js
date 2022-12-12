@@ -32,7 +32,7 @@ function CartCheckout() {
     try {
       const data = (
         await axios.post(
-          "https://apinodejs.creativeparkingsolutions.com/api/user/addaddress",
+          "http://localhost:5000/api/user/addaddress",
           info
         )
       ).data;
@@ -64,7 +64,7 @@ function CartCheckout() {
     try {
       const data = (
         await axios.post(
-          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
+          "http://localhost:5000/api/admin/updatecart",
           info
         )
       ).data;
@@ -89,7 +89,7 @@ function CartCheckout() {
     try {
       const data = (
         await axios.post(
-          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
+          "http://localhost:5000/api/admin/updatecart",
           info
         )
       ).data;
@@ -110,7 +110,7 @@ function CartCheckout() {
     try {
       const data = (
         await axios.post(
-          "https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart",
+          "http://localhost:5000/api/admin/updatecart",
           info
         )
       ).data;
@@ -134,7 +134,7 @@ function CartCheckout() {
       try {
         const data = (
           await axios.post(
-            "https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",
+            "http://localhost:5000/api/admin/getcartitems",
             temp
           )
         ).data;
@@ -154,7 +154,7 @@ function CartCheckout() {
     try {
       const data = await (
         await axios.post(
-          "https://apinodejs.creativeparkingsolutions.com/api/user/getaddress",
+          "http://localhost:5000/api/user/getaddress",
           user
         )
       ).data;
@@ -173,7 +173,7 @@ function CartCheckout() {
       try {
         const data = await (
           await axios.post(
-            "https://apinodejs.creativeparkingsolutions.com/api/user/getaddress",
+            "http://localhost:5000/api/user/getaddress",
             user
           )
         ).data;
@@ -196,7 +196,7 @@ function CartCheckout() {
         try {
           const data = (
             await axios.post(
-              "https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems",
+              "http://localhost:5000/api/admin/getcartitems",
               temp
             )
           ).data;
@@ -229,7 +229,7 @@ function CartCheckout() {
     try {
       // setloading(true)
       const result = await axios.post(
-        "https://apinodejs.creativeparkingsolutions.com/api/admin/cartcheckout",
+        "http://localhost:5000/api/admin/cartcheckout",
         user
       ).data;
       console.log(result);
@@ -280,8 +280,8 @@ function CartCheckout() {
                     name="ordertype"
                     id="ordertype1"
                     value="0"
-                    onClick={()=>{setvisible(true)}}
-                    
+                    onClick={() => { setvisible(true) }}
+
                     required
                   />
                   <label className="form-check-label" for="ordertype1">
@@ -289,126 +289,126 @@ function CartCheckout() {
                   </label>
                 </div>
 
-                              <div className="form-check ordertype">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="ordertype"
-                  id="ordertype2"
-                  value="1"
-                  onClick={()=>{setvisible(false)}}
-                  checked
-                  required
-                />
-                <label className="form-check-label" for="ordertype2">
-                  Collection
-                </label>
-              </div>
+                <div className="form-check ordertype">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="ordertype"
+                    id="ordertype2"
+                    value="1"
+                    onClick={() => { setvisible(false) }}
+                    checked
+                    required
+                  />
+                  <label className="form-check-label" for="ordertype2">
+                    Collection
+                  </label>
+                </div>
 
 
 
-              {visible  && (
-                <>
-
-
-                <h5 className="mt-4 boldtext">Delivery Address</h5>
-
-                {address ? (
-                  address.map((addresses) => {
-                    return (
-                      <>
-                        {addresses.address_status === 1 ? (
-                          <>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input mt-3"
-                                type="radio"
-                                name="flexRadioDefault"
-                                id={`flexRadioDefault${addresses.ID}`}
-                                checked
-                              />
-                              <label
-                                class="form-check-label"
-                                for={`flexRadioDefault${addresses.ID}`}
-                              >
-                                <h6 className="mt-3 boldtext">
-                                  House no:{addresses.house},Flat:
-                                  {addresses.flat},{addresses.street},
-                                  {addresses.postcode},{addresses.town}
-                                </h6>
-                              </label>
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input mt-3"
-                                type="radio"
-                                name="flexRadioDefault"
-                                id={`flexRadioDefault${addresses.ID}`}
-                                disabled
-                              />
-                              <label
-                                class="form-check-label"
-                                for={`flexRadioDefault${addresses.ID}`}
-                              >
-                                <h6 className="mt-3 boldtext">
-                                  House no:{addresses.house},Flat:
-                                  {addresses.flat},{addresses.street},
-                                  {addresses.postcode},{addresses.town}
-                                </h6>
-                              </label>
-                            </div>
-                          </>
-                        )}
-                      </>
-                    );
-                  })
-                ) : (
+                {visible && (
                   <>
-                    <h6 className="mt-3 boldtext">
-                      You dont have any address. Please add one
-                    </h6>
+
+
+                    <h5 className="mt-4 boldtext">Delivery Address</h5>
+
+                    {address ? (
+                      address.map((addresses) => {
+                        return (
+                          <>
+                            {addresses.address_status === 1 ? (
+                              <>
+                                <div class="form-check">
+                                  <input
+                                    class="form-check-input mt-3"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id={`flexRadioDefault${addresses.ID}`}
+                                    checked
+                                  />
+                                  <label
+                                    class="form-check-label"
+                                    for={`flexRadioDefault${addresses.ID}`}
+                                  >
+                                    <h6 className="mt-3 boldtext">
+                                      House no:{addresses.house},Flat:
+                                      {addresses.flat},{addresses.street},
+                                      {addresses.postcode},{addresses.town}
+                                    </h6>
+                                  </label>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div class="form-check">
+                                  <input
+                                    class="form-check-input mt-3"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id={`flexRadioDefault${addresses.ID}`}
+                                    disabled
+                                  />
+                                  <label
+                                    class="form-check-label"
+                                    for={`flexRadioDefault${addresses.ID}`}
+                                  >
+                                    <h6 className="mt-3 boldtext">
+                                      House no:{addresses.house},Flat:
+                                      {addresses.flat},{addresses.street},
+                                      {addresses.postcode},{addresses.town}
+                                    </h6>
+                                  </label>
+                                </div>
+                              </>
+                            )}
+                          </>
+                        );
+                      })
+                    ) : (
+                      <>
+                        <h6 className="mt-3 boldtext">
+                          You dont have any address. Please add one
+                        </h6>
+                      </>
+                    )}
+
+                    <button
+                      type="button"
+                      className="btn btn-primary mt-3 mb-5"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addressModal"
+                    >
+                      Add New Address
+                    </button>
+                    <h5 className="boldtext">Delivery Time</h5>
+                    <div className="dropdown timelist mb-4">
+                      <button
+                        className="btn btn-light w-100 dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Select Time
+                      </button>
+                      <ul
+                        className="dropdown-menu timelist"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        {
+                          times.map((time) => (
+                            <>
+                              <li className="dropdown-item time">{time}</li>
+                            </>
+                          ))
+                        }
+                      </ul>
+                    </div>
                   </>
                 )}
-
-                <button
-                  type="button"
-                  className="btn btn-primary mt-3 mb-5"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addressModal"
-                >
-                  Add New Address
-                </button>
-                <h5 className="boldtext">Delivery Time</h5>
-                <div className="dropdown timelist mb-4">
-                  <button
-                    className="btn btn-light w-100 dropdown-toggle"
-                    type="button"
-                    id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Select Time
-                  </button>
-                  <ul
-                    className="dropdown-menu timelist"
-                    aria-labelledby="dropdownMenuButton1"
-                  >
-                    {
-                      times.map((time) => (
-                    <>
-                      <li className="dropdown-item time">{time}</li>
-                    </>
-                    ))
-                    }
-                  </ul>
-                </div>
-                </>
-                )}
               </div>
-              
+
               <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>ORDER ITEMS</h6>
                 <hr />
