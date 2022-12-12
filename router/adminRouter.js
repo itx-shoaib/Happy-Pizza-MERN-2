@@ -716,7 +716,7 @@ router.post('/salesvloumeresturant', (req, res) => {
 // Status: Working
 router.post('/getordercount', (req, res) => {
 
-    let id = req.body.id
+    let id = req.body.customer_Id
 
     // Main query
     let qr = `SELECT count(*) as 'total' FROM cart 

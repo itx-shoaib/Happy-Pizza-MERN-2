@@ -9,6 +9,7 @@ function Profile() {
   const [email, setemail] = useState(JSON.parse(localStorage.getItem("currentuser"))[0].email);
   const [number, setnumber] = useState(JSON.parse(localStorage.getItem("currentuser"))[0].number);
   const [ordercount, setordercount] = useState("")
+  const [address, setaddress] = useState([])
 
   async function updatecustomer(e) {
     const details = {
@@ -44,14 +45,19 @@ function Profile() {
   useEffect(() => {
     async function fetchData() {
       const detail = {
-        id: JSON.parse(localStorage.getItem("currentuser"))[0].customer_Id
+        customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0].customer_Id
       }
       try {
         const data = await (
           await axios.post("http://localhost:5000/api/admin/getordercount", detail)
         ).data;
 
+        const result = await (
+          await axios.post("http://localhost:5000/api/user/getaddress", detail)
+        ).data
+
         setordercount(data.data['total']);
+        setaddress(result.data)
       } catch (error) {
         console.log(error);
       }
@@ -170,15 +176,22 @@ function Profile() {
                 </button>
               </div>
               <div className="col-lg-4 text-start bs br mx-3 my-5 py-4 px-4 profileinfo responsiveness">
-                <p>INFO</p>
-                <br />
-                <hr />
-                <br />
                 <p>Total Orders: {ordercount}</p>
                 <br />
                 <hr />
                 <br />
-                <p>Last Added Address: ---</p>
+                <p>Last Added Address:</p>
+                {address.length < 1 ? (
+                  <p>
+                    <h6>No address</h6>
+                  </p>
+                ) : address.map(
+                  (val) => {
+                    return <>
+                      <p>{val.house},{val.flat},{val.street}</p>
+                    </>
+                  }
+                )}
               </div>
             </div>
           </div>
