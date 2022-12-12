@@ -12,6 +12,7 @@ import Navbar from "./Navbar";
 function MenuPage() {
   const [show, setShow] = useState(false);
   const [loading, setloading] = useState(true);
+  const [openclose, setopenclose] = useState([])
 
   //   const [navbar, setNavbar] = useState(false)
   //   const fixingit = ()=>{
@@ -62,12 +63,22 @@ function MenuPage() {
 
   useEffect(() => {
     async function fetchData() {
+      const details = {
+        id: JSON.parse(localStorage.getItem('currentuser'))[0].resturant_ID
+      }
       try {
         const data = await (
           await axios.get(
             "http://localhost:5000/api/admin/getallitems"
           )
         ).data;
+
+        const result = await (
+          await axios.post(
+            "http://localhost:5000/api/superadmin/getopenclose", details
+          )
+        ).data;
+        setopenclose(result.data[0].online)
         setItem(data.data);
         console.log(item);
       } catch (error) {
@@ -2387,11 +2398,13 @@ function MenuPage() {
                 <img
                   className="menutitleimg"
                   src="https://www.happyspizzaburger.co.uk/uploads/restorants/751msq61654252482.jpg"
+                  alt="..."
                 />
                 <div class="card-img-overlay textOnImg text-start ms-5">
                   <h2 class="card-title">Rupyal Spice</h2>
-                  <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p>
-                  <p class="card-text"><small>Here are details</small></p>
+                  {/* <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p> */}
+                  {openclose === "true" ? <p class="card-text">Resturant is open.</p> : (<p class="card-text">Resturant is closed.</p>)}
+                  {/* <p class="card-text"><small>Here are details</small></p> */}
                 </div>
               </div>
             </div>
