@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +8,7 @@ function Profile() {
   const [name, setname] = useState(JSON.parse(localStorage.getItem("currentuser"))[0].name);
   const [email, setemail] = useState(JSON.parse(localStorage.getItem("currentuser"))[0].email);
   const [number, setnumber] = useState(JSON.parse(localStorage.getItem("currentuser"))[0].number);
+  const [ordercount, setordercount] = useState("")
 
   async function updatecustomer(e) {
     const details = {
@@ -39,6 +40,25 @@ function Profile() {
       // setloading(true)
     }
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      const detail = {
+        id: JSON.parse(localStorage.getItem("currentuser"))[0].customer_Id
+      }
+      try {
+        const data = await (
+          await axios.post("http://localhost:5000/api/admin/getordercount", detail)
+        ).data;
+
+        setordercount(data.data['total']);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -154,7 +174,7 @@ function Profile() {
                 <br />
                 <hr />
                 <br />
-                <p>Total Orders: 0</p>
+                <p>Total Orders: {ordercount}</p>
                 <br />
                 <hr />
                 <br />

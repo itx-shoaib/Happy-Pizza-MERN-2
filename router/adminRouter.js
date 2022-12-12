@@ -712,4 +712,28 @@ router.post('/salesvloumeresturant', (req, res) => {
     })
 })
 
+// Router: http://localhost:5000/api/admin/getordercount
+// Status: Working
+router.post('/getordercount', (req, res) => {
+
+    let id = req.body.id
+
+    // Main query
+    let qr = `SELECT count(*) as 'total' FROM cart 
+    Where 	customer_Id = ${id}
+   `;
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result[0]
+            })
+        } else {
+            res.status(404).json({
+                err: err
+            })
+        }
+    })
+
+})
+
 module.exports = router
