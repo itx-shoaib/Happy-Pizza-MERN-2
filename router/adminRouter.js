@@ -53,7 +53,7 @@ router.post('/imageuploadcheck', upload.single("photo"), (req, res) => {
 // ROUTER 1: Getting all the menu by GET method PATH: http://localhost:5000/api/admin/getallmenu
 // STATUS: WORKING
 router.get('/getallmenu', (req, res) => {
-    let qr = 'SELECT * FROM category'
+    let qr = 'SELECT * FROM category '
     dbconfig.query(qr, (err, result) => {
         if (err) {
             console.log(err, 'errs');
@@ -107,13 +107,13 @@ router.post('/updatemenu', (req, res) => {
     let qr = `update category 
                     set Name = '${title}',
                     set discountable = '${editdiscountable}',
-                    set sunday = '${sunday}',
-                    set monday = '${monday}',
-                    set tuesday = '${tuesday}',
-                    set wednesday = '${wednesday}',
-                    set thursday = '${thursday}',
-                    set friday = '${friday}',
-                    set saturday = '${saturday}'
+                    set Sunday = '${sunday}',
+                    set Monday = '${monday}',
+                    set Tuesday = '${tuesday}',
+                    set Wednesday = '${wednesday}',
+                    set Thursday = '${thursday}',
+                    set Friday = '${friday}',
+                    set Saturday = '${saturday}'
                     where id = ${ID}`;
 
     dbconfig.query(qr, (err, result) => {
@@ -197,7 +197,14 @@ router.get('/getitem/:id', (req, res) => {
 // STATUS: WORKING
 router.get('/getallitems', (req, res) => {
     let num = 3;
-    let qr = `SELECT * from item`;
+    // For getting day
+    const d = new Date();
+    // let d2 = d.getDay();
+    const options = { weekday: "long" };
+    let day = new Intl.DateTimeFormat("en-US", options).format(d)
+    // console.log(day)
+
+    let qr = `SELECT * from item where available = "true" AND ${day} = "true"`;
 
     dbconfig.query(qr, (err, result) => {
         if (err) {
@@ -206,6 +213,7 @@ router.get('/getallitems', (req, res) => {
         res.send({
             data: result
         });
+
         // console.log(result[0])
     });
     // let qr = `Select * from item 
