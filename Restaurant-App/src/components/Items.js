@@ -8,7 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2'
 
-function Items({ items, categorys }) {
+function Items({ items, categorys, openclose }) {
   const [show, setShow] = useState(false);
   const [quantity, setQuantity] = useState()
   const getstatus = localStorage.getItem('status');
@@ -102,9 +102,14 @@ function Items({ items, categorys }) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" size="lg" style={{ width: "100%" }} onClick={AddtoCart}>
+          {openclose === "true" ? (<Button variant="primary" size="lg" style={{ width: "100%" }} onClick={AddtoCart}>
             Add to Cart
-          </Button>
+          </Button>) : (<>
+            <Button className="disabled" variant="danger" size="lg" style={{ width: "100%" }}>
+              Resturant is closed
+            </Button>
+          </>)}
+
 
 
         </Modal.Footer>

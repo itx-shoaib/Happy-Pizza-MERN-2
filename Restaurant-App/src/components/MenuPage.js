@@ -2403,7 +2403,7 @@ function MenuPage() {
                 <div class="card-img-overlay textOnImg text-start ms-5">
                   <h2 class="card-title">Rupyal Spice</h2>
                   {/* <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p> */}
-                  {openclose === "true" ? <p class="card-text">Resturant is open.</p> : (<p class="card-text">Resturant is closed.</p>)}
+                  {openclose === "true" ? <p class="card-text">Resturant is open.</p> : (<span class="placeholder col-6 bg-danger  ">Resturant is closed.</span>)}
                   {/* <p class="card-text"><small>Here are details</small></p> */}
                 </div>
               </div>
@@ -2477,7 +2477,7 @@ function MenuPage() {
                           item.map((items) => {
                             return (
                               <>
-                                <Items items={items} categorys={categorys} />
+                                <Items items={items} categorys={categorys} openclose={openclose} />
                               </>
                             );
                           })}
