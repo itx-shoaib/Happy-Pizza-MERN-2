@@ -260,6 +260,8 @@ router.post('/cartcheckout', (req, res) => {
     let customer_Id = req.body.customer_Id
     let comment = req.body.comment
     let total = req.body.total
+    let cashondelivery = req.body.cashondelivery
+    let paywithcard = req.body.paywithcard
 
     let qr = `SELECT * FROM cart
                 where customer_Id=${customer_Id}`
@@ -279,6 +281,8 @@ router.post('/cartcheckout', (req, res) => {
             , Orderstatus = 1
             , address_Id = ${result[0]['ID']}
             , total = "${total}"
+            , cashondelivery = "${cashondelivery}"
+            , paywithcard = "${paywithcard}"
             where customer_Id=${customer_Id}`
                         dbconfig.query(qr, (err, result) => {
                             if (!err) {
@@ -293,28 +297,54 @@ router.post('/cartcheckout', (req, res) => {
 
                     }
                     else {
-                        console.log(err, "err")
+                        console.log(err, 'err')
+
                     }
                 })
             } else {
                 console.log(err, 'err')
             }
+        }
+        else {
+            console.log(err, 'err')
+        }
+    })
 
-            // let qr = `update cart 
-            // set comment = '${comment}'
-            // , Status = 2
-            // , Orderstatus = 1
-            // where customer_Id=${customer_Id}`
-            // dbconfig.query(qr,(err,result)=>{
-            //     if(!err){
-            //         res.json({
-            //             message:"Your Cart has been checkout"
-            //         })
-            //     }
-            //     else{
-            //         console.log(err,"err")
-            //     }
-            // })
+})
+
+// Router 4 : http://localhost:5000/api/admin/cartcheckout
+// Status:
+router.post('/cartcheckoutcollection', (req, res) => {
+    let customer_Id = req.body.customer_Id
+    let comment = req.body.comment
+    let total = req.body.total
+    let cashondelivery = req.body.cashondelivery
+    let paywithcard = req.body.paywithcard
+
+    let qr = `SELECT * FROM cart
+                where customer_Id=${customer_Id} and Status = 1`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            // If one person select Collection then there is no requirement for the address and address ID
+            let qr = `update cart 
+                        set comment = '${comment}'
+                        , Status = 2
+                        , Orderstatus = 1
+                        , address_Id = 0
+                        , total = "${total}"
+                        , cashondelivery = "${cashondelivery}"
+                        , paywithcard = "${paywithcard}"
+                        where customer_Id=${customer_Id}`
+            dbconfig.query(qr, (err, result) => {
+                if (!err) {
+                    res.json({
+                        message: "Your Cart has been checkout"
+                    })
+                }
+                else {
+                    console.log(err, "err")
+                }
+            })
         }
         else {
             console.log(err, "err")

@@ -15,6 +15,9 @@ function CartCheckout() {
   const [street, setstreet] = useState("");
   const [town, settown] = useState("");
   const [items, setItems] = useState([]);
+  const [cashondelivery, setcashondelivery] = useState(false)
+  const [paywithcard, setpaywithcard] = useState(false)
+  const [termcondition, settermcondition] = useState(false)
   const getstatus = localStorage.getItem("status");
   const [visible, setvisible] = useState(false)
   const refClose = useRef(null);
@@ -216,35 +219,76 @@ function CartCheckout() {
     total = total + parseFloat(productTotal);
   }
 
+  function CashOnChange(e) {
+    setcashondelivery(e.target.checked)
+    setpaywithcard(false)
+  }
+
+  function PayOnChange(e) {
+    setpaywithcard(e.target.checked)
+    setcashondelivery(false)
+  }
+
+  function termConditionOnChange(e) {
+    settermcondition(e.target.checked)
+  }
+
   async function checkout() {
     const user = {
       comment,
       customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
         .customer_Id,
       total,
+      cashondelivery,
+      paywithcard
     };
 
-    console.log(user);
+    if (termcondition === true && visible === true) {
+      try {
+        // setloading(true)
+        const result = await axios.post(
+          "http://localhost:5000/api/admin/cartcheckout",
+          user
+        ).data;
+        console.log(result);
+        toast.success("Checkout Successfull");
+        // setloading(true)
+        setInterval(() => {
+          window.location.href = "/";
+        }, 2000);
 
-    try {
-      // setloading(true)
-      const result = await axios.post(
-        "http://localhost:5000/api/admin/cartcheckout",
-        user
-      ).data;
-      console.log(result);
-      toast.success("Checkout Successfull");
-      // setloading(true)
-      setInterval(() => {
-        window.location.href = "/";
-      }, 2000);
-
-      setcomment("");
-    } catch (error) {
-      console.log(error);
-      toast.warn("Something went wrong!");
-      // setloading(true)
+        setcomment("");
+      } catch (error) {
+        console.log(error);
+        toast.warn("Something went wrong!");
+        // setloading(true)
+      }
     }
+    else if (termcondition === true && visible === false) {
+      try {
+        // setloading(true)
+        const result = await axios.post(
+          "http://localhost:5000/api/admin/cartcheckoutcollection",
+          user
+        ).data;
+        console.log(result);
+        toast.success("Checkout Successfull");
+        // setloading(true)
+        setInterval(() => {
+          window.location.href = "/";
+        }, 2000);
+
+        setcomment("");
+      } catch (error) {
+        console.log(error);
+        toast.warn("Something went wrong!");
+        // setloading(true)
+      }
+    }
+    else {
+      toast.warn("Please Read out our term and conditions and mark agree");
+    }
+
   }
 
   var times = [
@@ -654,28 +698,37 @@ function CartCheckout() {
                   }}
                   required
                 ></textarea>
-                <div className="form-check mt-3 mb-3">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="paymenttype"
-                    id="payment1"
-                  />
-                  <label className="form-check-label" for="payment1">
-                    Cash on Delivery
-                  </label>
-                </div>
-                <div className="form-check mb-4">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="paymenttype"
-                    id="payment2"
-                  />
-                  <label className="form-check-label" for="payment2">
-                    Pay with Card
-                  </label>
-                </div>
+                {visible === true && (
+                  <>
+                    <div className="form-check mt-3 mb-3">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="paymenttype"
+                        id="payment1"
+                        value={cashondelivery}
+                        onChange={(e) => { CashOnChange(e) }}
+                      />
+                      <label className="form-check-label" for="payment1">
+                        Cash on Delivery
+                      </label>
+                    </div>
+                    <div className="form-check mb-4">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="paymenttype"
+                        id="payment2"
+                        value={paywithcard}
+                        onChange={(e) => { PayOnChange(e) }}
+                      />
+                      <label className="form-check-label" for="payment2">
+                        Pay with Card
+                      </label>
+                    </div>
+                  </>
+                )}
+
                 <button className="btn btn-primary mb-3" onClick={checkout}>
                   Place Order
                 </button>
@@ -683,8 +736,9 @@ function CartCheckout() {
                   <input
                     className="form-check-input"
                     type="checkbox"
-                    value=""
                     id="flexCheckIndeterminate"
+                    value={termcondition}
+                    onChange={(e) => { termConditionOnChange(e) }}
                   />
                   <label
                     className="form-check-label"
