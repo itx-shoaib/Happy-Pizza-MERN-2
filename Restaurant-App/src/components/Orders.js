@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import "../Css/order.css";
+import moment from "moment";
 
 function Orders() {
   const [order, setOrder] = useState([]);
@@ -196,9 +197,14 @@ function Orders() {
                                     </td>
                                     <td>{orders.DateTime}</td>
                                     <td>
-                                      <span class="badge text-bg-primary primary">
+                                      {orders.cashondelivery === "true" ? (<span class="badge text-bg-primary primary">
+                                        Delivery
+                                      </span>) : orders.paywithcard === "true" ? (<span class="badge text-bg-primary primary">
+                                        Delivery
+                                      </span>) : (<span class="badge text-bg-primary primary">
                                         collection
-                                      </span>
+                                      </span>)}
+
                                     </td>
                                     <td>
                                       <span class="badge text-bg-info info">
@@ -214,9 +220,14 @@ function Orders() {
                                       </span>
                                     </td>
                                     <td>
-                                      <span class="badge text-bg-primary primary">
+                                      {orders.cashondelivery === "true" ? (<span class="badge text-bg-primary primary">
                                         cod(unpaid)
-                                      </span>
+                                      </span>) : orders.paywithcard === "true" ? (<span class="badge text-bg-primary primary">
+                                        stripe
+                                      </span>) : (<span class="badge text-bg-primary primary">
+                                        N/A
+                                      </span>)}
+
                                     </td>
                                     <td>${orders.Price}</td>
                                   </tr>
@@ -248,7 +259,7 @@ function Orders() {
                                   {order.ID}
                                 </span>
                               </td>
-                              <td>{order.DateTime}</td>
+                              <td>{moment(order.DateTime).format('MMMM Do YYYY, h:mm:ss a')}</td>
                               <td>
                                 <span class="badge text-bg-primary primary">
                                   collection
