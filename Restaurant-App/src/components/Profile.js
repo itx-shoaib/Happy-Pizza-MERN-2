@@ -138,11 +138,11 @@ function Profile() {
               <div className="col-lg-7 bs br mx-4 my-5 py-4 px-4 responsiveness">
                 <div className="container userprofileinfo">
                   <h6>USER PROFILE</h6>
-                  <Link to="/cart-checkout">
+                  {/* <Link to="/cart-checkout">
                     <button className="btn btn-info usercartbtn">
                       <i class="fa-solid fa-bag-shopping btnicon"></i> CART
                     </button>
-                  </Link>
+                  </Link> */}
                 </div>
                 <br />
                 <hr />
