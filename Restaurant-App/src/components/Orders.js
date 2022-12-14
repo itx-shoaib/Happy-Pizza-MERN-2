@@ -4,10 +4,15 @@ import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import "../Css/order.css";
 import moment from "moment";
+import { DatePicker, Space } from "antd";
+const { RangePicker } = DatePicker;
 
 function Orders() {
   const [order, setOrder] = useState([]);
+  const [duplicateorders, setduplicateorders] = useState([]);
   const getstatus = localStorage.getItem("status");
+  const [fromdate, setfromdate] = useState();
+  const [todate, settodate] = useState();
 
   useEffect(() => {
     async function fetchData() {
@@ -23,12 +28,57 @@ function Orders() {
           )
         ).data;
         setOrder(data.data);
+        setduplicateorders(data.data);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
   }, []);
+
+  function filterByDate2(dates) {
+    setfromdate(moment(dates[0]).format("DD-MM-YYYY"));
+    settodate(moment(dates[1]).format("DD-MM-YYYY"));
+
+    if (dates[0] && dates[1]) {
+      const temporders = duplicateorders.filter(
+        (order) => {
+          console.log(Date.parse(dates[0]._d)
+            , Date.parse(order.DateTime), Date.parse(dates[1]._d)
+          )
+          return Date.parse(dates[0]._d) < Date.parse(order.DateTime) && Date.parse(dates[1]._d) > Date.parse(order.DateTime)
+        }
+      );
+      setOrder(temporders);
+
+
+      // setOrders(temporders);
+    }
+    else {
+      setOrder(order)
+    }
+
+    // alert(fromdate)
+
+
+    // var temp = []
+    // var availablity = false;
+    // for (let i = 0; i < orderHistory.length; i++) {
+    //   if (orderHistory.length < 0) {
+    //     if(moment(orderHistory[i].DateTime).format('MMMM Do YYYY').isBetween(fromdate , todate)){
+    //       alert("Yes there are some")
+    //     }
+    //     else{
+    //       alert("testing fail")
+    //     }
+    //   }
+    //   else{
+    //     alert("In the else")
+    //   }
+
+    // }
+
+  }
   return (
     <>
       <Navbar />
@@ -131,15 +181,9 @@ function Orders() {
                           >
                             Date Range
                           </label>
-                          <input
-                            id="daterange"
-                            className="me-1 my-1 py-1"
-                            placeholder="Start Date"
-                          />
-                          <input
-                            id="daterange"
-                            className="me-1 my-1 py-1"
-                            placeholder="End Date"
+                          <RangePicker
+                            format="DD-MM-YYYY"
+                            onChange={filterByDate2}
                           />
                           <label
                             for="customerfilter"
@@ -195,7 +239,8 @@ function Orders() {
                                         {orders.ID}
                                       </span>
                                     </td>
-                                    <td>{orders.DateTime}</td>
+                                    {/* <td>{orders.DateTime}</td> */}
+                                    <td>{moment(orders.DateTime).format('MMMM Do YYYY, h:mm:ss a')}</td>
                                     <td>
                                       {orders.cashondelivery === "true" ? (<span class="badge text-bg-primary primary">
                                         Delivery
@@ -259,6 +304,7 @@ function Orders() {
                                   {order.ID}
                                 </span>
                               </td>
+                              {/* <td>{order.DateTime}</td> */}
                               <td>{moment(order.DateTime).format('MMMM Do YYYY, h:mm:ss a')}</td>
                               <td>
                                 <span class="badge text-bg-primary primary">
