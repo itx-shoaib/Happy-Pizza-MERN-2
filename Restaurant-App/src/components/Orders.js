@@ -185,7 +185,7 @@ function Orders() {
                             format="DD-MM-YYYY"
                             onChange={filterByDate2}
                           />
-                          <label
+                          {/* <label
                             for="customerfilter"
                             className="boldtext my-1 ms-2"
                           >
@@ -195,7 +195,7 @@ function Orders() {
                             id="customerfilter"
                             className="mx-1 my-1 py-1"
                             placeholder="Select an option"
-                          />
+                          /> */}
                           <button className="btn btn-primary my-1 mx-1">
                             Export
                           </button>
@@ -279,50 +279,6 @@ function Orders() {
                                 </>
                               );
                             })}
-                          </tbody>
-                        </table>
-                      </div>
-                    </>
-                  ) : order ? (
-                    <>
-                      <div className="table-responsive-sm">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">Created</th>
-                              <th scope="col">Method</th>
-                              <th scope="col">Last status</th>
-                              <th scope="col">Payment status</th>
-                              <th scope="col">Total</th>
-                            </tr>
-                          </thead>
-                          <tbody class="table-group-divider">
-                            <tr>
-                              <td>
-                                <span class="badge text-bg-info info">
-                                  {order.ID}
-                                </span>
-                              </td>
-                              {/* <td>{order.DateTime}</td> */}
-                              <td>{moment(order.DateTime).format('MMMM Do YYYY, h:mm:ss a')}</td>
-                              <td>
-                                <span class="badge text-bg-primary primary">
-                                  collection
-                                </span>
-                              </td>
-                              <td>
-                                <span class="badge text-bg-info info">
-                                  rejected
-                                </span>
-                              </td>
-                              <td>
-                                <span class="badge text-bg-primary primary">
-                                  cod(unpaid)
-                                </span>
-                              </td>
-                              <td>${order.Price}</td>
-                            </tr>
                           </tbody>
                         </table>
                       </div>
