@@ -152,19 +152,46 @@ router.post('/addaddress', (req, res) => {
     let customer_Id = req.body.customer_Id;
 
 
-    let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status)
-    values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1)
-            `
+    let qr = `Select * from address where customer_Id = ${customer_Id}`
     dbconfig.query(qr, (err, result) => {
-
         if (!err) {
-            res.send({
-                message: 'New address is added'
+            if (result.length === 0) {
+                let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status,address_status)
+                values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1,1)
+                        `
+                dbconfig.query(qr, (err, result) => {
 
-            });
-        }
-        else {
-            console.log(err, 'err')
+                    if (!err) {
+                        res.send({
+                            message: 'New address is added'
+
+                        });
+                    }
+                    else {
+                        console.log(err, 'err')
+                    }
+                })
+            } else {
+                let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status)
+                values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1)
+                        `
+                dbconfig.query(qr, (err, result) => {
+
+                    if (!err) {
+                        res.send({
+                            message: 'New address is added'
+
+                        });
+                    }
+                    else {
+                        console.log(err, 'err')
+                    }
+                })
+            }
+        } else {
+            res.status(500).json({
+                error: err
+            })
         }
     })
 });
