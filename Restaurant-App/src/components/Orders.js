@@ -272,7 +272,7 @@ function Orders() {
                                       </span>)}
 
                                     </td>
-                                    <td>${orders.Price}</td>
+                                    <td>£ {orders.Price}</td>
                                   </tr>
                                 </>
                               );
