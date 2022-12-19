@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 
 function Items({ items, categorys, openclose }) {
   const [show, setShow] = useState(false);
-  const [quantity, setQuantity] = useState()
+  const [quantity, setQuantity] = useState(1)
   const getstatus = localStorage.getItem('status');
 
   const [category, setcategory] = useState(
