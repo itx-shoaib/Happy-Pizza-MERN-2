@@ -150,48 +150,22 @@ router.post('/addaddress', (req, res) => {
     let street = req.body.street;
     let town = req.body.town;
     let customer_Id = req.body.customer_Id;
+    let address_status = req.body.address_status
 
 
-    let qr = `Select * from address where customer_Id = ${customer_Id}`
+    let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status,address_status)
+                values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1,${address_status})
+                        `
     dbconfig.query(qr, (err, result) => {
+
         if (!err) {
-            if (result.length === 0) {
-                let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status,address_status)
-                values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1,1)
-                        `
-                dbconfig.query(qr, (err, result) => {
+            res.send({
+                message: 'New address is added'
 
-                    if (!err) {
-                        res.send({
-                            message: 'New address is added'
-
-                        });
-                    }
-                    else {
-                        console.log(err, 'err')
-                    }
-                })
-            } else {
-                let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status)
-                values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1)
-                        `
-                dbconfig.query(qr, (err, result) => {
-
-                    if (!err) {
-                        res.send({
-                            message: 'New address is added'
-
-                        });
-                    }
-                    else {
-                        console.log(err, 'err')
-                    }
-                })
-            }
-        } else {
-            res.status(500).json({
-                error: err
-            })
+            });
+        }
+        else {
+            console.log(err, 'err')
         }
     })
 });
@@ -241,12 +215,12 @@ router.post('/setaddressprimary', (req, res) => {
     let customer_Id = req.body.customer_Id
 
     let qr = `update address 
-    set address_status = 1
+    set address_status = true
     WHERE customer_Id = ${customer_Id} AND ID = ${ID};`
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             let qr = `UPDATE address 
-           set address_status = 0 
+           set address_status = false
            WHERE ID!= ${ID}
            `
             dbconfig.query(qr, (err, result) => {
