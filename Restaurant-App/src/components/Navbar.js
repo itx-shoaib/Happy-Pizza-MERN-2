@@ -182,7 +182,7 @@ function Navbar() {
               {total < 5 && (<>
                 <div className="cart-cont">
                   <p>
-                    Order Minimum is $5.00. Please add more items in the cart.
+                    Order Minimum is £ 5.00. Please add more items in the cart.
                   </p>
                 </div>
               </>)}
@@ -191,7 +191,7 @@ function Navbar() {
                 return <>
                   <div className="cart-card">
                     <h4>{item.Title}</h4>
-                    <h6>{item.Quantity} x ${item.Price}</h6>
+                    <h6>{item.Quantity} x £{item.Price}</h6>
                     <button className="btn" onClick={() => { add(item.orderitemid, item.Quantity + 1, item.Price) }}>
                       <i className="fa-solid fa-plus"></i>
                     </button>
@@ -221,7 +221,7 @@ function Navbar() {
               <div className="row my-5">
 
 
-                <h6>Sub-total: ${total}</h6>
+                <h6>Sub-total: £ {total}</h6>
 
                 {total >= 5 && (<>
                   <Link to="/cart-checkout">

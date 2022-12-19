@@ -74,7 +74,7 @@ function Items({ items, categorys, openclose }) {
           <div className="col-7 producttext">
             <h5 className="boldtext">{items.Title}</h5>
             {items.Description !== "undefined" ? (<p>{items.Description}</p>) : (<></>)}
-            {items.Price !== "undefined" ? (<h5>$ {items.Price}</h5>) : (<></>)}
+            {items.Price !== "undefined" ? (<h5>£ {items.Price}</h5>) : (<></>)}
 
           </div>
           <div className="col-5">
@@ -92,7 +92,7 @@ function Items({ items, categorys, openclose }) {
           <Modal.Title>{items.Title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5> ${items.Price}</h5>
+          <h5> £ {items.Price}</h5>
           <p>{items.Title}</p>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
