@@ -154,7 +154,7 @@ router.post('/addaddress', (req, res) => {
 
 
     let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status,address_status)
-                values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1,${address_status})
+                values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1,'${address_status}')
                         `
     dbconfig.query(qr, (err, result) => {
 
@@ -195,7 +195,7 @@ router.post('/getprimaryaddress', (req, res) => {
     let customer_Id = req.body.customer_Id
 
     let qr = `SELECT * FROM address
-    where customer_Id = ${customer_Id} AND address_status=true`;
+    where customer_Id = ${customer_Id} AND address_status="true"`;
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             res.json({
@@ -215,12 +215,12 @@ router.post('/setaddressprimary', (req, res) => {
     let customer_Id = req.body.customer_Id
 
     let qr = `update address 
-    set address_status = true
+    set address_status = "true"
     WHERE customer_Id = ${customer_Id} AND ID = ${ID};`
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             let qr = `UPDATE address 
-           set address_status = false
+           set address_status = "false"
            WHERE ID!= ${ID}
            `
             dbconfig.query(qr, (err, result) => {

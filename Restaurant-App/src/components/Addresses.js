@@ -227,7 +227,7 @@ function Addresses() {
                               return <>
                                 <tr>
                                   <td>{item.house},{item.flat},{item.street},{item.postcode},{item.town}
-                                    {item.address_status === 1 && (<><span class="badge text-bg-info info">Primary Address</span></>)}
+                                    {item.address_status === "true" && (<><span class="badge text-bg-info info">Primary Address</span></>)}
                                   </td>
                                   <td></td>
                                   <td></td>
@@ -237,7 +237,7 @@ function Addresses() {
                                         <AiOutlineUnorderedList />
                                       </button>
                                       <ul class="dropdown-menu">
-                                        {item.address_status === 1 ? (<>
+                                        {item.address_status === "true" ? (<>
                                           <li><button class="dropdown-item" type="button" onClick={() => { del(item.ID) }}>Delete</button></li>
                                         </>) : (<>
                                           <li><button class="dropdown-item" type="button" onClick={() => { primary(item.ID) }}>Set as primary</button></li>

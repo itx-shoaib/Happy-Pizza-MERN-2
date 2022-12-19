@@ -362,7 +362,7 @@ function CartCheckout() {
                       address.map((addresses) => {
                         return (
                           <>
-                            {addresses.address_status === 1 ? (
+                            {addresses.address_status === "true" ? (
                               <>
                                 <div class="form-check">
                                   <input
