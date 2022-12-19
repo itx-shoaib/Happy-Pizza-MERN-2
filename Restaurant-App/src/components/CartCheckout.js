@@ -73,10 +73,10 @@ function CartCheckout() {
       ).data;
       console.log(data.data);
       update();
-      toast.success("Quantity increase");
+      // toast.success("Quantity increase");
     } catch (error) {
       console.log(error);
-      toast.warn("Failed! Try again later");
+      // toast.warn("Failed! Try again later");
     }
   }
 
@@ -98,10 +98,10 @@ function CartCheckout() {
       ).data;
       console.log(data.data);
       update();
-      toast.success("Quantity decrease");
+      // toast.success("Quantity decrease");
     } catch (error) {
       console.log(error);
-      toast.warn("Failed! Try again later");
+      // toast.warn("Failed! Try again later");
     }
   }
 
@@ -119,10 +119,10 @@ function CartCheckout() {
       ).data;
       console.log(data.data);
       update();
-      toast.warn("Item has been deleted");
+      // toast.warn("Item has been deleted");
     } catch (error) {
       console.log(error);
-      toast.warn("Failed! Try again later");
+      // toast.warn("Failed! Try again later");
     }
   }
 
@@ -216,7 +216,8 @@ function CartCheckout() {
   let total = 0;
   for (var i = 0; i < items.length; i++) {
     let productTotal = items[i].totalp;
-    total = total + parseFloat(productTotal);
+    total = total + parseFloat(productTotal)
+    total = total.toFixed(3);
   }
 
   function CashOnChange(e) {
@@ -487,9 +488,9 @@ function CartCheckout() {
                                   <strong>{item.Title}</strong>
                                 </td>
                                 <td>{item.Quantity}</td>
-                                <td>${item.Price}</td>
+                                <td>£ {item.Price}</td>
                                 <td class="text-end">
-                                  ${item.Quantity * item.Price}
+                                  £ {total}
                                 </td>
                                 <td>
                                   <button
