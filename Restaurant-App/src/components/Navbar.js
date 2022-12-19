@@ -141,7 +141,7 @@ function Navbar() {
   }
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={700} />
       <nav className={location.pathname === "/menu" ? "navbar-light justify-content-center mainnavbar fixedNavbar" : "navbar-light justify-content-center mainnavbar"}>
         <div className="row menu mobileActive">
           <div className="col-md-4 menuitems text-start">
@@ -246,6 +246,7 @@ function Navbar() {
 
           <div className="col-md-4 menuitems text-end">
             {getstatus === "true" ? (<>
+              <Link to="/menu"><button className="btn btn-primary">Order Now</button></Link>
               <div className="dropdown">
                 <button
                   className="btn btn-light dropdown-toggle"
