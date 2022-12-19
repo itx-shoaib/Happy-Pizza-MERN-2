@@ -14,6 +14,7 @@ function Addresses() {
   const [street, setstreet] = useState('');
   const [town, settown] = useState('');
   const [address, setAddress] = useState([])
+  const [address_status, setaddress_status] = useState(false)
   const getstatus = localStorage.getItem('status');
   const refClose = useRef(null)
 
@@ -24,6 +25,7 @@ function Addresses() {
       flat,
       street,
       town,
+      address_status,
       customer_Id: JSON.parse(localStorage.getItem('currentuser'))[0].customer_Id
     }
     try {
@@ -386,6 +388,8 @@ function Addresses() {
                             class="form-check-input"
                             type="checkbox"
                             id="flexSwitchCheckDefault"
+                            value={address_status}
+                            onChange={(e) => setaddress_status(e.target.checked)}
                           />
                         </div>
                       </div>
