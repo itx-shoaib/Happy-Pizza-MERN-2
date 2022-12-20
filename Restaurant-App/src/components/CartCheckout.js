@@ -331,7 +331,7 @@ function CartCheckout() {
   ];
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Navbar />
       <div className="row justify-content-center my-5">
         <div className="col-md-10">
@@ -346,7 +346,7 @@ function CartCheckout() {
                     type="radio"
                     name="ordertype"
                     id="ordertype1"
-                    value="0"
+                    value={visible}
                     onClick={() => { setvisible(true) }}
 
                     required
@@ -362,9 +362,9 @@ function CartCheckout() {
                     type="radio"
                     name="ordertype"
                     id="ordertype2"
-                    value="1"
+                    value={!visible}
+                    checked={!visible}
                     onClick={() => { setvisible(false) }}
-                    checked
                     required
                   />
                   <label className="form-check-label" for="ordertype2">
