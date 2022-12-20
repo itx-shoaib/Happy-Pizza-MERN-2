@@ -262,7 +262,8 @@ function CartCheckout() {
         .customer_Id,
       total,
       cashondelivery,
-      paywithcard
+      paywithcard,
+      delivery_time
     };
 
     if (termcondition === true && visible === true) {
@@ -702,9 +703,9 @@ function CartCheckout() {
               <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
                 <h6>CHECKOUT</h6>
                 <hr />
-                <h6 className="boldtext">Subtotal: ${total}</h6>
-                <h6 className="boldtext">Delivery: $0.0</h6>
-                <h6 className="boldtext">Total: ${total}</h6>
+                <h6 className="boldtext">Subtotal: £{total}</h6>
+                <h6 className="boldtext">Delivery: £0.0</h6>
+                <h6 className="boldtext">Total: £{total}</h6>
                 <br />
                 <br />
                 <br />
