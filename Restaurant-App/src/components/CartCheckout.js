@@ -5,6 +5,7 @@ import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import CheckoutNavbar from "./CheckoutNavbar";
 
 function CartCheckout() {
   const [address, setAddress] = useState([]);
@@ -74,10 +75,10 @@ function CartCheckout() {
       ).data;
       console.log(data.data);
       update();
-      // toast.success("Quantity increase");
+      toast.success("Quantity increase");
     } catch (error) {
       console.log(error);
-      // toast.warn("Failed! Try again later");
+      toast.warn("Failed! Try again later");
     }
   }
 
@@ -99,10 +100,10 @@ function CartCheckout() {
       ).data;
       console.log(data.data);
       update();
-      // toast.success("Quantity decrease");
+      toast.success("Quantity decrease");
     } catch (error) {
       console.log(error);
-      // toast.warn("Failed! Try again later");
+      toast.warn("Failed! Try again later");
     }
   }
 
@@ -120,10 +121,10 @@ function CartCheckout() {
       ).data;
       console.log(data.data);
       update();
-      // toast.warn("Item has been deleted");
+      toast.warn("Item has been deleted");
     } catch (error) {
       console.log(error);
-      // toast.warn("Failed! Try again later");
+      toast.warn("Failed! Try again later");
     }
   }
 
@@ -331,8 +332,9 @@ function CartCheckout() {
   ];
   return (
     <>
-      {/* <ToastContainer /> */}
-      <Navbar />
+      <ToastContainer autoClose={700} />
+      <CheckoutNavbar />
+      {/* <Navbar /> */}
       <div className="row justify-content-center my-5">
         <div className="col-md-10">
           <div className="row">
