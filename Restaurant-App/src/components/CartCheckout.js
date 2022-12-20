@@ -17,6 +17,7 @@ function CartCheckout() {
   const [items, setItems] = useState([]);
   const [cashondelivery, setcashondelivery] = useState(false)
   const [paywithcard, setpaywithcard] = useState(false)
+  const [delivery_time, setdelivery_time] = useState("N/A")
   const [termcondition, settermcondition] = useState(false)
   const getstatus = localStorage.getItem("status");
   const [visible, setvisible] = useState(false)
@@ -162,6 +163,26 @@ function CartCheckout() {
         )
       ).data;
       setAddress(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function changeAddressPrimary(ID) {
+    const user = {
+      customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id,
+      ID
+    };
+    try {
+      const data = await (
+        await axios.post(
+          "http://localhost:5000/api/user/setaddressprimary",
+          user
+        )
+      ).data;
+      console.log(data.message)
+      updateAddress()
     } catch (error) {
       console.log(error);
     }
@@ -392,7 +413,7 @@ function CartCheckout() {
                                     type="radio"
                                     name="flexRadioDefault"
                                     id={`flexRadioDefault${addresses.ID}`}
-                                    disabled
+                                    onChange={() => changeAddressPrimary(`${addresses.ID}`)}
                                   />
                                   <label
                                     class="form-check-label"
@@ -427,29 +448,27 @@ function CartCheckout() {
                       Add New Address
                     </button>
                     <h5 className="boldtext">Delivery Time</h5>
-                    <div className="dropdown timelist mb-4">
-                      <button
-                        className="btn btn-light w-100 dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        Select Time
-                      </button>
-                      <ul
-                        className="dropdown-menu timelist"
-                        aria-labelledby="dropdownMenuButton1"
-                      >
-                        {
-                          times.map((time) => (
-                            <>
-                              <li className="dropdown-item time">{time}</li>
-                            </>
-                          ))
-                        }
-                      </ul>
-                    </div>
+                    {/* <div className=" mb-4"> */}
+                    <select
+                      className="form-select"
+                      aria-label="Default select example"
+                      value={delivery_time}
+                      onChange={(e) => { setdelivery_time(e.target.value) }}
+                    >
+                      <option>Select Time</option>
+                      {
+                        times.map((time) => (
+                          <>
+                            <option
+                              value={time}
+                            >
+                              {time}
+                            </option>
+                          </>
+                        ))
+                      }
+                    </select>
+                    {/* </div> */}
                   </>
                 )}
               </div>
