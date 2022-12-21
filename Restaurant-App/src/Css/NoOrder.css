@@ -59,7 +59,15 @@ body{
     color:red;
     cursor:pointer;
   }
+
+  .imgdiv{
+    display: flex;
+justify-content: center;
+  }
   
   .orderImg{
-    
+    border-radius: 40px;
+    width: 150px;
+    height: 150px;
+    margin: 20px;
   }

@@ -7,7 +7,9 @@ const NoOrder = () => {
     return (
         <div className="container1">
             <div className="form-box1">
-                <img className='orderImg' src={logo} alt="Logo" />
+                <div className="imgdiv">
+                    <img className='orderImg' src={logo} alt="Logo" />
+                </div>
                 <h5 className="h5 text-center">NO ORDER FOUND</h5>
                 <h3 className='h3' >Looks like you haven't made your order yet</h3>
                 {/* <i className="fa fa-user-circle" style={{ fontSize: "110px" }}></i> */}
