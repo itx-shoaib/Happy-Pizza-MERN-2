@@ -307,4 +307,31 @@ router.post('/deletecustomer', (req, res) => {
     })
 })
 
+// Router for getting last added address in myProfile.js Customer side
+// PATH http://localhost:5000/api/user/lastaddedaddress
+// METHOD :POST
+router.post("/lastaddedaddress", (req, res) => {
+    let ID = req.body.customer_Id;
+
+    let qr = `
+    SELECT    *
+FROM      address
+WHERE customer_Id = ${ID}
+ORDER BY  ID DESC
+LIMIT     1
+    `
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(500).json({
+                error: err,
+                message: "Something went wrong"
+            })
+        }
+    })
+})
+
 module.exports = router
