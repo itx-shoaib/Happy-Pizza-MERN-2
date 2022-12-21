@@ -26,7 +26,7 @@ function ChangePassword() {
         toast.success("Password has been changed")
         // setloading(true)
         setInterval(() => {
-          window.location.href = "/home"
+          window.location.href = "/"
         }, 2000);
 
 
@@ -131,6 +131,7 @@ function ChangePassword() {
                   <hr />
                   <br />
                   <input
+                    type="password"
                     id="password"
                     className="form-control mb-4 px-4 py-3"
                     placeholder="Current Password"
@@ -138,6 +139,7 @@ function ChangePassword() {
                     onChange={(e) => { setpassword(e.target.value) }}
                   />
                   <input
+                    type="password"
                     id="npassword"
                     className="form-control mb-4 px-4 py-3"
                     placeholder="New Password"
@@ -145,6 +147,7 @@ function ChangePassword() {
                     onChange={(e) => { setnew_password(e.target.value) }}
                   />
                   <input
+                    type="password"
                     id="cpassword"
                     className="form-control mb-4 px-4 py-3"
                     placeholder="Confirm New Password"

@@ -137,8 +137,10 @@ function Navbar() {
   for (var i = 0; i < items.length; i++) {
     let productTotal = items[i].totalp;
     total = total + parseFloat(productTotal);
-
+    total = total.toFixed(3)
   }
+
+
   return (
     <>
       <ToastContainer autoClose={700} />

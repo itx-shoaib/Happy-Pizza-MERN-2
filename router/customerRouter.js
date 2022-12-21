@@ -150,23 +150,55 @@ router.post('/addaddress', (req, res) => {
     let street = req.body.street;
     let town = req.body.town;
     let customer_Id = req.body.customer_Id;
+    let address_status = req.body.address_status
+    if (address_status === true) {
+        let qr = `update address 
+        set address_status = "false"
+        WHERE customer_Id = ${customer_Id}`
+        dbconfig.query(qr, (err, result) => {
+            if (!err) {
+                let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status,address_status)
+                values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1,'${address_status}')
+                        `
+                dbconfig.query(qr, (err, result) => {
+
+                    if (!err) {
+                        res.send({
+                            message: 'New address is added'
+
+                        });
+                    }
+                    else {
+                        console.log(err, 'err')
+                    }
+                })
+
+            }
+        })
 
 
-    let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status)
-    values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1)
-            `
-    dbconfig.query(qr, (err, result) => {
+    }
+    else {
 
-        if (!err) {
-            res.send({
-                message: 'New address is added'
 
-            });
-        }
-        else {
-            console.log(err, 'err')
-        }
-    })
+        let qr = `insert into address(house,flat,postcode,street,town,customer_Id,status,address_status)
+        values('${house}','${flat}','${postcode}','${street}','${town}',${customer_Id},1,'${address_status}')
+                `
+        dbconfig.query(qr, (err, result) => {
+
+            if (!err) {
+                res.send({
+                    message: 'New address is added'
+
+                });
+            }
+            else {
+                console.log(err, 'err')
+            }
+        })
+    }
+
+
 });
 
 // Router 4: http://localhost:5000/api/user/getaddress
@@ -194,7 +226,7 @@ router.post('/getprimaryaddress', (req, res) => {
     let customer_Id = req.body.customer_Id
 
     let qr = `SELECT * FROM address
-    where customer_Id = ${customer_Id} AND address_status=1`;
+    where customer_Id = ${customer_Id} AND address_status="true"`;
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             res.json({
@@ -214,12 +246,12 @@ router.post('/setaddressprimary', (req, res) => {
     let customer_Id = req.body.customer_Id
 
     let qr = `update address 
-    set address_status = 1
+    set address_status = "true"
     WHERE customer_Id = ${customer_Id} AND ID = ${ID};`
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             let qr = `UPDATE address 
-           set address_status = 0 
+           set address_status = "false"
            WHERE ID!= ${ID}
            `
             dbconfig.query(qr, (err, result) => {
@@ -271,6 +303,33 @@ router.post('/deletecustomer', (req, res) => {
         }
         else {
             console.log(err, 'err')
+        }
+    })
+})
+
+// Router for getting last added address in myProfile.js Customer side
+// PATH http://localhost:5000/api/user/lastaddedaddress
+// METHOD :POST
+router.post("/lastaddedaddress", (req, res) => {
+    let ID = req.body.customer_Id;
+
+    let qr = `
+    SELECT    *
+FROM      address
+WHERE customer_Id = ${ID}
+ORDER BY  ID DESC
+LIMIT     1
+    `
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(500).json({
+                error: err,
+                message: "Something went wrong"
+            })
         }
     })
 })

@@ -262,6 +262,7 @@ router.post('/cartcheckout', (req, res) => {
     let total = req.body.total
     let cashondelivery = req.body.cashondelivery
     let paywithcard = req.body.paywithcard
+    let delivery_time = req.body.delivery_time
 
     let qr = `SELECT * FROM cart
                 where customer_Id=${customer_Id}`
@@ -269,7 +270,7 @@ router.post('/cartcheckout', (req, res) => {
         if (!err) {
             if (result.length > 0) {
                 let qr = `SELECT * FROM address
-            where customer_Id=${customer_Id} and address_status =1`
+            where customer_Id=${customer_Id} and address_status ="true"`
                 dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         // res.json({
@@ -282,7 +283,8 @@ router.post('/cartcheckout', (req, res) => {
             , address_Id = ${result[0]['ID']}
             , total = "${total}"
             , cashondelivery = "${cashondelivery}"
-            , paywithcard = "${paywithcard}"
+            , paywithcard = "${paywithcard}",
+            delivery_time = "${delivery_time}",
             where customer_Id=${customer_Id}`
                         dbconfig.query(qr, (err, result) => {
                             if (!err) {

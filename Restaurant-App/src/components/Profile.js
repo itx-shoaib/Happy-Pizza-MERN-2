@@ -53,11 +53,11 @@ function Profile() {
         ).data;
 
         const result = await (
-          await axios.post("http://localhost:5000/api/user/getaddress", detail)
+          await axios.post("http://localhost:5000/api/user/lastaddedaddress", detail)
         ).data
 
         setordercount(data.data['total']);
-        setaddress(result.data)
+        setaddress(result.data[0])
       } catch (error) {
         console.log(error);
       }
@@ -185,13 +185,17 @@ function Profile() {
                   <p>
                     <h6>No address</h6>
                   </p>
-                ) : address.map(
-                  (val) => {
-                    return <>
-                      <p>{val.house},{val.flat},{val.street}</p>
-                    </>
-                  }
-                )}
+                ) :
+                  // address.map(
+                  //   (val) => {
+                  //     return <>
+                  //       <p>{val.house},{val.flat},{val.street}</p>
+                  //     </>
+                  //   }
+                  // )
+                  <p>{address.house},{address.flat},{address.street}</p>
+
+                }
               </div>
             </div>
           </div>

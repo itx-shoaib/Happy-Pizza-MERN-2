@@ -736,4 +736,25 @@ router.post('/getordercount', (req, res) => {
 
 })
 
+// Router for getting phone and address from backend 
+// Path: http://localhost:5000/api/admin/phoneandaddress
+// Method:POST
+router.post("/phoneandaddress", (req, res) => {
+    let ID = req.body.ID
+
+    let qr = `Select * from resturant where ID = ${ID}`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(500).json({
+                message: "Something went wrong",
+                error: err
+            })
+        }
+    })
+})
+
 module.exports = router

@@ -242,9 +242,7 @@ function Orders() {
                                     {/* <td>{orders.DateTime}</td> */}
                                     <td>{moment(orders.DateTime).format('MMMM Do YYYY, h:mm:ss a')}</td>
                                     <td>
-                                      {orders.cashondelivery === "true" ? (<span class="badge text-bg-primary primary">
-                                        Delivery
-                                      </span>) : orders.paywithcard === "true" ? (<span class="badge text-bg-primary primary">
+                                      {orders.cashondelivery === "true" || orders.paywithcard === "true" ? (<span class="badge text-bg-primary primary">
                                         Delivery
                                       </span>) : (<span class="badge text-bg-primary primary">
                                         collection
@@ -274,7 +272,7 @@ function Orders() {
                                       </span>)}
 
                                     </td>
-                                    <td>${orders.Price}</td>
+                                    <td>£ {orders.Price}</td>
                                   </tr>
                                 </>
                               );

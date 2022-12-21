@@ -5,6 +5,8 @@ import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import CheckoutNavbar from "./CheckoutNavbar";
+import NoOrder from "./NoOrder";
 
 function CartCheckout() {
   const [address, setAddress] = useState([]);
@@ -17,6 +19,7 @@ function CartCheckout() {
   const [items, setItems] = useState([]);
   const [cashondelivery, setcashondelivery] = useState(false)
   const [paywithcard, setpaywithcard] = useState(false)
+  const [delivery_time, setdelivery_time] = useState("N/A")
   const [termcondition, settermcondition] = useState(false)
   const getstatus = localStorage.getItem("status");
   const [visible, setvisible] = useState(false)
@@ -167,6 +170,26 @@ function CartCheckout() {
     }
   }
 
+  async function changeAddressPrimary(ID) {
+    const user = {
+      customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
+        .customer_Id,
+      ID
+    };
+    try {
+      const data = await (
+        await axios.post(
+          "http://localhost:5000/api/user/setaddressprimary",
+          user
+        )
+      ).data;
+      console.log(data.message)
+      updateAddress()
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       const user = {
@@ -216,7 +239,8 @@ function CartCheckout() {
   let total = 0;
   for (var i = 0; i < items.length; i++) {
     let productTotal = items[i].totalp;
-    total = total + parseFloat(productTotal);
+    total = total + parseFloat(productTotal)
+    total = total.toFixed(3);
   }
 
   function CashOnChange(e) {
@@ -240,7 +264,8 @@ function CartCheckout() {
         .customer_Id,
       total,
       cashondelivery,
-      paywithcard
+      paywithcard,
+      delivery_time
     };
 
     if (termcondition === true && visible === true) {
@@ -308,465 +333,469 @@ function CartCheckout() {
   ];
   return (
     <>
-      <ToastContainer />
-      <Navbar />
-      <div className="row justify-content-center my-5">
-        <div className="col-md-10">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
-                <h6>DELIVERY/COLLECTION</h6>
-                <hr />
-                <div className="form-check ordertype">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="ordertype"
-                    id="ordertype1"
-                    value="0"
-                    onClick={() => { setvisible(true) }}
+      <ToastContainer autoClose={700} />
+      <CheckoutNavbar />
+      {/* <Navbar /> */}
+      {items.length > 0 ? (
+        <div className="row justify-content-center my-5">
+          <div className="col-md-10">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
+                  <h6>DELIVERY/COLLECTION</h6>
+                  <hr />
+                  <div className="form-check ordertype">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="ordertype"
+                      id="ordertype1"
+                      value={visible}
+                      onClick={() => { setvisible(true) }}
 
-                    required
-                  />
-                  <label className="form-check-label" for="ordertype1">
-                    Delivery
-                  </label>
-                </div>
+                      required
+                    />
+                    <label className="form-check-label" for="ordertype1">
+                      Delivery
+                    </label>
+                  </div>
 
-                <div className="form-check ordertype">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="ordertype"
-                    id="ordertype2"
-                    value="1"
-                    onClick={() => { setvisible(false) }}
-                    checked
-                    required
-                  />
-                  <label className="form-check-label" for="ordertype2">
-                    Collection
-                  </label>
-                </div>
-
-
-
-                {visible && (
-                  <>
+                  <div className="form-check ordertype">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="ordertype"
+                      id="ordertype2"
+                      value={!visible}
+                      checked={!visible}
+                      onClick={() => { setvisible(false) }}
+                      required
+                    />
+                    <label className="form-check-label" for="ordertype2">
+                      Collection
+                    </label>
+                  </div>
 
 
-                    <h5 className="mt-4 boldtext">Delivery Address</h5>
 
-                    {address ? (
-                      address.map((addresses) => {
-                        return (
-                          <>
-                            {addresses.address_status === 1 ? (
-                              <>
-                                <div class="form-check">
-                                  <input
-                                    class="form-check-input mt-3"
-                                    type="radio"
-                                    name="flexRadioDefault"
-                                    id={`flexRadioDefault${addresses.ID}`}
-                                    checked
-                                  />
-                                  <label
-                                    class="form-check-label"
-                                    for={`flexRadioDefault${addresses.ID}`}
-                                  >
-                                    <h6 className="mt-3 boldtext">
-                                      House no:{addresses.house},Flat:
-                                      {addresses.flat},{addresses.street},
-                                      {addresses.postcode},{addresses.town}
-                                    </h6>
-                                  </label>
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div class="form-check">
-                                  <input
-                                    class="form-check-input mt-3"
-                                    type="radio"
-                                    name="flexRadioDefault"
-                                    id={`flexRadioDefault${addresses.ID}`}
-                                    disabled
-                                  />
-                                  <label
-                                    class="form-check-label"
-                                    for={`flexRadioDefault${addresses.ID}`}
-                                  >
-                                    <h6 className="mt-3 boldtext">
-                                      House no:{addresses.house},Flat:
-                                      {addresses.flat},{addresses.street},
-                                      {addresses.postcode},{addresses.town}
-                                    </h6>
-                                  </label>
-                                </div>
-                              </>
-                            )}
-                          </>
-                        );
-                      })
-                    ) : (
-                      <>
-                        <h6 className="mt-3 boldtext">
-                          You dont have any address. Please add one
-                        </h6>
-                      </>
-                    )}
+                  {visible && (
+                    <>
 
-                    <button
-                      type="button"
-                      className="btn btn-primary mt-3 mb-5"
-                      data-bs-toggle="modal"
-                      data-bs-target="#addressModal"
-                    >
-                      Add New Address
-                    </button>
-                    <h5 className="boldtext">Delivery Time</h5>
-                    <div className="dropdown timelist mb-4">
+
+                      <h5 className="mt-4 boldtext">Delivery Address</h5>
+
+                      {address ? (
+                        address.map((addresses) => {
+                          return (
+                            <>
+                              {addresses.address_status === "true" ? (
+                                <>
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input mt-3"
+                                      type="radio"
+                                      name="flexRadioDefault"
+                                      id={`flexRadioDefault${addresses.ID}`}
+                                      checked
+                                    />
+                                    <label
+                                      class="form-check-label"
+                                      for={`flexRadioDefault${addresses.ID}`}
+                                    >
+                                      <h6 className="mt-3 boldtext">
+                                        House no:{addresses.house},Flat:
+                                        {addresses.flat},{addresses.street},
+                                        {addresses.postcode},{addresses.town}
+                                      </h6>
+                                    </label>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input mt-3"
+                                      type="radio"
+                                      name="flexRadioDefault"
+                                      id={`flexRadioDefault${addresses.ID}`}
+                                      onChange={() => changeAddressPrimary(`${addresses.ID}`)}
+                                    />
+                                    <label
+                                      class="form-check-label"
+                                      for={`flexRadioDefault${addresses.ID}`}
+                                    >
+                                      <h6 className="mt-3 boldtext">
+                                        House no:{addresses.house},Flat:
+                                        {addresses.flat},{addresses.street},
+                                        {addresses.postcode},{addresses.town}
+                                      </h6>
+                                    </label>
+                                  </div>
+                                </>
+                              )}
+                            </>
+                          );
+                        })
+                      ) : (
+                        <>
+                          <h6 className="mt-3 boldtext">
+                            You dont have any address. Please add one
+                          </h6>
+                        </>
+                      )}
+
                       <button
-                        className="btn btn-light w-100 dropdown-toggle"
                         type="button"
-                        id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
+                        className="btn btn-primary mt-3 mb-5"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addressModal"
                       >
-                        Select Time
+                        Add New Address
                       </button>
-                      <ul
-                        className="dropdown-menu timelist"
-                        aria-labelledby="dropdownMenuButton1"
+                      <h5 className="boldtext">Delivery Time</h5>
+                      {/* <div className=" mb-4"> */}
+                      <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        value={delivery_time}
+                        onChange={(e) => { setdelivery_time(e.target.value) }}
                       >
+                        <option>Select Time</option>
                         {
                           times.map((time) => (
                             <>
-                              <li className="dropdown-item time">{time}</li>
+                              <option
+                                value={time}
+                              >
+                                {time}
+                              </option>
                             </>
                           ))
                         }
-                      </ul>
-                    </div>
-                  </>
-                )}
-              </div>
+                      </select>
+                      {/* </div> */}
+                    </>
+                  )}
+                </div>
 
-              <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
-                <h6>ORDER ITEMS</h6>
-                <hr />
-                <div class="table-responsive cart-items">
-                  <table class="table table-hover table-borderless mb-0">
-                    <thead class="light">
-                      <tr>
-                        <th></th>
-                        <th>Product</th>
-                        <th>Items</th>
-                        <th>Price</th>
-                        <th class="text-end">Total</th>
-                        <th class="text-end">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {items &&
-                        items.map((item) => {
-                          return (
-                            <>
-                              <tr class="items">
-                                <td>
-                                  <img
-                                    src={item.Image}
-                                    data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg"
-                                    width="70"
-                                    alt=""
-                                    class="productImage"
-                                  />
-                                </td>
-                                <td>
-                                  <strong>{item.Title}</strong>
-                                </td>
-                                <td>{item.Quantity}</td>
-                                <td>${item.Price}</td>
-                                <td class="text-end">
-                                  ${item.Quantity * item.Price}
-                                </td>
-                                <td>
-                                  <button
-                                    type="button"
-                                    class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
-                                  >
-                                    <span
-                                      class="btn-inner--icon btn-cart-icon"
+                <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
+                  <h6>ORDER ITEMS</h6>
+                  <hr />
+                  <div class="table-responsive cart-items">
+                    <table class="table table-hover table-borderless mb-0">
+                      <thead class="light">
+                        <tr>
+                          <th></th>
+                          <th>Product</th>
+                          <th>Items</th>
+                          <th>Price</th>
+                          <th class="text-end">Total</th>
+                          <th class="text-end">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {items &&
+                          items.map((item) => {
+                            return (
+                              <>
+                                <tr class="items">
+                                  <td>
+                                    <img
+                                      src={item.Image}
+                                      data-src="/uploads/restorants/01840cf4-a5e0-4556-85f7-a7536920d799_thumb.jpg"
+                                      width="70"
+                                      alt=""
+                                      class="productImage"
+                                    />
+                                  </td>
+                                  <td>
+                                    <strong>{item.Title}</strong>
+                                  </td>
+                                  <td>{item.Quantity}</td>
+                                  <td>£ {item.Price}</td>
+                                  <td class="text-end">
+                                    £ {total}
+                                  </td>
+                                  <td>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
+                                    >
+                                      <span
+                                        class="btn-inner--icon btn-cart-icon"
+                                        onClick={() => {
+                                          remove(
+                                            item.orderitemid,
+                                            item.Quantity - 1,
+                                            item.Price
+                                          );
+                                        }}
+                                      >
+                                        <i class="fa fa-minus"></i>
+                                      </span>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      value="1661936711"
+                                      class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
                                       onClick={() => {
-                                        remove(
+                                        add(
                                           item.orderitemid,
-                                          item.Quantity - 1,
+                                          item.Quantity + 1,
                                           item.Price
                                         );
                                       }}
                                     >
-                                      <i class="fa fa-minus"></i>
-                                    </span>
-                                  </button>
-                                  <button
-                                    type="button"
-                                    value="1661936711"
-                                    class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
-                                    onClick={() => {
-                                      add(
-                                        item.orderitemid,
-                                        item.Quantity + 1,
-                                        item.Price
-                                      );
-                                    }}
-                                  >
-                                    <span class="btn-inner--icon btn-cart-icon">
-                                      <i class="fa fa-plus"></i>
-                                    </span>
-                                  </button>
-                                  <button
-                                    type="button"
-                                    value="1661936711"
-                                    class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
-                                    onClick={() => {
-                                      del(item.orderitemid);
-                                    }}
-                                  >
-                                    <span class="btn-inner--icon btn-cart-icon">
-                                      <i class="fa fa-trash"></i>
-                                    </span>
-                                  </button>
-                                </td>
-                              </tr>
-                            </>
-                          );
-                        })}
-                    </tbody>
-                  </table>
+                                      <span class="btn-inner--icon btn-cart-icon">
+                                        <i class="fa fa-plus"></i>
+                                      </span>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      value="1661936711"
+                                      class="btn btn-outline-primary btn-icon btn-sm page-link btn-cart-radius"
+                                      onClick={() => {
+                                        del(item.orderitemid);
+                                      }}
+                                    >
+                                      <span class="btn-inner--icon btn-cart-icon">
+                                        <i class="fa fa-trash"></i>
+                                      </span>
+                                    </button>
+                                  </td>
+                                </tr>
+                              </>
+                            );
+                          })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              className="modal fade"
-              id="addressModal"
-              tabindex="-1"
-              aria-labelledby="addressModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="addressModalLabel">
-                      ADD NEW ADDRESS
-                    </h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <div className="row justify-content-center">
-                      <div className="col-md-10">
-                        <iframe
-                          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13611.200265534018!2d74.3023612!3d31.4746856!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd90d41edbbe08d45!2sINNOVATION.TECH!5e0!3m2!1sen!2s!4v1660646556492!5m2!1sen!2s"
-                          width="100%"
-                          height="150px"
-                          allowfullscreen=""
-                          loading="lazy"
-                          referrerpolicy="no-referrer-when-downgrade"
-                        ></iframe>
-                        <input
-                          className="form-control my-3 px-2"
-                          placeholder="Search address using Postal Code, street, etc"
-                        />
-                      </div>
-                      <div className="col-md-5">
-                        <label for="houseno">House/Door No.</label>
-                        <input
-                          className="form-control mb-3 px-2"
-                          placeholder="House/Door No."
-                          id="houseno"
-                          value={house}
-                          onChange={(e) => {
-                            sethouse(e.target.value);
-                          }}
-                          required
-                        />
-                        <label for="postcode">Postcode</label>
-                        <input
-                          className="form-control mb-3 px-2"
-                          placeholder="Postcode"
-                          id="postcode"
-                          value={postcode}
-                          onChange={(e) => {
-                            setpostcode(e.target.value);
-                          }}
-                          required
-                        />
-                      </div>
-                      <div className="col-md-5">
-                        <label for="flat">Flat</label>
-                        <input
-                          className="form-control mb-3 px-2"
-                          placeholder="Flat"
-                          id="flat"
-                          value={flat}
-                          onChange={(e) => {
-                            setflat(e.target.value);
-                          }}
-                        />
-                        <label for="street">Street</label>
-                        <input
-                          className="form-control mb-3 px-2"
-                          placeholder="Street"
-                          id="street"
-                          value={street}
-                          onChange={(e) => {
-                            setstreet(e.target.value);
-                          }}
-                          required
-                        />
-                      </div>
-                      <div className="col-md-10">
-                        <label for="town">Town</label>
-                        <input
-                          className="form-control my-3 px-2"
-                          placeholder="Postal Town"
-                          id="town"
-                          value={town}
-                          onChange={(e) => {
-                            settown(e.target.value);
-                          }}
-                          required
-                        />
-                        <div className="form-check form-switch my-3">
-                          <label
-                            className="form-check-label"
-                            for="flexSwitchCheckDefault"
-                          >
-                            Default Address
-                          </label>
+              <div
+                className="modal fade"
+                id="addressModal"
+                tabindex="-1"
+                aria-labelledby="addressModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="addressModalLabel">
+                        ADD NEW ADDRESS
+                      </h5>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      <div className="row justify-content-center">
+                        <div className="col-md-10">
+                          <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13611.200265534018!2d74.3023612!3d31.4746856!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd90d41edbbe08d45!2sINNOVATION.TECH!5e0!3m2!1sen!2s!4v1660646556492!5m2!1sen!2s"
+                            width="100%"
+                            height="150px"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                          ></iframe>
                           <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="flexSwitchCheckDefault"
+                            className="form-control my-3 px-2"
+                            placeholder="Search address using Postal Code, street, etc"
                           />
+                        </div>
+                        <div className="col-md-5">
+                          <label for="houseno">House/Door No.</label>
+                          <input
+                            className="form-control mb-3 px-2"
+                            placeholder="House/Door No."
+                            id="houseno"
+                            value={house}
+                            onChange={(e) => {
+                              sethouse(e.target.value);
+                            }}
+                            required
+                          />
+                          <label for="postcode">Postcode</label>
+                          <input
+                            className="form-control mb-3 px-2"
+                            placeholder="Postcode"
+                            id="postcode"
+                            value={postcode}
+                            onChange={(e) => {
+                              setpostcode(e.target.value);
+                            }}
+                            required
+                          />
+                        </div>
+                        <div className="col-md-5">
+                          <label for="flat">Flat</label>
+                          <input
+                            className="form-control mb-3 px-2"
+                            placeholder="Flat"
+                            id="flat"
+                            value={flat}
+                            onChange={(e) => {
+                              setflat(e.target.value);
+                            }}
+                          />
+                          <label for="street">Street</label>
+                          <input
+                            className="form-control mb-3 px-2"
+                            placeholder="Street"
+                            id="street"
+                            value={street}
+                            onChange={(e) => {
+                              setstreet(e.target.value);
+                            }}
+                            required
+                          />
+                        </div>
+                        <div className="col-md-10">
+                          <label for="town">Town</label>
+                          <input
+                            className="form-control my-3 px-2"
+                            placeholder="Postal Town"
+                            id="town"
+                            value={town}
+                            onChange={(e) => {
+                              settown(e.target.value);
+                            }}
+                            required
+                          />
+                          <div className="form-check form-switch my-3">
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Default Address
+                            </label>
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id="flexSwitchCheckDefault"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                      ref={refClose}
-                    >
-                      Close
-                    </button>
-                    <button
-                      type="button"
-                      onClick={addAddress}
-                      className="btn btn-primary"
-                    >
-                      Save changes
-                    </button>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        ref={refClose}
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        onClick={addAddress}
+                        className="btn btn-primary"
+                      >
+                        Save changes
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-md-6">
-              <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
-                <h6>CHECKOUT</h6>
-                <hr />
-                <h6 className="boldtext">Subtotal: ${total}</h6>
-                <h6 className="boldtext">Delivery: $0.0</h6>
-                <h6 className="boldtext">Total: ${total}</h6>
-                <br />
-                <br />
-                <br />
-                <textarea
-                  className="form-control"
-                  rows="3"
-                  placeholder="Your comments here..."
-                  value={comment}
-                  onChange={(e) => {
-                    setcomment(e.target.value);
-                  }}
-                  required
-                ></textarea>
-                {visible === true && (
-                  <>
-                    <div className="form-check mt-3 mb-3">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="paymenttype"
-                        id="payment1"
-                        value={cashondelivery}
-                        onChange={(e) => { CashOnChange(e) }}
-                      />
-                      <label className="form-check-label" for="payment1">
-                        Cash on Delivery
-                      </label>
-                    </div>
-                    <div className="form-check mb-4">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="paymenttype"
-                        id="payment2"
-                        value={paywithcard}
-                        onChange={(e) => { PayOnChange(e) }}
-                      />
-                      <label className="form-check-label" for="payment2">
-                        Pay with Card
-                      </label>
-                    </div>
-                  </>
-                )}
+              <div className="col-md-6">
+                <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
+                  <h6>CHECKOUT</h6>
+                  <hr />
+                  <h6 className="boldtext">Subtotal: £{total}</h6>
+                  <h6 className="boldtext">Delivery: £0.0</h6>
+                  <h6 className="boldtext">Total: £{total}</h6>
+                  <br />
+                  <br />
+                  <br />
+                  <textarea
+                    className="form-control"
+                    rows="3"
+                    placeholder="Your comments here..."
+                    value={comment}
+                    onChange={(e) => {
+                      setcomment(e.target.value);
+                    }}
+                    required
+                  ></textarea>
+                  {visible === true && (
+                    <>
+                      <div className="form-check mt-3 mb-3">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="paymenttype"
+                          id="payment1"
+                          value={cashondelivery}
+                          onChange={(e) => { CashOnChange(e) }}
+                        />
+                        <label className="form-check-label" for="payment1">
+                          Cash on Delivery
+                        </label>
+                      </div>
+                      <div className="form-check mb-4">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="paymenttype"
+                          id="payment2"
+                          value={paywithcard}
+                          onChange={(e) => { PayOnChange(e) }}
+                        />
+                        <label className="form-check-label" for="payment2">
+                          Pay with Card
+                        </label>
+                      </div>
+                    </>
+                  )}
 
-                <button className="btn btn-primary mb-3" onClick={checkout}>
-                  Place Order
-                </button>
-                <div className="form-check mb-5">
+                  <button className="btn btn-primary mb-3" onClick={checkout}>
+                    Place Order
+                  </button>
+                  <div className="form-check mb-5">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckIndeterminate"
+                      value={termcondition}
+                      onChange={(e) => { termConditionOnChange(e) }}
+                    />
+                    <label
+                      className="form-check-label"
+                      for="flexCheckIndeterminate"
+                    >
+                      I agree to the Terms of Service and Privacy Policy.
+                    </label>
+                  </div>
+                </div>
+                <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
+                  <h6>HAVE A PROMO CODE?</h6>
+                  <hr />
                   <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="flexCheckIndeterminate"
-                    value={termcondition}
-                    onChange={(e) => { termConditionOnChange(e) }}
+                    className="form-control"
+                    placeholder="Enter your promo code here"
                   />
-                  <label
-                    className="form-check-label"
-                    for="flexCheckIndeterminate"
-                  >
-                    I agree to the Terms of Service and Privacy Policy.
-                  </label>
+                  <p className="boldtext">
+                    Only one promo code must be used per order
+                  </p>
+                  <button className="btn btn-primary">Apply</button>
                 </div>
               </div>
-              <div className="container checkout-box bs br my-4 px-5 py-3 responsiveness">
-                <h6>HAVE A PROMO CODE?</h6>
-                <hr />
-                <input
-                  className="form-control"
-                  placeholder="Enter your promo code here"
-                />
-                <p className="boldtext">
-                  Only one promo code must be used per order
-                </p>
-                <button className="btn btn-primary">Apply</button>
-              </div>
+              <Link to="/">
+                <button className="btn btn-danger w-auto backbutton">Back</button>
+              </Link>
             </div>
-            <Link to="/">
-              <button className="btn btn-danger w-auto backbutton">Back</button>
-            </Link>
           </div>
         </div>
-      </div>
+      ) : (
+        <NoOrder />
+      )}
+
       <Footer />
     </>
   );
