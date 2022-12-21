@@ -8,12 +8,13 @@ import Items from "./Items";
 import { Link } from "react-router-dom";
 import "../Css/MenuPage.css";
 import Navbar from "./Navbar";
+import { Carousel } from "react-bootstrap";
 
 function MenuPage() {
   const [show, setShow] = useState(false);
   const [loading, setloading] = useState(true);
   const [openclose, setopenclose] = useState([])
-
+const[navbar,setNavbar]=useState(false);
   //   const [navbar, setNavbar] = useState(false)
   //   const fixingit = ()=>{
   //     if(window.scrollY >= 70){
@@ -87,7 +88,17 @@ function MenuPage() {
     }
     fetchData();
   }, []);
-
+  const leftScroll=()=> {
+    // alert("haidhaslj")
+    const left = document.querySelector(".scroll-images");
+    left.scrollBy(200, 0);
+  }
+  const rightScroll=()=> {
+    
+    // alert("naknhcd")
+    const right = document.querySelector(".scroll-images");
+    right.scrollBy(-200, 0);
+  }
   // function showmodal(item) {
   //   console.log(item.title);
   //   <div
@@ -333,7 +344,7 @@ function MenuPage() {
   //     description: "Pure Orange Juice 500ml",
   //     price: 2.5,
   //     image:
-  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/b526e6eb-c67e-4801-9adc-9b1e2e2880e9_thumb.jpg",
+  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/b526e6eb-c67e-4801-9adc-9b1e2e2750e9_thumb.jpg",
   //   },
   //   {
   //     title: "Pure Apple Juice 500ml",
@@ -371,7 +382,7 @@ function MenuPage() {
   //     description: "Caramel Shake",
   //     price: 3.99,
   //     image:
-  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/0e9eb956-fef0-4c93-9b09-70fc962850b1_thumb.jpg",
+  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/0e9eb956-fef0-4c93-9b09-70fc962750b1_thumb.jpg",
   //   },
   //   {
   //     title: "Galaxy Shake",
@@ -413,7 +424,7 @@ function MenuPage() {
   //     description: "Strawberry Shake",
   //     price: 3.99,
   //     image:
-  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/3b1c924c-e21e-4264-9004-eb1f0b6cf4ff_thumb.jpg",
+  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/3b1c924c-e21e-4264-7504-eb1f0b6cf4ff_thumb.jpg",
   //   },
   //   {
   //     title: "Milky Way Shake",
@@ -549,7 +560,7 @@ function MenuPage() {
   //     description:
   //       "Porky Speical Burger Meal with Chips and Drinks of your own choice",
   //     image:
-  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/43b6a246-1108-443d-b044-bcac58d58507_thumb.jpg",
+  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/43b6a246-1108-443d-b044-bcac58d57507_thumb.jpg",
   //   },
   //   {
   //     title: "Bacon & cheese Burger Meal",
@@ -1125,7 +1136,7 @@ function MenuPage() {
   //     description: "Fudge Cake",
   //     price: 3.2,
   //     image:
-  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/6a125b62-9160-475e-b5f9-ab21960c10a1_thumb.jpg",
+  //       "https://www.happyspizzaburger.co.uk/uploads/restorants/6a125b62-9160-475e-b5f9-ab21750c10a1_thumb.jpg",
   //   },
   //   {
   //     title: "Daim Bar Cake",
@@ -2381,8 +2392,17 @@ function MenuPage() {
   //     </div>
   //   </div>
   // ));
-
+  const fixedbtn=()=>{
+    if(window.scrollY>=15){
+      setNavbar(true)
+    }else{
+      setNavbar(false)
+    }
+    // console.log(window.scrollY)
+  }
+window.addEventListener("scroll",fixedbtn)
   return (
+  
     <>
       {loading ? (
         <div className="container">
@@ -2394,7 +2414,7 @@ function MenuPage() {
           <div className="row justify-content-center">
             <div className="col-xl-12 text-center" style={{ padding: "0px" }}>
 
-              <div class="card text-white">
+              <div className="card text-white">
                 <img
                   className="menutitleimg"
                   src="https://www.happyspizzaburger.co.uk/uploads/restorants/751msq61654252482.jpg"
@@ -2408,27 +2428,51 @@ function MenuPage() {
                 </div>
               </div>
             </div>
-          </div>
-
-          <ul className="nav nav-pills nav-fill stick flex-column">
+          </div><div >
+            <div className="fixingnavo">
+          <ul className={navbar?'nav nav-pills nav-fill fixingnaving flex-column ':'nav nav-pills nav-fill  flex-column'}>
+         
+           <i className="fa-solid fa-arrow-left-long text-center "onClick={leftScroll}></i>
+          
+          
             {category &&
+            
               category.map((categorys) => {
                 return (
-                  <>
-                    <li className="nav-item">
+                  <>  
+                  <div className="">
+                    <li className="nav-item ">
+                 
                       <a
-                        className="nav-link"
+                        className="nav-link scroll-images"
                         aria-current="page"
+                        
                         href={`#${categorys.Name}`}
                       >
+                    {/* <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active"> */}
                         {categorys.Name}
+                        {/* </div></div>
+    </div> */}
                       </a>
                     </li>
+                    </div>
+                    {/* <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span> */}
+  {/* </button> */}
                   </>
                 );
               })}
-          </ul>
-
+              <i className="fa-solid fa-arrow-right mt-6 right" onClick={rightScroll}></i>
+           
+          </ul> </div>
+          </div>
           {/* <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <ul className="nav nav-pills nav-fill stick flex-column">
@@ -2467,7 +2511,7 @@ function MenuPage() {
             category.map((categorys) => {
               return (
                 <>
-                  <div className="row productrow" id={`${categorys.Name}`}>
+                  <div className="row productrow tim-vine" id={`${categorys.Name}`}>
                     <div className="col-xl-12 responsiveness">
                       <h3 className="boldtext ms-2 mt-5 nomargin">
                         {categorys.Name}

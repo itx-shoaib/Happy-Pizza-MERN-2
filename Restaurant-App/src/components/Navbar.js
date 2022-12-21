@@ -144,7 +144,7 @@ function Navbar() {
       <ToastContainer autoClose={700} />
       <nav className={location.pathname === "/menu" ? "navbar-light justify-content-center mainnavbar fixedNavbar" : "navbar-light justify-content-center mainnavbar"}>
         <div className="row menu mobileActive">
-          <div className="col-md-4 menuitems text-start">
+          <div className="col-md-4 col-sm-2 menuitems text-start">
             <button
               className="btn position-relative"
               type="button"
@@ -235,7 +235,7 @@ function Navbar() {
             </div>
           </div>
 
-          <div className="col-md-4 menuitems text-center">
+          <div className="col-md-4 col-sm-2 menuitems text-center">
             <Link to="/">
               <img
                 className="menuimg"
@@ -244,7 +244,7 @@ function Navbar() {
             </Link>
           </div>
 
-          <div className="col-md-4 menuitems text-end">
+          <div className="col-md-4 col-sm-2 menuitems text-end">
             {getstatus === "true" ? (<>
               <Link to="/menu"><button className="btn btn-primary">Order Now</button></Link>
               <div className="dropdown">

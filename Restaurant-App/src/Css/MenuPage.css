@@ -1,4 +1,11 @@
-@media (max-width:992px){
+@media(min-width:750px){
+    .textOnImg {
+        margin-top: 10rem;
+    }
+}
+
+
+@media (max-width:750px){
 .centeritems{
     display: flex;
     flex-direction: row;
@@ -20,6 +27,21 @@
 }
 }
 
+
+   
+   .fa-arrow-left-long {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .fa-arrow-right {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
 .scrollingoff{
     position: absolute;
 }
@@ -28,6 +50,6 @@ body{
     background-color: #f8f9fa;
 }
 
-.textOnImg {
+/* .textOnImg {
     margin-top: 10rem;
-}
+} */

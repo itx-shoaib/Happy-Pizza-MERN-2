@@ -6,12 +6,7 @@ body {
   font-family: 'Poppins', sans-serif !important;
 }
 
-.menu {
-  padding: 16px 11px;
-  margin: 0px;
-  position: sticky;
-  z-index: 1000;
-}
+
 
 .container-fluid{
   padding: 0;
@@ -213,7 +208,7 @@ body {
 .fixedNavbar{
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 5;
 }
 
 .registerbtn {
@@ -257,6 +252,23 @@ a {
   width: 120px;
   height: 120px;
 }
+/* .fixing{
+  overflow: hidden;
+  overflow: scroll;
+} */
+/* 
+.nav-pills {
+  /* overflow-x: auto; */
+  /* top: 5%;
+  background-color: black;
+  color: white;
+  height: 12%;
+  /* margin-top: 2%; */
+ /* position:relative;
+  width: 100%;
+  overflow-y: hidden;  */
+  /* z-index: 5 !important; */
+/* }  */
 
 .nav-pills {
   overflow-x: auto;
@@ -266,10 +278,17 @@ a {
   background-color: black;
   color: white;
   height: 85px;
+  width: 100%;
   position: sticky !important;
   z-index: 0 !important;
 }
 
+.fixingnaving{
+   position: fixed !important;
+   overflow-y: hidden; 
+   width: 100%;
+   margin-top: 4%; 
+}
 .nav-pills a {
   color: white;
 }
@@ -422,144 +441,10 @@ a {
   z-index: 2000;
 }
 
-@media (max-width: 992px) {
-  .body {
-    overflow-x: hidden !important;
-  }
-  .menu {
-    display: flex !important;
-    flex-direction: row;
-  }
-  .menuitems {
-    width: 33.33%;
-  }
-  .disablebtn {
-    display: none;
-  }
-  .menuitems button {
-    margin: 0;
-    font-size: small;
-  }
-  .menuitems a {
-    margin: 0;
-    font-size: small;
-  }
-  iframe {
-    width: 100%;
-    height: auto;
-  }
-  .signinimg {
-    display: none;
-  }
 
-  .nav-pills {
-    overflow-x: auto;
-    overflow-y: hidden;
-    /* top: 8%; */
-    top:0%;
-    background-color: black;
-    color: white;
-    height: 85px;
-    position: sticky !important;
-    z-index: 0 !important;
-  }
-
-  .productrow {
-    display: block !important;
-    margin-top: 20px;
-    justify-content: center !important;
-  }
-  .productcard {
-    width: 90% !important;
-    text-align: start;
-    background-color: white;
-    padding: 10px 5px !important;
-    min-height: 150px;
-
-    /* height: 150px !important;
-    background-color:aliceblue; */
-  }
-  .productimg {
-    /* display: inline-flex !important;
-    flex-direction: row !important;
-    position: relative !important;
-    bottom: 100px !important;
-    left: 195px !important; */
-    width: 100px;
-    height: 100px;
-  }
-  .producttext {
-    line-height: 20px;
-  }
-  .blockimg {
-    height: 250px;
-  }
-  .centered {
-    height: 250px;
-    padding: 0 10px;
-    width: 100%;
-  }
-
-  .centered h4 {
-    font-size: 12px;
-    font-weight: 400;
-    padding: 0;
-  }
-
-  .centered h1 {
-    font-size: 18px;
-    font-weight: 600;
-    padding: 0;
-  }
-
-  .whyus {
-    font-size: 12px !important;
-    padding: 0 10px !important;
-  }
-  .sidebar {
-    display: none;
-  }
-  body {
-    overflow-x: hidden !important;
-  }
-  .usercartbtn {
-    width: 100% !important;
-  }
-  .responsiveness {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  .menutitleimg {
-    height: 180px !important;
-  }
-  .time {
-    font-size: smaller;
-    height: 18px;
-  }
-  .navorderbtn {
-    display: inline-flex !important;
-    width: min-content !important;
-    padding: 0 6px !important;
-  }
-  .checkout-box {
-    width: 90%;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  .row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  .body {
-    overflow-x: hidden !important;
-  }
-  .mobileActive{
-    padding: 0px;
-  }
+.fa-arrow-left-long{
+  scroll-direction: horizontal;
 }
-
-/* Adding new media query */
 @media screen and (max-width:767px) {
   .mobileActive{
     padding: 0px;
@@ -632,6 +517,236 @@ a {
 }
 
 
+
+/* Adding new media query */
+/* @media screen and (max-width:767px) {
+  .productrow {
+    display: block !important;
+    margin-top: 20px;
+    justify-content: center !important;
+  }
+  .productcard {
+    width: 90% !important;
+    text-align: start;
+    background-color: white;
+    padding: 10px 5px !important;
+    min-height: 150px;
+    /* height: 150px !important;
+    background-color:aliceblue; */
+   /* } 
+  .nav-pils{
+  top: 7%;
+   
+  height: 4%;
+
+
+  
+}
+  .mobileActive{
+    padding: 0px;
+  }
+  .mobileActiveButton{
+    padding: 0;
+  }
+  .carousel-inner {
+    height: 38vh;
+}
+.img-responsive {
+  height: 38vh;
+}
+.carousel-indicators {
+
+  right: 35%;
+}
+.productrow {
+  display: flex !important;
+  margin-top: 20px;
+  justify-content: center !important;
+}
+.productcard {
+  width: 45% !important;
+  text-align: start;
+  background-color: white;
+  padding: 10px 5px !important;
+  min-height: 150px;
+  /* height: 150px !important;
+  background-color:aliceblue; */
+
+@media
+(prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+
+.navbarOffsetMargin {
+  padding-top: 45px;
+}
+
+/* Adding new media query */
+ @media (max-width:767px) and (min-width: 280px) {
+  .body {
+    overflow-x: hidden !important;
+  }
+  .menu {
+    display: flex !important;
+    flex-direction: row;
+  }
+  .menuitems {
+    width: 33.33%;
+  }
+  .disablebtn {
+    display: none;
+  }
+  .menuitems button {
+    margin: 0;
+    font-size: smaller;
+  }
+  .menuitems a {
+    margin: 0;
+    font-size: small;
+  }
+  iframe {
+    width: 100%;
+    height: auto;
+  }
+  .signinimg {
+    display: none;
+  }
+.nav-pills{
+  top:4%;
+}
+}
+
+  /* .productrow {
+    display: block !important;
+    margin-top: 20px;
+    justify-content: center !important;
+  }
+  .productcard {
+    width: 90% !important;
+    text-align: start;
+    background-color: white;
+    padding: 10px 5px !important;
+    min-height: 150px; */
+
+    /* height: 150px !important;
+    background-color:aliceblue; */
+  /* } */
+  /* .productimg {
+    /* display: inline-flex !important;
+    flex-direction: row !important;
+    position: relative !important;
+    bottom: 100px !important;
+    left: 195px !important; */
+    /* width: 100px;
+    height: 100px;
+  }
+  .producttext {
+    line-height: 20px;
+  }
+  .blockimg {
+    height: 250px;
+  }
+  .centered {
+    height: 250px;
+    padding: 0 10px;
+    width: 100%;
+  }
+
+  .centered h4 {
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0;
+  }
+
+  .centered h1 {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0;
+  }
+
+  .whyus {
+    font-size: 12px !important;
+    padding: 0 10px !important;
+  }
+  .sidebar {
+    display: none;
+  }
+  body {
+    overflow-x: hidden !important;
+  }
+  .usercartbtn {
+    width: 100% !important;
+  }
+  .responsiveness {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .menutitleimg {
+    height: 180px !important;
+  }
+  .time {
+    font-size: smaller;
+    height: 18px;
+  }
+  .navorderbtn {
+    display: inline-flex !important;
+    width: min-content !important;
+    padding: 0 6px !important;
+  }
+  .checkout-box {
+    width: 90%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .body {
+    overflow-x: hidden !important;
+  }
+  .mobileActive{
+    padding: 0px;
+  }
+  /* .nav-pills {
+    
+    top: 5%;
+   
+    height: 5%;
+  
+  margin-top: 2%;
+    
+    overflow-y: hidden; 
+   
+  }
+  */
+  /* .card{
+    margin-top: 10%;
+  }
+.productrow {
+  display: flex !important;
+  margin-top: 20px;
+  justify-content: center !important;
+}
+.productcard {
+  width: 40% !important;
+  text-align: start;
+  background-color: white;
+  padding: 10px 5px !important;
+  min-height: 150px;
+  margin-right: 20px !important;
+  margin-left: 20px !important; */
+
+  /* height: 150px !important;
+  background-color:aliceblue; */
+/* }
+}  */
+
+
 @media screen and (max-width:360px) {
   .centered {
     height: 300px;
@@ -658,19 +773,37 @@ a {
 /* -------------------------------------------- */
 /* Adding media query for nav-pills by Shoaib */
 /* -------------------------------------------- */
-@media screen and (max-width: 400px) {
+/* @media screen and (max-width: 400px) {
   .nav-pills{
     top:0%;
-    /* top:9%; */
-  }
-}
+    top:9%; 
+  } 
+} */
 
 @media screen and (min-width:768px) and (max-width:820px) {
+   .nav-pills{
+    
+    top:2.5%;
+   }  
+}
+/* .hidescroll{
+  overflow-x: hidden;
+} */
+@media(max-width:280px){
   .nav-pills{
-    top:0%;
-    /* top:5%; */
+    top:8%
   }
 }
-.hidescroll{
-  overflow-x: hidden;
+@media(max-width:751px){
+  .textOnImg {
+    margin-top: 5rem;
+} 
+.menuitems button{
+
 }
+} 
+/* @media(max-width:820px)and (mion-width:760px){
+  .nav-pills{
+    top:5%;
+  }
+} */
