@@ -2469,17 +2469,26 @@ window.addEventListener("scroll",fixedbtn)
           <Modal show={show} onHide={handleClose}>
 
 <Modal.Header closeButton>
-  <Modal.Title>modal title</Modal.Title>
+  <Modal.Title>HAPPYS PIZZA  & BURGER</Modal.Title>
 </Modal.Header>
 <Modal.Body>
-  <h5> modal body</h5>
-  
+  <div className="row">
+  <div className="col-md-4 col-sm-4">
+    <p><b>phone  number</b></p>
+    <p>+4567890</p>
+    <p><b>address</b></p> 
+    <p>45678900 house no</p> </div>
+  <div className="col-md-7 col-sm-7"> <iframe
+                          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13611.200265534018!2d74.3023612!3d31.4746856!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd90d41edbbe08d45!2sINNOVATION.TECH!5e0!3m2!1sen!2s!4v1660646556492!5m2!1sen!2s"
+                          width="100%"
+                          height="150px"
+                          allowfullscreen=""
+                          loading="lazy"
+                          referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe></div>
+                        </div>
 </Modal.Body>
-<Modal.Footer>
 
-
-<p>modal footer</p>
-</Modal.Footer>
 </Modal>
             {category &&
             
