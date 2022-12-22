@@ -2497,21 +2497,21 @@ function MenuPage() {
     
         </li> */}
 
-<Modal show={show} onHide={handleClose}>
+                <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
-                    <Modal.Title>HAPPYS PIZZA & BURGER</Modal.Title>
+                    <Modal.Title>{resturant.name}</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <div className="row">
                       <div className="col-md-4 col-sm-4">
                         <p>
-                          <b>phone number</b>
+                          <b>Phone Number:</b>
                         </p>
-                        <p>+4567890</p>
+                        <p>{phone}</p>
                         <p>
-                          <b>address</b>
+                          <b>Address:</b>
                         </p>
-                        <p>45678900 house no</p>
+                        <p>{address}</p>
                       </div>
                       <div className="col-md-7 col-sm-7">
                         {" "}
