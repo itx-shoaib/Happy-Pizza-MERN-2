@@ -249,7 +249,7 @@ function Navbar() {
           <div className="col-md-4 col-sm-2 menuitems text-end">
             {getstatus === "true" ? (<>
               <Link to="/menu"><button className="btn btn-primary">Order Now</button></Link>
-              <div className="dropdown">
+              <div className="dropdown " style={{margin:"4.5%"}} >
                 <button
                   className="btn btn-light dropdown-toggle"
                   type="button"

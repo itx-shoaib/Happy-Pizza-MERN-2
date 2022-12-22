@@ -8,13 +8,16 @@ import Items from "./Items";
 import { Link } from "react-router-dom";
 import "../Css/MenuPage.css";
 import Navbar from "./Navbar";
-import { Carousel } from "react-bootstrap";
+
+import Swal from 'sweetalert2'
 
 function MenuPage() {
   const [show, setShow] = useState(false);
   const [loading, setloading] = useState(true);
   const [openclose, setopenclose] = useState([])
+  const getstatus = localStorage.getItem('status');
 const[navbar,setNavbar]=useState(false);
+const handleClose = () => setShow(false);
   //   const [navbar, setNavbar] = useState(false)
   //   const fixingit = ()=>{
   //     if(window.scrollY >= 70){
@@ -89,15 +92,12 @@ const[navbar,setNavbar]=useState(false);
     fetchData();
   }, []);
   const leftScroll=()=> {
-    // alert("haidhaslj")
-    const left = document.querySelector(".scroll-images");
-    left.scrollBy(200, 0);
+    document.getElementById('rightbtn').scrollBy(-100, 0);
+
   }
   const rightScroll=()=> {
     
-    // alert("naknhcd")
-    const right = document.querySelector(".scroll-images");
-    right.scrollBy(-200, 0);
+    document.getElementById('rightbtn').scrollBy(100, 0);
   }
   // function showmodal(item) {
   //   console.log(item.title);
@@ -2392,10 +2392,22 @@ const[navbar,setNavbar]=useState(false);
   //     </div>
   //   </div>
   // ));
+  const handleShow = () => setShow(true);
+  function showAlert
+    () {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Dear user, you must have in login first to add to cart. Thank you!',
+      footer: '<a href="/login">Login and register</a>'
+    })
+
+  }
   const fixedbtn=()=>{
-    if(window.scrollY>=15){
+    console.log(window.scroll)
+    if(window.scrollY>=321){
       setNavbar(true)
-    }else{
+    }else if(window.scrollY<=320){
       setNavbar(false)
     }
     // console.log(window.scrollY)
@@ -2425,23 +2437,57 @@ window.addEventListener("scroll",fixedbtn)
                   {/* <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p> */}
                   {openclose === "true" ? <p class="card-text">Resturant is open.</p> : (<h2><span class="placeholder col-6 bg-danger  card-text">Resturant is closed.</span></h2>)}
                   {/* <p class="card-text"><small>Here are details</small></p> */}
+                  <div
+         
+          type="button"
+          // onClick={() => {
+          //   showmodal(item);
+          // }}
+
+          onClick={getstatus === "true" ? (handleShow) : (showAlert)}
+        // data-bs-toggle="modal"
+        // data-bs-target="#addtocart"
+        >
+          more info 
+      
+</div>
                 </div>
               </div>
             </div>
-          </div><div >
-            <div className="fixingnavo">
-          <ul className={navbar?'nav nav-pills nav-fill fixingnaving flex-column ':'nav nav-pills nav-fill  flex-column'}>
+          </div>
+          
+          <div >
+          
+            <div  >
+            
+          <ul  id="rightbtn"className={navbar?'nav nav-pills nav-fill fixingnaving flex-column ':'nav nav-pills nav-fill  flex-column'}>
          
-           <i className="fa-solid fa-arrow-left-long text-center "onClick={leftScroll}></i>
+        {/* <li className="nav-item ">
+    
+        </li> */}
           
-          
+          <Modal show={show} onHide={handleClose}>
+
+<Modal.Header closeButton>
+  <Modal.Title>modal title</Modal.Title>
+</Modal.Header>
+<Modal.Body>
+  <h5> modal body</h5>
+  
+</Modal.Body>
+<Modal.Footer>
+
+
+<p>modal footer</p>
+</Modal.Footer>
+</Modal>
             {category &&
             
               category.map((categorys) => {
                 return (
                   <>  
                   <div className="">
-                    <li className="nav-item ">
+                    <li className="nav-item " >
                  
                       <a
                         className="nav-link scroll-images"
@@ -2449,29 +2495,29 @@ window.addEventListener("scroll",fixedbtn)
                         
                         href={`#${categorys.Name}`}
                       >
-                    {/* <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active"> */}
+             
                         {categorys.Name}
-                        {/* </div></div>
-    </div> */}
+                       
                       </a>
                     </li>
                     </div>
-                    {/* <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span> */}
-  {/* </button> */}
+                    
                   </>
                 );
               })}
-              <i className="fa-solid fa-arrow-right mt-6 right" onClick={rightScroll}></i>
+              {/* <li className="nav-item ">
+         
+          </li>  */}
            
           </ul> </div>
+        
+         
+          </div>
+          <div style={{display:navbar?"none":"flex",flexDirection:"row",justifyContent:"space-between", position:'relative', margin:'20px'}}>
+          <i class="fa-solid fa-chevron-left" onClick={leftScroll} style={{cursor: 'pointer', fontSize: '20px'}}></i>
+          {/* <i className="fa-solid fa-arrow-left-long text-center "></i> */}
+          <i className="fa-solid fa-chevron-right" onClick={rightScroll} style={{cursor: 'pointer', fontSize: '20px'}}></i>
+          {/* <i className="fa-solid fa-arrow-right mt-6 right" onClick={rightScroll}></i> */}
           </div>
           {/* <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -2511,6 +2557,7 @@ window.addEventListener("scroll",fixedbtn)
             category.map((categorys) => {
               return (
                 <>
+                
                   <div className="row productrow tim-vine" id={`${categorys.Name}`}>
                     <div className="col-xl-12 responsiveness">
                       <h3 className="boldtext ms-2 mt-5 nomargin">
