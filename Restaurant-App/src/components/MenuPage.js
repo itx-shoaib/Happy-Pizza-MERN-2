@@ -9,15 +9,15 @@ import { Link } from "react-router-dom";
 import "../Css/MenuPage.css";
 import Navbar from "./Navbar";
 
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 function MenuPage() {
   const [show, setShow] = useState(false);
   const [loading, setloading] = useState(true);
-  const [openclose, setopenclose] = useState([])
-  const getstatus = localStorage.getItem('status');
-const[navbar,setNavbar]=useState(false);
-const handleClose = () => setShow(false);
+  const [openclose, setopenclose] = useState([]);
+  const getstatus = localStorage.getItem("status");
+  const [navbar, setNavbar] = useState(false);
+  const handleClose = () => setShow(false);
   //   const [navbar, setNavbar] = useState(false)
   //   const fixingit = ()=>{
   //     if(window.scrollY >= 70){
@@ -50,9 +50,7 @@ const handleClose = () => setShow(false);
       try {
         setloading(true);
         const data = await (
-          await axios.get(
-            "http://localhost:5000/api/admin/getallmenu"
-          )
+          await axios.get("http://localhost:5000/api/admin/getallmenu")
         ).data;
         setcategory(data.data);
         console.log(category);
@@ -68,21 +66,20 @@ const handleClose = () => setShow(false);
   useEffect(() => {
     async function fetchData() {
       const details = {
-        id: JSON.parse(localStorage.getItem('currentuser'))[0].resturant_ID
-      }
+        id: JSON.parse(localStorage.getItem("currentuser"))[0].resturant_ID,
+      };
       try {
         const data = await (
-          await axios.get(
-            "http://localhost:5000/api/admin/getallitems"
-          )
+          await axios.get("http://localhost:5000/api/admin/getallitems")
         ).data;
 
         const result = await (
           await axios.post(
-            "http://localhost:5000/api/superadmin/getopenclose", details
+            "http://localhost:5000/api/superadmin/getopenclose",
+            details
           )
         ).data;
-        setopenclose(result.data[0].online)
+        setopenclose(result.data[0].online);
         setItem(data.data);
         console.log(item);
       } catch (error) {
@@ -91,14 +88,12 @@ const handleClose = () => setShow(false);
     }
     fetchData();
   }, []);
-  const leftScroll=()=> {
-    document.getElementById('rightbtn').scrollBy(-100, 0);
-
-  }
-  const rightScroll=()=> {
-    
-    document.getElementById('rightbtn').scrollBy(100, 0);
-  }
+  const leftScroll = () => {
+    document.getElementById("rightbtn").scrollBy(-100, 0);
+  };
+  const rightScroll = () => {
+    document.getElementById("rightbtn").scrollBy(100, 0);
+  };
   // function showmodal(item) {
   //   console.log(item.title);
   //   <div
@@ -2393,28 +2388,25 @@ const handleClose = () => setShow(false);
   //   </div>
   // ));
   const handleShow = () => setShow(true);
-  function showAlert
-    () {
+  function showAlert() {
     Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Dear user, you must have in login first to add to cart. Thank you!',
-      footer: '<a href="/login">Login and register</a>'
-    })
-
+      icon: "error",
+      title: "Oops...",
+      text: "Dear user, you must have in login first to add to cart. Thank you!",
+      footer: '<a href="/login">Login and register</a>',
+    });
   }
-  const fixedbtn=()=>{
-    console.log(window.scroll)
-    if(window.scrollY>=321){
-      setNavbar(true)
-    }else if(window.scrollY<=320){
-      setNavbar(false)
+  const fixedbtn = () => {
+    console.log(window.scroll);
+    if (window.scrollY >= 321) {
+      setNavbar(true);
+    } else if (window.scrollY <= 320) {
+      setNavbar(false);
     }
     // console.log(window.scrollY)
-  }
-window.addEventListener("scroll",fixedbtn)
+  };
+  window.addEventListener("scroll", fixedbtn);
   return (
-  
     <>
       {loading ? (
         <div className="container">
@@ -2425,7 +2417,6 @@ window.addEventListener("scroll",fixedbtn)
           <Navbar />
           <div className="row justify-content-center">
             <div className="col-xl-12 text-center" style={{ padding: "0px" }}>
-
               <div className="card text-white">
                 <img
                   className="menutitleimg"
@@ -2435,98 +2426,122 @@ window.addEventListener("scroll",fixedbtn)
                 <div class="card-img-overlay textOnImg text-start ms-5">
                   <h2 class="card-title">Rupyal Spice</h2>
                   {/* <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p> */}
-                  {openclose === "true" ? <p class="card-text">Resturant is open.</p> : (<h2><span class="placeholder col-6 bg-danger  card-text">Resturant is closed.</span></h2>)}
+                  {openclose === "true" ? (
+                    <p class="card-text">Resturant is open.</p>
+                  ) : (
+                    <h2>
+                      <span class="placeholder col-6 bg-danger  card-text">
+                        Resturant is closed.
+                      </span>
+                    </h2>
+                  )}
                   {/* <p class="card-text"><small>Here are details</small></p> */}
                   <div
-         
-          type="button"
-          // onClick={() => {
-          //   showmodal(item);
-          // }}
+                    type="button"
+                    // onClick={() => {
+                    //   showmodal(item);
+                    // }}
 
-          onClick={getstatus === "true" ? (handleShow) : (showAlert)}
-        // data-bs-toggle="modal"
-        // data-bs-target="#addtocart"
-        >
-          more info 
-      
-</div>
+                    onClick={getstatus === "true" ? handleShow : showAlert}
+                    // data-bs-toggle="modal"
+                    // data-bs-target="#addtocart"
+                  >
+                    more info
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          
-          <div >
-          
-            <div  >
-            
-          <ul  id="rightbtn"className={navbar?'nav nav-pills nav-fill fixingnaving flex-column ':'nav nav-pills nav-fill  flex-column'}>
-         
-        {/* <li className="nav-item ">
+
+          <div>
+            <div>
+              <ul
+                id="rightbtn"
+                className={
+                  navbar
+                    ? "nav nav-pills nav-fill fixingnaving flex-column "
+                    : "nav nav-pills nav-fill  flex-column"
+                }
+              >
+                {/* <li className="nav-item ">
     
         </li> */}
-          
-          <Modal show={show} onHide={handleClose}>
 
-<Modal.Header closeButton>
-  <Modal.Title>HAPPYS PIZZA  & BURGER</Modal.Title>
-</Modal.Header>
-<Modal.Body>
-  <div className="row">
-  <div className="col-md-4 col-sm-4">
-    <p><b>phone  number</b></p>
-    <p>+4567890</p>
-    <p><b>address</b></p> 
-    <p>45678900 house no</p> </div>
-  <div className="col-md-7 col-sm-7"> <iframe
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>HAPPYS PIZZA & BURGER</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <div className="row">
+                      <div className="col-md-4 col-sm-4">
+                        <p>
+                          <b>phone number</b>
+                        </p>
+                        <p>+4567890</p>
+                        <p>
+                          <b>address</b>
+                        </p>
+                        <p>45678900 house no</p>
+                      </div>
+                      <div className="col-md-7 col-sm-7">
+                        {" "}
+                        <iframe
                           src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13611.200265534018!2d74.3023612!3d31.4746856!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd90d41edbbe08d45!2sINNOVATION.TECH!5e0!3m2!1sen!2s!4v1660646556492!5m2!1sen!2s"
                           width="100%"
                           height="150px"
                           allowfullscreen=""
                           loading="lazy"
                           referrerpolicy="no-referrer-when-downgrade"
-                        ></iframe></div>
-                        </div>
-</Modal.Body>
-
-</Modal>
-            {category &&
-            
-              category.map((categorys) => {
-                return (
-                  <>  
-                  <div className="">
-                    <li className="nav-item " >
-                 
-                      <a
-                        className="nav-link scroll-images"
-                        aria-current="page"
-                        
-                        href={`#${categorys.Name}`}
-                      >
-             
-                        {categorys.Name}
-                       
-                      </a>
-                    </li>
+                        ></iframe>
+                      </div>
                     </div>
-                    
-                  </>
-                );
-              })}
-              {/* <li className="nav-item ">
+                  </Modal.Body>
+                </Modal>
+                {category &&
+                  category.map((categorys) => {
+                    return (
+                      <>
+                        <div className="">
+                          <li className="nav-item ">
+                            <a
+                              className="nav-link scroll-images"
+                              aria-current="page"
+                              href={`#${categorys.Name}`}
+                            >
+                              {categorys.Name}
+                            </a>
+                          </li>
+                        </div>
+                      </>
+                    );
+                  })}
+                {/* <li className="nav-item ">
          
           </li>  */}
-           
-          </ul> </div>
-        
-         
+              </ul>{" "}
+            </div>
           </div>
-          <div style={{display:navbar?"none":"flex",flexDirection:"row",justifyContent:"space-between", position:'relative', margin:'20px'}}>
-          <i class="fa-solid fa-chevron-left" onClick={leftScroll} style={{cursor: 'pointer', fontSize: '20px'}}></i>
-          {/* <i className="fa-solid fa-arrow-left-long text-center "></i> */}
-          <i className="fa-solid fa-chevron-right" onClick={rightScroll} style={{cursor: 'pointer', fontSize: '20px'}}></i>
-          {/* <i className="fa-solid fa-arrow-right mt-6 right" onClick={rightScroll}></i> */}
+          <div
+            style={{
+              display: navbar ? "none" : "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              position: "relative",
+              margin: "20px",
+            }}
+          >
+            <i
+              class="fa-solid fa-chevron-left"
+              onClick={leftScroll}
+              style={{ cursor: "pointer", fontSize: "20px" }}
+            ></i>
+            {/* <i className="fa-solid fa-arrow-left-long text-center "></i> */}
+            <i
+              className="fa-solid fa-chevron-right"
+              onClick={rightScroll}
+              style={{ cursor: "pointer", fontSize: "20px" }}
+            ></i>
+            {/* <i className="fa-solid fa-arrow-right mt-6 right" onClick={rightScroll}></i> */}
           </div>
           {/* <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -2566,8 +2581,10 @@ window.addEventListener("scroll",fixedbtn)
             category.map((categorys) => {
               return (
                 <>
-                
-                  <div className="row productrow tim-vine" id={`${categorys.Name}`}>
+                  <div
+                    className="row productrow tim-vine"
+                    id={`${categorys.Name}`}
+                  >
                     <div className="col-xl-12 responsiveness">
                       <h3 className="boldtext ms-2 mt-5 nomargin">
                         {categorys.Name}
@@ -2577,7 +2594,11 @@ window.addEventListener("scroll",fixedbtn)
                           item.map((items) => {
                             return (
                               <>
-                                <Items items={items} categorys={categorys} openclose={openclose} />
+                                <Items
+                                  items={items}
+                                  categorys={categorys}
+                                  openclose={openclose}
+                                />
                               </>
                             );
                           })}
