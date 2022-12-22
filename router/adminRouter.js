@@ -785,7 +785,7 @@ router.post("/getresturantinfo", (req, res) => {
 router.post("/getallpages", (req, res) => {
     let ID = req.body.ID;
 
-    let qr = `Select * from pages where resturant_ID = ${ID}`
+    let qr = `Select * from pages where resturant_ID = ${ID} and status = "true"`
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             res.status(200).json({

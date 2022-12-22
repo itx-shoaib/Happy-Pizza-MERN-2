@@ -42,14 +42,17 @@ function Footer() {
     <>
       <div className="row footer justify-content-center responsiveness">
         <div className="col-md-3 text-center">
-          <h4 className="boldtext">Information</h4>
-          {pages.map((info) => {
-            return <>
-              <a href={`/privacy-policy/${info.ID}`}>{info.title}</a>
-              <br />
-              <br />
-            </>
-          })}
+          {pages.length > 0 && <>
+            <h4 className="boldtext">Information</h4>
+            {pages.map((info) => {
+              return <>
+                <a href={`/privacy-policy/${info.ID}`}>{info.title}</a>
+                <br />
+                <br />
+              </>
+            })}
+          </>}
+
           {/* <a href="/privacy-policy">Privacy Policy</a>
           <br />
           <br />
