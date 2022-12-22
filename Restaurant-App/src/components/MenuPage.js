@@ -14,8 +14,11 @@ import Swal from "sweetalert2";
 function MenuPage() {
   const [show, setShow] = useState(false);
   const [loading, setloading] = useState(true);
-  const [openclose, setopenclose] = useState([]);
-  const getstatus = localStorage.getItem("status");
+  const [openclose, setopenclose] = useState([])
+  const [phone, setphone] = useState([])
+  const [resturant, setresturant] = useState([])
+  const [address, setaddress] = useState([])
+  const getstatus = localStorage.getItem('status');
   const [navbar, setNavbar] = useState(false);
   const handleClose = () => setShow(false);
   //   const [navbar, setNavbar] = useState(false)
@@ -65,6 +68,37 @@ function MenuPage() {
 
   useEffect(() => {
     async function fetchData() {
+      const detail = {
+        ID: JSON.parse(localStorage.getItem("currentuser"))[0].resturant_ID
+      }
+      try {
+        const data = (
+          await axios.post(
+            "http://localhost:5000/api/admin/phoneandaddress",
+            detail
+          )
+        ).data;
+
+        const result = (
+          await axios.post(
+            "http://localhost:5000/api/admin/getresturantinfo",
+            detail
+          )
+        ).data;
+
+        setresturant(result.data[0])
+        setphone(data.data[0]['phone'])
+        setaddress(data.data[0]['address'])
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    async function fetchData() {
       const details = {
         id: JSON.parse(localStorage.getItem("currentuser"))[0].resturant_ID,
       };
@@ -79,7 +113,7 @@ function MenuPage() {
             details
           )
         ).data;
-        setopenclose(result.data[0].online);
+        setopenclose(result.data[0])
         setItem(data.data);
         console.log(item);
       } catch (error) {
@@ -89,11 +123,13 @@ function MenuPage() {
     fetchData();
   }, []);
   const leftScroll = () => {
-    document.getElementById("rightbtn").scrollBy(-100, 0);
-  };
+    document.getElementById('rightbtn').scrollBy(-100, 0);
+
+  }
   const rightScroll = () => {
-    document.getElementById("rightbtn").scrollBy(100, 0);
-  };
+
+    document.getElementById('rightbtn').scrollBy(100, 0);
+  }
   // function showmodal(item) {
   //   console.log(item.title);
   //   <div
@@ -2397,16 +2433,17 @@ function MenuPage() {
     });
   }
   const fixedbtn = () => {
-    console.log(window.scroll);
+    console.log(window.scroll)
     if (window.scrollY >= 321) {
-      setNavbar(true);
+      setNavbar(true)
     } else if (window.scrollY <= 320) {
-      setNavbar(false);
+      setNavbar(false)
     }
     // console.log(window.scrollY)
-  };
-  window.addEventListener("scroll", fixedbtn);
+  }
+  window.addEventListener("scroll", fixedbtn)
   return (
+
     <>
       {loading ? (
         <div className="container">
@@ -2424,50 +2461,43 @@ function MenuPage() {
                   alt="..."
                 />
                 <div class="card-img-overlay textOnImg text-start ms-5">
-                  <h2 class="card-title">Rupyal Spice</h2>
+                  {/* <h2 class="card-title">Rupyal Spice</h2> */}
                   {/* <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p> */}
-                  {openclose === "true" ? (
-                    <p class="card-text">Resturant is open.</p>
-                  ) : (
-                    <h2>
-                      <span class="placeholder col-6 bg-danger  card-text">
-                        Resturant is closed.
-                      </span>
-                    </h2>
-                  )}
+                  {openclose.online === "true" ? <h2 class="card-text">{resturant.description}</h2> : (<h2>{openclose.statement}</h2>)}
                   {/* <p class="card-text"><small>Here are details</small></p> */}
+                  {/* <span class="placeholder col-6 bg-danger  card-text">Resturant is closed.</span> */}
+                  <p class="card-text">{address} | {phone}</p>
+
                   <div
+
                     type="button"
                     // onClick={() => {
                     //   showmodal(item);
                     // }}
 
-                    onClick={getstatus === "true" ? handleShow : showAlert}
-                    // data-bs-toggle="modal"
-                    // data-bs-target="#addtocart"
+                    onClick={getstatus === "true" ? (handleShow) : (showAlert)}
+                  // data-bs-toggle="modal"
+                  // data-bs-target="#addtocart"
                   >
                     more info
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div>
-            <div>
-              <ul
-                id="rightbtn"
-                className={
-                  navbar
-                    ? "nav nav-pills nav-fill fixingnaving flex-column "
-                    : "nav nav-pills nav-fill  flex-column"
-                }
-              >
+          <div >
+
+            <div  >
+
+              <ul id="rightbtn" className={navbar ? 'nav nav-pills nav-fill fixingnaving flex-column ' : 'nav nav-pills nav-fill  flex-column'}>
+
                 {/* <li className="nav-item ">
     
         </li> */}
 
-                <Modal show={show} onHide={handleClose}>
+<Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>HAPPYS PIZZA & BURGER</Modal.Title>
                   </Modal.Header>
@@ -2498,49 +2528,41 @@ function MenuPage() {
                   </Modal.Body>
                 </Modal>
                 {category &&
+
                   category.map((categorys) => {
                     return (
                       <>
                         <div className="">
-                          <li className="nav-item ">
+                          <li className="nav-item " >
+
                             <a
                               className="nav-link scroll-images"
                               aria-current="page"
+
                               href={`#${categorys.Name}`}
                             >
+
                               {categorys.Name}
+
                             </a>
                           </li>
                         </div>
+
                       </>
                     );
                   })}
                 {/* <li className="nav-item ">
          
           </li>  */}
-              </ul>{" "}
-            </div>
+
+              </ul> </div>
+
+
           </div>
-          <div
-            style={{
-              display: navbar ? "none" : "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              position: "relative",
-              margin: "20px",
-            }}
-          >
-            <i
-              class="fa-solid fa-chevron-left"
-              onClick={leftScroll}
-              style={{ cursor: "pointer", fontSize: "20px" }}
-            ></i>
+          <div style={{ display: navbar ? "none" : "flex", flexDirection: "row", justifyContent: "space-between", position: 'relative', margin: '20px' }}>
+            <i class="fa-solid fa-chevron-left" onClick={leftScroll} style={{ cursor: 'pointer', fontSize: '20px' }}></i>
             {/* <i className="fa-solid fa-arrow-left-long text-center "></i> */}
-            <i
-              className="fa-solid fa-chevron-right"
-              onClick={rightScroll}
-              style={{ cursor: "pointer", fontSize: "20px" }}
-            ></i>
+            <i className="fa-solid fa-chevron-right" onClick={rightScroll} style={{ cursor: 'pointer', fontSize: '20px' }}></i>
             {/* <i className="fa-solid fa-arrow-right mt-6 right" onClick={rightScroll}></i> */}
           </div>
           {/* <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -2581,10 +2603,8 @@ function MenuPage() {
             category.map((categorys) => {
               return (
                 <>
-                  <div
-                    className="row productrow tim-vine"
-                    id={`${categorys.Name}`}
-                  >
+
+                  <div className="row productrow tim-vine" id={`${categorys.Name}`}>
                     <div className="col-xl-12 responsiveness">
                       <h3 className="boldtext ms-2 mt-5 nomargin">
                         {categorys.Name}

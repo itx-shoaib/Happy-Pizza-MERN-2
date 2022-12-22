@@ -757,4 +757,26 @@ router.post("/phoneandaddress", (req, res) => {
     })
 })
 
+// Router for getting resturant information
+// Path: http://localhost:5000/api/admin/getresturantinfo
+// Method : POST
+router.post("/getresturantinfo", (req, res) => {
+    let ID = req.body.ID
+
+    let qr = `Select * from resturant where ID = ${ID}`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(500).json({
+                message: "something went wrong",
+                error: err
+            })
+
+        }
+    })
+})
+
 module.exports = router
