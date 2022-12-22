@@ -835,6 +835,44 @@ router.post("/forgetpassword", (req, res) => {
     })
 })
 
+// Router for contact us
+// Path: http://localhost:5000/api/superadmin/contactus
+router.post("/contactus", (req, res) => {
+    let name = req.body.name;
+    let email1 = req.body.email;
+    let subject = req.body.subject;
+    let message = req.body.message;
+
+    try {
+        let mailOptions1 = {
+            from: 'umairshahbaz420@gmail.com',
+            to: 'shoaibjamil43@gmail.com',
+            subject: subject,
+            text: `This email has been sent by ${name}. Email: ${message}`
+        };
+
+        transporter.sendMail(mailOptions1, function (error, info) {
+            if (error) {
+                // console.log(error);
+                res.status(404).json({
+                    error: error
+                })
+            } else {
+                // console.log('Email sent: ' + info.response);
+                res.status(200).json({
+                    message: info.response
+                })
+            }
+        });
+
+    } catch (error) {
+        res.status(200).json({
+            message: "Email has been sent"
+        })
+    }
+
+})
+
 //  router for reset password
 router.post("/resetpassword/:email", (req, res) => {
     let email = req.body.email;

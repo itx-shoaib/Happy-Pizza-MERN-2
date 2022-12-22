@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import "../Css/HomePage.css"
 import Navbar from "./Navbar";
+import axios from "axios"
 
 function Homepage() {
+  const [name, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [message, setmessage] = useState("");
+  const [subject, setsubject] = useState("");
+
+  async function sendEmail() {
+    const details = {
+      name,
+      email,
+      message,
+      subject
+    }
+    try {
+      const data = (
+        await axios.post(
+          "http://localhost:5000/api/superadmin/contactus",
+          details
+        )
+      ).data;
+
+      setname("")
+      setemail("")
+      setmessage("")
+      setsubject("")
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <div className="hidescroll">
@@ -203,11 +233,11 @@ function Homepage() {
           <div className="col-md-5 bs mx-5 px-5 py-5">
             <h1 className="boldtext">Contact Us</h1>
             <h3 className="boldtext">Let's get in touch</h3>
-            <input className="form-control" type="text" placeholder="Name" />
-            <input className="form-control" type="email" placeholder="Email" />
-            <input className="form-control" type="text" placeholder="Subject" />
-            <textarea className="form-control" rows="5" placeholder="Message" />
-            <button className="btn btn-lg btn-danger">Send Message</button>
+            <input className="form-control" type="text" value={name} onChange={(e) => { setname(e.target.value) }} placeholder="Name" />
+            <input className="form-control" type="email" value={email} onChange={(e) => { setemail(e.target.value) }} placeholder="Email" />
+            <input className="form-control" type="text" value={subject} onChange={(e) => { setsubject(e.target.value) }} placeholder="Subject" />
+            <textarea className="form-control" rows="5" value={message} onChange={(e) => { setmessage(e.target.value) }} placeholder="Message" />
+            <button className="btn btn-lg btn-danger" onClick={() => { sendEmail() }}>Send Message</button>
           </div>
         </div>
         <Footer />
