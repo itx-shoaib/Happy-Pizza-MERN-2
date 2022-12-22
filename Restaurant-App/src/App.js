@@ -27,7 +27,7 @@ function App() {
       <Route path='/addresses' element={<Addresses />} />
       <Route path='/change-password' element={<ChangePassword />} />
       <Route path='/cart-checkout' element={<CartCheckout />} />
-      <Route path='/privacy-policy' element={<PrivacPolicy />} />
+      <Route path='/privacy-policy/:ID' element={<PrivacPolicy />} />
       <Route path='/term-of-use' element={<TermsOfUse />} />
       <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
       <Route path='/allergy-information' element={<AllergyInformation />} />

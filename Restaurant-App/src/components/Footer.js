@@ -45,7 +45,7 @@ function Footer() {
           <h4 className="boldtext">Information</h4>
           {pages.map((info) => {
             return <>
-              <a href="/privacy-policy">{info.title}</a>
+              <a href={`/privacy-policy/${info.ID}`}>{info.title}</a>
               <br />
               <br />
             </>
