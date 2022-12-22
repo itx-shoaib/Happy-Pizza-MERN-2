@@ -779,4 +779,46 @@ router.post("/getresturantinfo", (req, res) => {
     })
 })
 
+// Router for getting all pages of corresponding resturant by resturant ID
+// Path: http://localhost:5000/api/admin/getallpages
+// METHOD:POST
+router.post("/getallpages", (req, res) => {
+    let ID = req.body.ID;
+
+    let qr = `Select * from pages where resturant_ID = ${ID}`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(500).json({
+                message: "Something went wrong",
+                error: err
+            })
+        }
+    })
+})
+
+// Router for getting pages decxription
+// PATH: http://localhost:5000/api/admin/getpagedesc
+// METHOD: POST
+router.post("/getpagedesc", (req, res) => {
+    let ID = req.body.ID;
+
+    let qr = `Select * from pages where ID = ${ID}`
+    dbconfig.query(qr, (err, result) => {
+        if (!err) {
+            res.status(200).json({
+                data: result
+            })
+        } else {
+            res.status(500).json({
+                message: "Something went wrong",
+                error: err
+            })
+        }
+    })
+})
+
 module.exports = router

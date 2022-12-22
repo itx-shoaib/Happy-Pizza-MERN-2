@@ -4,6 +4,7 @@ import "../Css/Footer.css";
 function Footer() {
   const [phone, setphone] = useState([])
   const [address, setaddress] = useState([])
+  const [pages, setpages] = useState([])
 
   useEffect(() => {
     async function fetchData() {
@@ -17,6 +18,16 @@ function Footer() {
             detail
           )
         ).data;
+
+        const result = (
+          await axios.post(
+            "http://localhost:5000/api/admin/getallpages",
+            detail
+          )
+        ).data;
+
+
+        setpages(result.data)
         setphone(data.data[0]['phone'])
         setaddress(data.data[0]['address'])
 
@@ -32,7 +43,14 @@ function Footer() {
       <div className="row footer justify-content-center responsiveness">
         <div className="col-md-3 text-center">
           <h4 className="boldtext">Information</h4>
-          <a href="/privacy-policy">Privacy Policy</a>
+          {pages.map((info) => {
+            return <>
+              <a href="/privacy-policy">{info.title}</a>
+              <br />
+              <br />
+            </>
+          })}
+          {/* <a href="/privacy-policy">Privacy Policy</a>
           <br />
           <br />
           <a href="/term-of-use">Terms of Use</a>
@@ -43,7 +61,7 @@ function Footer() {
           <br />
           <a href="/allergy-information">Allergy Information</a>
           <br />
-          <br />
+          <br /> */}
         </div>
         <div className="col-md-3 text-center">
           <h4 className="boldtext">Contact Us</h4>
