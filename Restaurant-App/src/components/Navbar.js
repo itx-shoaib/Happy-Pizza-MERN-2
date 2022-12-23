@@ -7,6 +7,8 @@ import axios from 'axios';
 function Navbar() {
 
   const [items, setItems] = useState([])
+  const [minimum_order, setminimum_order] = useState("")
+  const [charges, setcharges] = useState("")
   let location = useLocation();
 
 
@@ -101,6 +103,7 @@ function Navbar() {
     }
   }
 
+
   useEffect(() => {
 
     if (getstatus === "true") {
@@ -110,11 +113,16 @@ function Navbar() {
         const temp = {
           customer_Id: user
         }
+        const info = {
+          ID: JSON.parse(localStorage.getItem('currentuser'))[0].resturant_ID
+        }
         try {
 
           const data = (await axios.post("http://localhost:5000/api/admin/getcartitems", temp)).data;
-          console.log(data.data)
+          const result = (await axios.post("http://localhost:5000/api/admin/phoneandaddress", info)).data;
           setItems(data.data)
+          setminimum_order(result.data[0]["minimum_order"])
+          setcharges(result.data[0]["charges"])
 
         } catch (error) {
           console.log(error);
@@ -181,10 +189,10 @@ function Navbar() {
               ></button>
             </div>
             <div className="offcanvas-body">
-              {total < 5 && (<>
+              {total < Number(charges) && (<>
                 <div className="cart-cont">
                   <p>
-                    Order Minimum is £ 5.00. Please add more items in the cart.
+                    Order Minimum is £ {charges}. Please add more items in the cart.
                   </p>
                 </div>
               </>)}
@@ -225,7 +233,7 @@ function Navbar() {
 
                 <h6>Sub-total: £ {total}</h6>
 
-                {total >= 5 && (<>
+                {total >= Number(charges) && (<>
                   <Link to="/cart-checkout">
                     <button className="btn btn-primary btn-lg w-100 mt-2">
                       CheckOut
@@ -249,7 +257,7 @@ function Navbar() {
           <div className="col-md-4 col-sm-2 menuitems text-end">
             {getstatus === "true" ? (<>
               <Link to="/menu"><button className="btn btn-primary">Order Now</button></Link>
-              <div className="dropdown " style={{margin:"4.5%"}} >
+              <div className="dropdown " style={{ margin: "4.5%" }} >
                 <button
                   className="btn btn-light dropdown-toggle"
                   type="button"

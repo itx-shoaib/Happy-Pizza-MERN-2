@@ -113,7 +113,7 @@ function MenuPage() {
             details
           )
         ).data;
-        setopenclose(result.data[0])
+        setopenclose(result.data[0]['online'])
         setItem(data.data);
         console.log(item);
       } catch (error) {
