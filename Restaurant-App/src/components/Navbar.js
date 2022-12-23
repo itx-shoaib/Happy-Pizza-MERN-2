@@ -8,7 +8,7 @@ function Navbar() {
 
   const [items, setItems] = useState([])
   const [minimum_order, setminimum_order] = useState("")
-  const [charges, setcharges] = useState("")
+
   let location = useLocation();
 
 
@@ -122,7 +122,6 @@ function Navbar() {
           const result = (await axios.post("http://localhost:5000/api/admin/phoneandaddress", info)).data;
           setItems(data.data)
           setminimum_order(result.data[0]["minimum_order"])
-          setcharges(result.data[0]["charges"])
 
         } catch (error) {
           console.log(error);
@@ -189,10 +188,10 @@ function Navbar() {
               ></button>
             </div>
             <div className="offcanvas-body">
-              {total < Number(charges) && (<>
+              {total < Number(minimum_order) && (<>
                 <div className="cart-cont">
                   <p>
-                    Order Minimum is £ {charges}. Please add more items in the cart.
+                    Order Minimum is £ {minimum_order}. Please add more items in the cart.
                   </p>
                 </div>
               </>)}
@@ -233,7 +232,7 @@ function Navbar() {
 
                 <h6>Sub-total: £ {total}</h6>
 
-                {total >= Number(charges) && (<>
+                {total >= Number(minimum_order) && (<>
                   <Link to="/cart-checkout">
                     <button className="btn btn-primary btn-lg w-100 mt-2">
                       CheckOut

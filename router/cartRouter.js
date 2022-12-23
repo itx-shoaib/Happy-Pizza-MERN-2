@@ -260,9 +260,12 @@ router.post('/cartcheckout', (req, res) => {
     let customer_Id = req.body.customer_Id
     let comment = req.body.comment
     let total = req.body.total
+    let totalFinal = total.toString()
     let cashondelivery = req.body.cashondelivery
     let paywithcard = req.body.paywithcard
     let delivery_time = req.body.delivery_time
+
+    console.log(totalFinal)
 
     let qr = `SELECT * FROM cart
                 where customer_Id=${customer_Id}`
@@ -280,11 +283,11 @@ router.post('/cartcheckout', (req, res) => {
             set comment = '${comment}'
             , Status = 2
             , Orderstatus = 1
-            , address_Id = ${result[0]['ID']}
+            , address_Id = 0
             , total = "${total}"
             , cashondelivery = "${cashondelivery}"
             , paywithcard = "${paywithcard}",
-            delivery_time = "${delivery_time}",
+            delivery_time = "${delivery_time}"
             where customer_Id=${customer_Id}`
                         dbconfig.query(qr, (err, result) => {
                             if (!err) {
@@ -293,13 +296,13 @@ router.post('/cartcheckout', (req, res) => {
                                 })
                             }
                             else {
-                                console.log(err, "err")
+                                console.log(err, "err1")
                             }
                         })
 
                     }
                     else {
-                        console.log(err, 'err')
+                        console.log(err, 'err2')
 
                     }
                 })

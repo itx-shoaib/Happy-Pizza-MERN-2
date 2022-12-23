@@ -78,7 +78,7 @@ function Items({ items, categorys, openclose }) {
 
           </div>
           <div className="col-5">
-            <img className="productimg" src={items.Image} alt=".." />
+            <img className="productimg" src={`/upload/${items.Image}`} alt=".." />
           </div>
         </div>
       </>

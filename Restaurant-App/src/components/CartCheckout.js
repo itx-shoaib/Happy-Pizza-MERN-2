@@ -15,6 +15,7 @@ function CartCheckout() {
   const [postcode, setpostcode] = useState("");
   const [flat, setflat] = useState("");
   const [street, setstreet] = useState("");
+  const [charges, setcharges] = useState("")
   const [town, settown] = useState("");
   const [items, setItems] = useState([]);
   const [cashondelivery, setcashondelivery] = useState(false)
@@ -196,6 +197,9 @@ function CartCheckout() {
         customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
           .customer_Id,
       };
+      const info = {
+        ID: JSON.parse(localStorage.getItem('currentuser'))[0].resturant_ID
+      }
       try {
         const data = await (
           await axios.post(
@@ -203,6 +207,9 @@ function CartCheckout() {
             user
           )
         ).data;
+
+        const result = (await axios.post("http://localhost:5000/api/admin/phoneandaddress", info)).data;
+        setcharges(result.data[0]["charges"])
         setAddress(data.data);
       } catch (error) {
         console.log(error);
@@ -237,16 +244,24 @@ function CartCheckout() {
   }, []);
 
   let total = 0;
+  let Total2 = 0
+  let Total3 = 0
+  let checkoutTotal = 0
   for (var i = 0; i < items.length; i++) {
     let productTotal = items[i].totalp;
     total = total + parseFloat(productTotal)
     total = total.toFixed(3);
+    Total2 = Number(total) + Number(charges)
+    // Total3 = parseFloat(Total2)
+    checkoutTotal = Total2.toFixed(3)
   }
 
+  console.log(typeof (checkoutTotal), "total")
   function CashOnChange(e) {
     setcashondelivery(e.target.checked)
     setpaywithcard(false)
   }
+
 
   function PayOnChange(e) {
     setpaywithcard(e.target.checked)
@@ -262,7 +277,7 @@ function CartCheckout() {
       comment,
       customer_Id: JSON.parse(localStorage.getItem("currentuser"))[0]
         .customer_Id,
-      total,
+      total: visible === true ? checkoutTotal : total,
       cashondelivery,
       paywithcard,
       delivery_time
@@ -708,8 +723,9 @@ function CartCheckout() {
                   <h6>CHECKOUT</h6>
                   <hr />
                   <h6 className="boldtext">Subtotal: £{total}</h6>
-                  <h6 className="boldtext">Delivery: £0.0</h6>
-                  <h6 className="boldtext">Total: £{total}</h6>
+                  {visible === true && <h6 className="boldtext">Delivery: £{charges}</h6>}
+                  {visible === true ? (<h6 className="boldtext">Total: £{checkoutTotal}</h6>) : (<h6 className="boldtext">Total: £{total}</h6>)}
+
                   <br />
                   <br />
                   <br />
