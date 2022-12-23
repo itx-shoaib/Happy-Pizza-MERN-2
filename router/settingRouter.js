@@ -4,12 +4,13 @@ const dbconfig = require('../db');
 const multer = require("multer")
 
 // Image storage connfig
-var imgconfig = multer.diskStorage({
+const imgconfig = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './upload');
     },
     filename: function (req, file, callback) {
         callback(null, `image-${Date.now()}.${file.originalname}`)
+        console.log(file);
     }
 });
 
@@ -24,7 +25,7 @@ const isImage = (req, file, callback) => {
 
 var upload = multer({
     storage: imgconfig,
-    fileFilter: isImage
+
 })
 
 // Router 1 api is for super admin and admin for adding the resturnat.
@@ -147,13 +148,12 @@ router.post('/resturantmanagement', upload.fields([{ name: "photo", maxCount: 1 
     let average_order = req.body.average_order;
     let time = req.body.time;
     let id = req.body.id;
-    let photo = req.files.photo[0].path;
-    let cimage = req.files.cimage[0].path;
-    let rimage = req.files.rimage[0].path;
+    let photo = req.body.photo ? req.body.photo : req.files.photo[0].path.replace("upload", "");
+    let cimage = req.body.cimage ? req.body.cimage : req.files.cimage[0].path;
+    let rimage = req.body.rimage ? req.body.rimage : req.files.rimage[0].path;
     let cash = req.body.cash;
     let pickup = req.body.pickup;
     let delivery = req.body.delivery;
-
     let qr = `update resturant
     set minimum_order = '${minimum_order}', description ='${description}',
     average_order = '${average_order}',
@@ -161,7 +161,7 @@ router.post('/resturantmanagement', upload.fields([{ name: "photo", maxCount: 1 
     address = '${address}',
     phone = '${phone}',
     charges = '${charges}',
-    image = '${photo}',
+    image = '/upload/${photo}',
     cimage= '${cimage}',
     rimage = '${rimage}',
     cash = '${cash}',

@@ -2,6 +2,7 @@ const express = require("express");
 const bodyparser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql')
+const path = require('node:path');
 
 const app = express();
 
@@ -10,7 +11,8 @@ const app = express();
 app.use(express.json())
 app.use(cors());
 app.use(bodyparser.json());
-
+app.use(express.static(__dirname + '/public'));
+app.use('/upload', express.static('upload'));
 const customerRouter = require('./router/customerRouter')
 const adminRouter = require('./router/adminRouter')
 const cartRouter = require("./router/cartRouter")
@@ -20,9 +22,9 @@ const superRouter = require("./router/superRouter")
 // const orderitemRoute = require('./router/orderitemRouter')
 app.use('/api/user', customerRouter)
 app.use('/api/admin', adminRouter)
-app.use('/api/admin',cartRouter)
-app.use('/api/setting',settingRouter)
-app.use('/api/superadmin',superRouter)
+app.use('/api/admin', cartRouter)
+app.use('/api/setting', settingRouter)
+app.use('/api/superadmin', superRouter)
 // app.use('/api/admin',orderRoute)
 // app.use('/api/admin',orderitemRoute)
 
