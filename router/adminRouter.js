@@ -50,7 +50,7 @@ router.post('/imageuploadcheck', upload.single("photo"), (req, res) => {
 
 })
 
-// ROUTER 1: Getting all the menu by GET method PATH: http://localhost:5000/api/admin/getallmenu
+// ROUTER 1: Getting all the menu by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu
 // STATUS: WORKING
 router.get('/getallmenu', (req, res) => {
     let qr = 'SELECT * FROM category '
@@ -67,7 +67,7 @@ router.get('/getallmenu', (req, res) => {
     })
 })
 
-// ROUTER 2: Creating the menu by POST method PATH: http://localhost:5000/api/admin/createmenu
+// ROUTER 2: Creating the menu by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/createmenu
 // STATUS: WORKING
 router.post('/createmenu', (req, res) => {
     let name = req.body.name;
@@ -87,7 +87,7 @@ router.post('/createmenu', (req, res) => {
 });
 
 
-// ROUTER 3: Updating the menu by PUT method PATH: http://localhost:5000/api/admin/updatemenu
+// ROUTER 3: Updating the menu by PUT method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/updatemenu
 // STATUS: WORKING
 router.post('/updatemenu', (req, res) => {
     let ID = req.body.ID;
@@ -128,7 +128,7 @@ router.post('/updatemenu', (req, res) => {
 })
 
 
-// ROUTER 4: Deleting the menu by DELETE method PATH: http://localhost:5000/api/admin/deletemenu
+// ROUTER 4: Deleting the menu by DELETE method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/deletemenu
 // STATUS: WORKING
 router.post('/deletemenu', (req, res) => {
     let ID = req.body.ID
@@ -148,7 +148,7 @@ router.post('/deletemenu', (req, res) => {
 })
 
 
-// ROUTER 4: Creating the item of category by POST method PATH: http://localhost:5000/api/admin/createitem
+// ROUTER 4: Creating the item of category by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/createitem
 // STATUS: WORKING,
 router.post('/createitem', upload.single("photo"), (req, res) => {
 
@@ -175,7 +175,7 @@ router.post('/createitem', upload.single("photo"), (req, res) => {
     });
 })
 
-// ROUTER 5: Get all the item of category by GET method PATH: http://localhost:5000/api/admin/getitem/:id
+// ROUTER 5: Get all the item of category by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getitem/:id
 // STATUS: WORKING
 router.get('/getitem/:id', (req, res) => {
     let category_id = req.params.id
@@ -193,7 +193,7 @@ router.get('/getitem/:id', (req, res) => {
     });
 })
 
-// ROUTER 6: Get all the item by GET method PATH: http://localhost:5000/api/admin/getallitems
+// ROUTER 6: Get all the item by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getallitems
 // STATUS: WORKING
 router.get('/getallitems', (req, res) => {
     let num = 3;
@@ -245,7 +245,7 @@ router.get('/getallitems', (req, res) => {
     //     })
 })
 
-// ROUTER 7: Update the item of category by GET method PATH: http://localhost:5000/api/admin/updateitem/:id
+// ROUTER 7: Update the item of category by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/updateitem/:id
 // STATUS: WORKING
 router.put('/updateitem/:id', (req, res) => {
     let id = req.params.id;
@@ -269,7 +269,7 @@ router.put('/updateitem/:id', (req, res) => {
     });
 })
 
-// ROUTER 7: Delete the item of category by DELETE method PATH: http://localhost:5000/api/admin/deleteitem/:id
+// ROUTER 7: Delete the item of category by DELETE method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/deleteitem/:id
 // STATUS: WORKING
 router.delete('/deleteitem/:id', (req, res) => {
     let id = req.params.id
@@ -288,7 +288,7 @@ router.delete('/deleteitem/:id', (req, res) => {
 
 })
 
-// Router: http://localhost:5000/api/admin/getliveorders
+// Router: https://apinodejs.creativeparkingsolutions.com/api/admin/getliveorders
 // Status: Working
 router.post('/getliveorders', (req, res) => {
 
@@ -318,7 +318,7 @@ router.post('/getliveorders', (req, res) => {
 
 })
 
-// Router: http://localhost:5000/api/admin/getliveorderscount
+// Router: https://apinodejs.creativeparkingsolutions.com/api/admin/getliveorderscount
 // Status: Working
 router.post('/getliveorderscount', (req, res) => {
 
@@ -349,7 +349,7 @@ router.post('/getliveorderscount', (req, res) => {
 
 })
 
-// Router 6: http://localhost:5000/api/admin/acceptorder
+// Router 6: https://apinodejs.creativeparkingsolutions.com/api/admin/acceptorder
 // Status:
 router.post('/acceptorder', (req, res) => {
     let cart_Id = req.body.cart_Id;
@@ -369,7 +369,7 @@ router.post('/acceptorder', (req, res) => {
     })
 })
 
-// Router 7: http://localhost:5000/api/admin/rejectorder
+// Router 7: https://apinodejs.creativeparkingsolutions.com/api/admin/rejectorder
 // Status:
 router.post('/rejectorder', (req, res) => {
     let cart_Id = req.body.cart_Id;
@@ -388,7 +388,7 @@ router.post('/rejectorder', (req, res) => {
     })
 })
 
-// Router 8 : Get all customers PATH: http://localhost:5000/api/admin/getcustomers
+// Router 8 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getcustomers
 // STATUS:
 router.get('/getcustomers', (req, res) => {
     let qr = `SELECT * FROM customer where role = 0`
@@ -404,7 +404,7 @@ router.get('/getcustomers', (req, res) => {
 })
 
 
-// Router 9 : Get all customers PATH: http://localhost:5000/api/admin/getallorders
+// Router 9 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getallorders
 // STATUS:
 router.post('/getallorders', (req, res) => {
     let id = req.body.id;
@@ -427,7 +427,7 @@ router.post('/getallorders', (req, res) => {
 
 
 
-// ROUTER 11: Login a admin by GET method PATH: http://localhost:5000/api/admin/loginadmin
+// ROUTER 11: Login a admin by GET method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/loginadmin
 // STATUS:
 router.post('/loginadmin', (req, res) => {
 
@@ -468,7 +468,7 @@ router.post('/loginadmin', (req, res) => {
 
 });
 
-// ROUTER 10: Register a admin by POST method PATH: http://localhost:5000/api/admin/registeradmin
+// ROUTER 10: Register a admin by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/registeradmin
 // STATUS: WORKING
 router.post('/registeradmin', async (req, res) => {
 
@@ -524,7 +524,7 @@ router.post('/registeradmin', async (req, res) => {
 
 });
 
-// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getorderdetails/:id/:cid
+// Router 11 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getorderdetails/:id/:cid
 // STATUS:
 router.get('/getorderdetails/:id/:cid', (req, res) => {
     let id = req.params.id
@@ -543,7 +543,7 @@ router.get('/getorderdetails/:id/:cid', (req, res) => {
 
 })
 
-// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getorderlength
+// Router 11 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getorderlength
 // STATUS:
 router.get('/getorderlength', (req, res) => {
 
@@ -561,7 +561,7 @@ router.get('/getorderlength', (req, res) => {
 
 })
 
-// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getcustomerlength
+// Router 11 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getcustomerlength
 // STATUS:
 router.get('/getcustomerlength', (req, res) => {
 
@@ -579,7 +579,7 @@ router.get('/getcustomerlength', (req, res) => {
 
 })
 
-// Router 11 : Get all customers PATH: http://localhost:5000/api/admin/getitemslength
+// Router 11 : Get all customers PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getitemslength
 // STATUS:
 router.get("/getitemslength", (req, res) => {
     let qr = `Select count(*) as 'total' from item`
@@ -658,7 +658,7 @@ router.post('/myprofile', (req, res) => {
     })
 })
 
-// Router: http://localhost:5000/api/admin/salesvloume
+// Router: https://apinodejs.creativeparkingsolutions.com/api/admin/salesvloume
 // Status:
 router.post("/getprofile", (req, res) => {
     let ID = req.body.ID
@@ -678,7 +678,7 @@ router.post("/getprofile", (req, res) => {
     })
 })
 
-// Router : http://localhost:5000/api/admin/salesvloume
+// Router : https://apinodejs.creativeparkingsolutions.com/api/admin/salesvloume
 // status:
 router.get('/salesvloume', (req, res) => {
     let qr = `Select total from cart`
@@ -696,7 +696,7 @@ router.get('/salesvloume', (req, res) => {
     })
 })
 
-// Router : http://localhost:5000/api/admin/salesvloume
+// Router : https://apinodejs.creativeparkingsolutions.com/api/admin/salesvloume
 // status:
 router.post('/salesvloumeresturant', (req, res) => {
     let id = req.body.id
@@ -715,7 +715,7 @@ router.post('/salesvloumeresturant', (req, res) => {
     })
 })
 
-// Router: http://localhost:5000/api/admin/getordercount
+// Router: https://apinodejs.creativeparkingsolutions.com/api/admin/getordercount
 // Status: Working
 router.post('/getordercount', (req, res) => {
 
@@ -740,7 +740,7 @@ router.post('/getordercount', (req, res) => {
 })
 
 // Router for getting phone and address from backend 
-// Path: http://localhost:5000/api/admin/phoneandaddress
+// Path: https://apinodejs.creativeparkingsolutions.com/api/admin/phoneandaddress
 // Method:POST
 router.post("/phoneandaddress", (req, res) => {
     let ID = req.body.ID
@@ -761,7 +761,7 @@ router.post("/phoneandaddress", (req, res) => {
 })
 
 // Router for getting resturant information
-// Path: http://localhost:5000/api/admin/getresturantinfo
+// Path: https://apinodejs.creativeparkingsolutions.com/api/admin/getresturantinfo
 // Method : POST
 router.post("/getresturantinfo", (req, res) => {
     let ID = req.body.ID
@@ -783,7 +783,7 @@ router.post("/getresturantinfo", (req, res) => {
 })
 
 // Router for getting all pages of corresponding resturant by resturant ID
-// Path: http://localhost:5000/api/admin/getallpages
+// Path: https://apinodejs.creativeparkingsolutions.com/api/admin/getallpages
 // METHOD:POST
 router.post("/getallpages", (req, res) => {
     let ID = req.body.ID;
@@ -804,7 +804,7 @@ router.post("/getallpages", (req, res) => {
 })
 
 // Router for getting pages decxription
-// PATH: http://localhost:5000/api/admin/getpagedesc
+// PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/getpagedesc
 // METHOD: POST
 router.post("/getpagedesc", (req, res) => {
     let ID = req.body.ID;
@@ -825,7 +825,7 @@ router.post("/getpagedesc", (req, res) => {
 })
 
 
-// ROUTER : Updating the image  of item by POST method PATH: http://localhost:5000/api/admin/updateitemimage
+// ROUTER : Updating the image  of item by POST method PATH: https://apinodejs.creativeparkingsolutions.com/api/admin/updateitemimage
 // STATUS: WORKING,
 router.post('/updateitemimage', upload.single("photo2"), (req, res) => {
     let ID = req.body.itemID;

@@ -14,14 +14,14 @@ function Footer() {
       try {
         const data = (
           await axios.post(
-            "http://localhost:5000/api/admin/phoneandaddress",
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/phoneandaddress",
             detail
           )
         ).data;
 
         const result = (
           await axios.post(
-            "http://localhost:5000/api/admin/getallpages",
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/getallpages",
             detail
           )
         ).data;

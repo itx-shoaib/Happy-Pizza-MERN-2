@@ -54,7 +54,7 @@ function MenuPage() {
       try {
         setloading(true);
         const data = await (
-          await axios.get("http://localhost:5000/api/admin/getallmenu")
+          await axios.get("https://apinodejs.creativeparkingsolutions.com/api/admin/getallmenu")
         ).data;
         setcategory(data.data);
         console.log(category);
@@ -75,14 +75,14 @@ function MenuPage() {
       try {
         const data = (
           await axios.post(
-            "http://localhost:5000/api/admin/phoneandaddress",
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/phoneandaddress",
             detail
           )
         ).data;
 
         const result = (
           await axios.post(
-            "http://localhost:5000/api/admin/getresturantinfo",
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/getresturantinfo",
             detail
           )
         ).data;
@@ -106,12 +106,12 @@ function MenuPage() {
       };
       try {
         const data = await (
-          await axios.get("http://localhost:5000/api/admin/getallitems")
+          await axios.get("https://apinodejs.creativeparkingsolutions.com/api/admin/getallitems")
         ).data;
 
         const result = await (
           await axios.post(
-            "http://localhost:5000/api/superadmin/getopenclose",
+            "https://apinodejs.creativeparkingsolutions.com/api/superadmin/getopenclose",
             details
           )
         ).data;
@@ -2460,13 +2460,13 @@ function MenuPage() {
 
                 <img
                   className="menutitleimg"
-                  src={`http://localhost:5000${resturant.cimage}`}
+                  src={`https://apinodejs.creativeparkingsolutions.com${resturant.cimage}`}
                   alt="..."
                 />
 
                 {/* <img
                   className="menutitleimg"
-                  src={`http://localhost:5000/upload/${resturant.cimage}`}
+                  src={`https://apinodejs.creativeparkingsolutions.com/upload/${resturant.cimage}`}
                   alt="..."
                 /> */}
 

@@ -19,7 +19,7 @@ function PrivacPolicy() {
       try {
         const result = (
           await axios.post(
-            "http://localhost:5000/api/admin/getpagedesc",
+            "https://apinodejs.creativeparkingsolutions.com/api/admin/getpagedesc",
             detail
           )
         ).data;

@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport({
 
 
 
-// Router 1: http://localhost:5000/api/superadmin/getliveresturants
+// Router 1: https://apinodejs.creativeparkingsolutions.com/api/superadmin/getliveresturants
 // Status:
 router.get('/getliveresturants', (req, res) => {
     let qr = `Select * from resturant where status = "true"`
@@ -34,7 +34,7 @@ router.get('/getliveresturants', (req, res) => {
     })
 })
 
-// Router 2 : http://localhost:5000/api/superadmin/getallorders
+// Router 2 : https://apinodejs.creativeparkingsolutions.com/api/superadmin/getallorders
 // Status: working
 router.get('/getallorders', (req, res) => {
     let qr = `Select * from cart INNER JOIN resturant on cart.resturant_ID = resturant.ID`
@@ -51,7 +51,7 @@ router.get('/getallorders', (req, res) => {
     })
 })
 
-// Router 3: http://localhost:5000/api/superadmin/addpage
+// Router 3: https://apinodejs.creativeparkingsolutions.com/api/superadmin/addpage
 // Status: working
 router.post('/addpage', (req, res) => {
     let title = req.body.title;
@@ -73,7 +73,7 @@ router.post('/addpage', (req, res) => {
     })
 })
 
-// router 4: http://localhost:5000/api/superadmin/getallpages
+// router 4: https://apinodejs.creativeparkingsolutions.com/api/superadmin/getallpages
 // status: working
 router.get('/getallpages', (req, res) => {
     let qr = `Select * from pages`
@@ -96,7 +96,7 @@ router.get('/getallpages', (req, res) => {
     })
 })
 
-// Router 5: http://localhost:5000/api/superadmin/deletepage
+// Router 5: https://apinodejs.creativeparkingsolutions.com/api/superadmin/deletepage
 // status: working
 router.post("/deletepage", (req, res) => {
     let ID = req.body.ID
@@ -116,7 +116,7 @@ router.post("/deletepage", (req, res) => {
     })
 })
 
-// Router 6: http://localhost:5000/api/superadmin/editpage
+// Router 6: https://apinodejs.creativeparkingsolutions.com/api/superadmin/editpage
 // Status: working
 router.post("/editpage", (req, res) => {
     let ID = req.body.ID;
@@ -139,7 +139,7 @@ router.post("/editpage", (req, res) => {
     })
 })
 
-// Router 14: http://localhost:5000/api/superadmin/editpageitem/:ID
+// Router 14: https://apinodejs.creativeparkingsolutions.com/api/superadmin/editpageitem/:ID
 // Status:
 router.get('/editpageitem/:ID', (req, res) => {
     let ID = req.params.ID;
@@ -162,7 +162,7 @@ router.get('/editpageitem/:ID', (req, res) => {
 }
 )
 
-// router 7: http://localhost:5000/api/superadmin/updatepagestatus
+// router 7: https://apinodejs.creativeparkingsolutions.com/api/superadmin/updatepagestatus
 // Status: working
 router.post('/updatepagestatus', (req, res) => {
     let ID = req.body.ID;
@@ -184,7 +184,7 @@ router.post('/updatepagestatus', (req, res) => {
     })
 })
 
-// Router 8:  http://localhost:5000/api/superadmin/orderreport
+// Router 8:  https://apinodejs.creativeparkingsolutions.com/api/superadmin/orderreport
 // Status: working
 router.get('/orderreport', (req, res) => {
     let qr = `SELECT *,customer.name as "cname",cart.DateTime as "datetime" FROM cart INNER join customer on cart.customer_Id = customer.customer_Id 
@@ -209,7 +209,7 @@ router.get('/orderreport', (req, res) => {
     })
 })
 
-// Router 9: http://localhost:5000/api/superadmin/getallresturants
+// Router 9: https://apinodejs.creativeparkingsolutions.com/api/superadmin/getallresturants
 // status : working
 router.get('/getallresturants', (req, res) => {
     let qr = `Select * from resturant`
@@ -232,7 +232,7 @@ router.get('/getallresturants', (req, res) => {
     })
 })
 
-// Router 9: http://localhost:5000/api/superadmin/deleteresturant
+// Router 9: https://apinodejs.creativeparkingsolutions.com/api/superadmin/deleteresturant
 // Status: working
 router.post('/deleteresturant', (req, res) => {
     let ID = req.body.ID;
@@ -252,7 +252,7 @@ router.post('/deleteresturant', (req, res) => {
     })
 })
 
-// Router 10: http://localhost:5000/api/superadmin/deactivateresturant
+// Router 10: https://apinodejs.creativeparkingsolutions.com/api/superadmin/deactivateresturant
 // Status: working
 router.post('/deactivateresturant', (req, res) => {
     let ID = req.body.ID;
@@ -274,7 +274,7 @@ router.post('/deactivateresturant', (req, res) => {
     })
 })
 
-// router 11: http://localhost:5000/api/superadmin/activateresturant
+// router 11: https://apinodejs.creativeparkingsolutions.com/api/superadmin/activateresturant
 // Status: working
 router.post('/activateresturant', (req, res) => {
     let ID = req.body.ID;
@@ -296,7 +296,7 @@ router.post('/activateresturant', (req, res) => {
     })
 })
 
-// Router 12: http://localhost:5000/api/superadmin/editresturant
+// Router 12: https://apinodejs.creativeparkingsolutions.com/api/superadmin/editresturant
 // Status: 
 router.post('/editresturant/:id', (req, res) => {
     let ID = req.body.ID;
@@ -414,7 +414,7 @@ router.get('/geteditresturant/:id', (req, res) => {
     })
 })
 
-// router 13: http://localhost:5000/api/superadmin/resturantcount
+// router 13: https://apinodejs.creativeparkingsolutions.com/api/superadmin/resturantcount
 // status: working
 router.get('/resturantcount', (req, res) => {
     let qr = `Select count(*) as 'total' from resturant`
@@ -432,7 +432,7 @@ router.get('/resturantcount', (req, res) => {
     })
 })
 
-// Router: http://localhost:5000/api/superadmin/openclose
+// Router: https://apinodejs.creativeparkingsolutions.com/api/superadmin/openclose
 // 
 router.post('/openclose', (req, res) => {
     let online = req.body.online;
@@ -487,7 +487,7 @@ router.post('/openclose', (req, res) => {
     })
 })
 
-// Router: http://localhost:5000/api/superadmin/getopenclose
+// Router: https://apinodejs.creativeparkingsolutions.com/api/superadmin/getopenclose
 // Status:
 router.post('/getopenclose', (req, res) => {
     let id = req.body.id;
@@ -507,7 +507,7 @@ router.post('/getopenclose', (req, res) => {
 })
 
 
-// Router: http://localhost:5000/api/superadmin/closeshift
+// Router: https://apinodejs.creativeparkingsolutions.com/api/superadmin/closeshift
 // Status:
 router.post('/closeshift', (req, res) => {
     let status = "false";
@@ -558,7 +558,7 @@ router.post('/closeshift', (req, res) => {
     })
 })
 
-// Login as route path: http://localhost:5000/api/superadmin/loginas
+// Login as route path: https://apinodejs.creativeparkingsolutions.com/api/superadmin/loginas
 router.post("/loginas", (req, res) => {
     let id = req.body.id;
 
@@ -838,7 +838,7 @@ router.post("/forgetpassword", (req, res) => {
 })
 
 // Router for contact us
-// Path: http://localhost:5000/api/superadmin/contactus
+// Path: https://apinodejs.creativeparkingsolutions.com/api/superadmin/contactus
 router.post("/contactus", (req, res) => {
     let name = req.body.name;
     let email1 = req.body.email;

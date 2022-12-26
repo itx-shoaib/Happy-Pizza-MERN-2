@@ -21,7 +21,7 @@ function Profile() {
     try {
 
       // setloading(true)
-      const result = await axios.post("http://localhost:5000/api/admin/myprofile", details).data;
+      const result = await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/myprofile", details).data;
       console.log(result)
       // toast.success("Password has been changed")
       // setloading(true)
@@ -49,11 +49,11 @@ function Profile() {
       }
       try {
         const data = await (
-          await axios.post("http://localhost:5000/api/admin/getordercount", detail)
+          await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getordercount", detail)
         ).data;
 
         const result = await (
-          await axios.post("http://localhost:5000/api/user/lastaddedaddress", detail)
+          await axios.post("https://apinodejs.creativeparkingsolutions.com/api/user/lastaddedaddress", detail)
         ).data
 
         setordercount(data.data['total']);

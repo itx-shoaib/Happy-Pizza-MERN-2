@@ -33,7 +33,7 @@ function Navbar() {
 
 
     try {
-      const data = (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
       console.log(data.data)
       update()
       toast.success("Quantity increase")
@@ -53,7 +53,7 @@ function Navbar() {
     }
 
     try {
-      const data = (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
       console.log(data.data)
       update()
       toast.success("Quantity decrease")
@@ -70,7 +70,7 @@ function Navbar() {
     }
 
     try {
-      const data = (await axios.post('http://localhost:5000/api/admin/updatecart', info)).data
+      const data = (await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/updatecart', info)).data
       console.log(data.data)
       update()
       toast.warn("Item has been deleted")
@@ -93,7 +93,7 @@ function Navbar() {
       }
       try {
 
-        const data = (await axios.post("http://localhost:5000/api/admin/getcartitems", temp)).data;
+        const data = (await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems", temp)).data;
         console.log(data.data)
         setItems(data.data)
 
@@ -119,8 +119,8 @@ function Navbar() {
         }
         try {
 
-          const data = (await axios.post("http://localhost:5000/api/admin/getcartitems", temp)).data;
-          const result = (await axios.post("http://localhost:5000/api/admin/phoneandaddress", info)).data;
+          const data = (await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/getcartitems", temp)).data;
+          const result = (await axios.post("https://apinodejs.creativeparkingsolutions.com/api/admin/phoneandaddress", info)).data;
           setItems(data.data)
           setminimum_order(result.data[0]["minimum_order"])
           setimage(result.data[0]['image'])
@@ -250,7 +250,7 @@ function Navbar() {
             <Link to="/">
               <img
                 className="menuimg"
-                src={`http://localhost:5000${image}`}
+                src={`https://apinodejs.creativeparkingsolutions.com${image}`}
                 // src="https://www.happyspizzaburger.co.uk/uploads/restorants/198031cc-1875-4d54-8945-8135a96f353a_large.jpg"
                 alt=".." />
             </Link>

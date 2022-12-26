@@ -21,7 +21,7 @@ function Homepage() {
     try {
       const data = (
         await axios.post(
-          "http://localhost:5000/api/superadmin/contactus",
+          "https://apinodejs.creativeparkingsolutions.com/api/superadmin/contactus",
           details
         )
       ).data;

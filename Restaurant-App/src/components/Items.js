@@ -32,8 +32,8 @@ function Items({ items, categorys, openclose }) {
 
     console.log(cartDetail)
     try {
-      // http://localhost:5000
-      const result = await axios.post('http://localhost:5000/api/admin/cart', cartDetail)
+      // https://apinodejs.creativeparkingsolutions.com
+      const result = await axios.post('https://apinodejs.creativeparkingsolutions.com/api/admin/cart', cartDetail)
       console.log(result)
       toast.success("Item has been added to cart")
       setQuantity('')
@@ -81,7 +81,7 @@ function Items({ items, categorys, openclose }) {
             {items.Image.startsWith("http") ? (
               <img className="productimg" src={items.Image} alt=".." />
             ) : (
-              <img className="productimg" src={`http://localhost:5000/upload/${items.Image}`} alt=".." />
+              <img className="productimg" src={`https://apinodejs.creativeparkingsolutions.com/upload/${items.Image}`} alt=".." />
             )}
 
           </div>
