@@ -2455,11 +2455,19 @@ function MenuPage() {
           <div className="row justify-content-center">
             <div className="col-xl-12 text-center" style={{ padding: "0px" }}>
               <div className="card text-white">
+
                 <img
                   className="menutitleimg"
-                  src="https://www.happyspizzaburger.co.uk/uploads/restorants/751msq61654252482.jpg"
+                  src={`http://localhost:5000${resturant.cimage}`}
                   alt="..."
                 />
+
+                {/* <img
+                  className="menutitleimg"
+                  src={`http://localhost:5000/upload/${resturant.cimage}`}
+                  alt="..."
+                /> */}
+
                 <div class="card-img-overlay textOnImg text-start ms-5">
                   {/* <h2 class="card-title">Rupyal Spice</h2> */}
                   {/* <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p> */}

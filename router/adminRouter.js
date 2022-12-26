@@ -156,13 +156,13 @@ router.post('/createitem', upload.single("photo"), (req, res) => {
     let category_id = req.body.categoryID;
     let title = req.body.title;
     let discountableitem = req.body.discountableitem;
-    const filename = req.body.photo ? req.body.photo : req.file.path.replace("upload", "");
+    const filename = req.body.photo ? req.body.photo : `/upload/${req.file.path.replace("upload", "")}`;
     let description = req.body.description;
     let price = req.body.price;
 
 
     let qr = `insert into item(category_id,Title,Description,Price,Image,discountableitem)
-                   values(${category_id},'${title}','${description}','${price}','/upload/${filename}','${discountableitem}')`;
+                   values(${category_id},'${title}','${description}','${price}','${filename}','${discountableitem}')`;
 
     dbconfig.query(qr, (err, result) => {
         if (err) {
@@ -826,9 +826,9 @@ router.post("/getpagedesc", (req, res) => {
 // STATUS: WORKING,
 router.post('/updateitemimage', upload.single("photo2"), (req, res) => {
     let ID = req.body.itemID;
-    const filename = req.body.photo2 ? req.body.photo2 : req.file.path.replace("upload", "");
+    const filename = req.body.photo2 ? req.body.photo2 : `/upload/${req.file.path.replace("upload", "")}`;
 
-    let qr = `UPDATE item SET Image='/upload/${filename}' Where ID = ${ID}`;
+    let qr = `UPDATE item SET Image='${filename}' Where ID = ${ID}`;
 
     dbconfig.query(qr, (err, result) => {
         if (err) {

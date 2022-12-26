@@ -148,9 +148,9 @@ router.post('/resturantmanagement', upload.fields([{ name: "photo", maxCount: 1 
     let average_order = req.body.average_order;
     let time = req.body.time;
     let id = req.body.id;
-    let photo = req.body.photo ? req.body.photo : req.files.photo[0].path.replace("upload", "");
-    let cimage = req.body.cimage ? req.body.cimage : req.files.cimage[0].path.replace("upload", "");
-    let rimage = req.body.rimage ? req.body.rimage : req.files.rimage[0].path.replace("upload", "");
+    let photo = req.body.photo ? req.body.photo : `/upload/${req.files.photo[0].path.replace("upload", "")}`;
+    let cimage = req.body.cimage ? req.body.cimage : `/upload/${req.files.cimage[0].path.replace("upload", "")}`;
+    let rimage = req.body.rimage ? req.body.rimage : `/upload/${req.files.rimage[0].path.replace("upload", "")}`;
     let cash = req.body.cash;
     let pickup = req.body.pickup;
     let delivery = req.body.delivery;
@@ -161,9 +161,9 @@ router.post('/resturantmanagement', upload.fields([{ name: "photo", maxCount: 1 
     address = '${address}',
     phone = '${phone}',
     charges = '${charges}',
-    image = '/upload/${photo}',
-    cimage= '/upload/${cimage}',
-    rimage = '/upload/${rimage}',
+    image = '${photo}',
+    cimage= '${cimage}',
+    rimage = '${rimage}',
     cash = '${cash}',
     pickup = '${pickup}',
     delivery = '${delivery}'
@@ -500,14 +500,14 @@ router.post("/addtimings", (req, res) => {
 router.post("/addgallery", upload.single("image"), (req, res) => {
     let id = req.body.id;
     let link = req.body.link;
-    const filename = req.file.image ? req.file.image : req.file.path.replace("upload", "");
+    const filename = req.file.image ? req.file.image : `/upload/${req.file.path.replace("upload", "")}`;
 
     let qr = `Select count(*) as 'total' from gallery where resturant_ID = ${id} `
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             if (result[0]['total'] === 0) {
                 let qr = `Insert into gallery (resturant_ID,link,image)
-                values (${id},'${link}','/upload/${filename}') `
+                values (${id},'${link}','${filename}') `
                 dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
@@ -522,7 +522,7 @@ router.post("/addgallery", upload.single("image"), (req, res) => {
             } else {
                 let qr = `Update timing 
                 set link = '${link}',
-                image ='/upload/${filename}'
+                image ='${filename}'
                 where resturant_ID = ${id} `
                 dbconfig.query(qr, (err, result) => {
                     if (!err) {
@@ -580,20 +580,20 @@ router.post("/addcontent", upload.fields([{ name: "menu", maxCount: 1 },
 
     // images
     let menu = req.files.menu ? req.files.menu : req.files.menu[0].path.replace("upload", "");
-    let banner1 = req.files.banner1 ? req.files.banner1 : req.files.banner1[0].path.replace("upload", "");
-    let banner2 = req.files.banner2 ? req.files.banner2 : req.files.banner2[0].path.replace("upload", "");
-    let banner3 = req.files.banner3 ? req.files.banner3 : req.files.banner3[0].path.replace("upload", "");
-    let banner4 = req.files.banner4 ? req.files.banner4 : req.files.banner4[0].path.replace("upload", "");
-    let banner5 = req.files.banner5 ? req.files.banner5 : req.files.banner5[0].path.replace("upload", "");
-    let box1icon = req.files.box1icon ? req.files.box1icon : req.files.box1icon[0].path.replace("upload", "");
-    let box2icon = req.files.box2icon ? req.files.box2icon : req.files.box2icon[0].path.replace("upload", "");
-    let box3icon = req.files.box3icon ? req.files.box3icon : req.files.box3icon[0].path.replace("upload", "");
+    let banner1 = req.files.banner1 ? req.files.banner1 : `/upload/${req.files.banner1[0].path.replace("upload", "")}`;
+    let banner2 = req.files.banner2 ? req.files.banner2 : `/upload/${req.files.banner2[0].path.replace("upload", "")}`;
+    let banner3 = req.files.banner3 ? req.files.banner3 : `/upload/${req.files.banner3[0].path.replace("upload", "")}`;
+    let banner4 = req.files.banner4 ? req.files.banner4 : `/upload/${req.files.banner4[0].path.replace("upload", "")}`;
+    let banner5 = req.files.banner5 ? req.files.banner5 : `/upload/${req.files.banner5[0].path.replace("upload", "")}`;
+    let box1icon = req.files.box1icon ? req.files.box1icon : `/upload/${req.files.box1icon[0].path.replace("upload", "")}`;
+    let box2icon = req.files.box2icon ? req.files.box2icon : `/upload/${req.files.box2icon[0].path.replace("upload", "")}`;
+    let box3icon = req.files.box3icon ? req.files.box3icon : `/upload/${req.files.box3icon[0].path.replace("upload", "")}`;
 
     let qr = `Select count(*) as 'total' from content where resturant_ID = ${id}`
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             if (result[0]['total'] === 0) {
-                let qr = `INSERT INTO content(resturant_ID,frontendtemplate,fadmintemplate,pcolor,scolor, title1,title2,description1,bannertext1,box1title,box1link,box2description,box3title, box3link, box3link2,menu,banner1,banner2,banner3,banner4,banner5,box1icon,box2icon,box3icon, description2,bannertext2,box1description,box2title,box2link,box3description) VALUES ('${id}','${frontendtemplate}','${fadmintemplate}','${pcolor}','${scolor}','${title1}','${title2}','${description1}','${bannertext1}','${box1title}','${box1link}','${box2description}','${box3title}','${box3link}','${box3link2}','/upload/${menu}','/upload/${banner1}','/upload/${banner2}','/upload/${banner3}','/upload/${banner4}','/upload/${banner5}','/upload/${box1icon}','/upload/${box2icon}','/upload/${box3icon}','${description2}','${bannertext2}','${box1description}','${box2title}','${box2link}','${box3description}')`
+                let qr = `INSERT INTO content(resturant_ID,frontendtemplate,fadmintemplate,pcolor,scolor, title1,title2,description1,bannertext1,box1title,box1link,box2description,box3title, box3link, box3link2,menu,banner1,banner2,banner3,banner4,banner5,box1icon,box2icon,box3icon, description2,bannertext2,box1description,box2title,box2link,box3description) VALUES ('${id}','${frontendtemplate}','${fadmintemplate}','${pcolor}','${scolor}','${title1}','${title2}','${description1}','${bannertext1}','${box1title}','${box1link}','${box2description}','${box3title}','${box3link}','${box3link2}','${menu}','${banner1}','${banner2}','${banner3}','${banner4}','${banner5}','${box1icon}','${box2icon}','${box3icon}','${description2}','${bannertext2}','${box1description}','${box2title}','${box2link}','${box3description}')`
                 dbconfig.query(qr, (err, result) => {
                     if (!err) {
                         res.status(200).json({
@@ -620,15 +620,15 @@ router.post("/addcontent", upload.fields([{ name: "menu", maxCount: 1 },
                 box3title='${box3title}',
                 box3link='${box3link}',
                 box3link2='${box3link2}',
-                menu='/upload/${menu}',
-                banner1='/upload/${banner1}',
-                banner2='/upload/${banner2}',
-                banner3='/upload/${banner3}',
-                banner4='/upload/${banner4}',
-                banner5='/upload/${banner5}',
-                box1icon='/upload/${box1icon}',
-                box2icon='/upload/${box2icon}',
-                box3icon='/upload/${box3icon}',
+                menu='${menu}',
+                banner1='${banner1}',
+                banner2='${banner2}',
+                banner3='${banner3}',
+                banner4='${banner4}',
+                banner5='${banner5}',
+                box1icon='${box1icon}',
+                box2icon='${box2icon}',
+                box3icon='${box3icon}',
                 description2='${description2}',
                 bannertext2='${bannertext2}',
                 box1description='${box1description}',

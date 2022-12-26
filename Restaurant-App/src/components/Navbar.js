@@ -8,6 +8,7 @@ function Navbar() {
 
   const [items, setItems] = useState([])
   const [minimum_order, setminimum_order] = useState("")
+  const [image, setimage] = useState("")
 
   let location = useLocation();
 
@@ -122,6 +123,7 @@ function Navbar() {
           const result = (await axios.post("http://localhost:5000/api/admin/phoneandaddress", info)).data;
           setItems(data.data)
           setminimum_order(result.data[0]["minimum_order"])
+          setimage(result.data[0]['image'])
 
         } catch (error) {
           console.log(error);
@@ -248,7 +250,8 @@ function Navbar() {
             <Link to="/">
               <img
                 className="menuimg"
-                src="https://www.happyspizzaburger.co.uk/uploads/restorants/198031cc-1875-4d54-8945-8135a96f353a_large.jpg"
+                src={`http://localhost:5000${image}`}
+                // src="https://www.happyspizzaburger.co.uk/uploads/restorants/198031cc-1875-4d54-8945-8135a96f353a_large.jpg"
                 alt=".." />
             </Link>
           </div>
