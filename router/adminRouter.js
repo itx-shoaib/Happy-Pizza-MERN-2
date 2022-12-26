@@ -821,4 +821,24 @@ router.post("/getpagedesc", (req, res) => {
     })
 })
 
+
+// ROUTER : Updating the image  of item by POST method PATH: http://localhost:5000/api/admin/updateitemimage
+// STATUS: WORKING,
+router.post('/updateitemimage', upload.single("photo2"), (req, res) => {
+    let ID = req.body.itemID;
+    const filename = req.body.photo2 ? req.body.photo2 : req.file.path.replace("upload", "");
+
+    let qr = `UPDATE item SET Image='/upload/${filename}' Where ID = ${ID}`;
+
+    dbconfig.query(qr, (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        return res.send({
+            message: 'data inserted'
+        });
+
+    });
+})
+
 module.exports = router
