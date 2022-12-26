@@ -405,7 +405,7 @@ router.get('/getcustomers', (req, res) => {
 // STATUS:
 router.post('/getallorders', (req, res) => {
     let id = req.body.id;
-    let qr = `SELECT cart.*,address.*,customer.name FROM address 
+    let qr = `SELECT cart.*,address.customer_Id as "ci" ,address.ID,address.house,address.flat,address.postcode,address.street,address.town,address.status,address.address_status,address.resturant_ID,customer.name FROM address 
     INNER JOIN cart on address.ID = cart.address_Id
     INNER join customer on customer.customer_Id = cart.customer_Id
     where cart.resturant_ID = ${id}`
@@ -526,7 +526,7 @@ router.post('/registeradmin', async (req, res) => {
 router.get('/getorderdetails/:id/:cid', (req, res) => {
     let id = req.params.id
 
-    let qr = `SELECT *,customer.name as "cname" FROM address INNER JOIN cart on cart.address_Id = address.ID INNER JOIN customer on customer.customer_Id = cart.customer_Id INNER JOIN resturant on resturant.ID = address.resturant_ID WHERE cart.cart_Id = ${id};`
+    let qr = `SELECT *,customer.name as "cname" FROM address INNER JOIN cart on cart.address_Id = address.ID INNER JOIN customer on customer.customer_Id = cart.customer_Id INNER JOIN resturant on resturant.ID = address.resturant_ID INNER JOIN orderitem on orderitem.Order_ID = cart.cart_Id WHERE cart.cart_Id = ${id};`
     // WHERE address.address_status = 1
     dbconfig.query(qr, (err, result) => {
         if (!err) {

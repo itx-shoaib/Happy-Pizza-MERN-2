@@ -516,11 +516,7 @@ router.post('/updateitemmanagement/:itemid/:categoryid', upload.single("photo"),
 router.post('/getcartorderdetailitems', (req, res) => {
     let customer_Id = req.body.customer_Id;
 
-    let qr = `SELECT customer.customer_Id,item.*,orderitem.Price as "totalp",orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem 
-    inner join cart on cart.cart_Id=orderitem.Order_ID 
-    inner join customer on customer.customer_Id=cart.customer_Id 
-    INNER join item on item.ID = orderitem.ProductID 
-    WHERE cart.customer_Id=${customer_Id}`
+    let qr = `SELECT resturant.charges,customer.customer_Id,item.*,cart.total as "totalp",orderitem.Price as "OPrice",orderitem.Quantity ,orderitem.id as "orderitemid",customer.name,cart.Status,cart.DateTime,cart.cart_Id FROM orderitem inner join cart on cart.cart_Id=orderitem.Order_ID inner join customer on customer.customer_Id=cart.customer_Id INNER join item on item.ID = orderitem.ProductID INNER join resturant on orderitem.resturant_ID = resturant.ID WHERE cart.cart_Id=${customer_Id}`
     dbconfig.query(qr, (err, result) => {
         if (!err) {
             res.json({
