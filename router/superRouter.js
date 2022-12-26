@@ -307,6 +307,7 @@ router.post('/editresturant/:id', (req, res) => {
     let charges = req.body.charges;
     let minimum_order = req.body.minimum_order;
     let average_order = req.body.average_order;
+    let average_order_delivery = req.body.average_order_delivery;
     let time = req.body.time;
     let owner_name = req.body.owner_name;
     let owner_email = req.body.owner_email;
@@ -377,7 +378,8 @@ router.post('/editresturant/:id', (req, res) => {
     oclient_id = '${oclient_id}',
     oclient_secret = '${oclient_secret}',
     oterminal_id = '${oterminal_id}',
-    otest_mode = '${otest_mode}'
+    otest_mode = '${otest_mode}',
+    average_order_delivery = '${average_order_delivery}'
     where ID = ${ID}`
 
     dbconfig.query(qr, (err, result) => {
