@@ -29,7 +29,7 @@ var upload = multer({
 
 // Image check api test
 router.post('/imageuploadcheck', upload.single("photo"), (req, res) => {
-    const { filename } = req.file;
+    const { filename } = req.body ? req.body : req.file;
     if (filename) {
         try {
             res.status(200).json({
@@ -156,13 +156,13 @@ router.post('/createitem', upload.single("photo"), (req, res) => {
     let category_id = req.body.categoryID;
     let title = req.body.title;
     let discountableitem = req.body.discountableitem;
-    const filename = req.file.path;
+    const filename = req.body.photo ? req.body.photo : req.file.path.replace("upload", "");
     let description = req.body.description;
     let price = req.body.price;
 
 
     let qr = `insert into item(category_id,Title,Description,Price,Image,discountableitem)
-                   values(${category_id},'${title}','${description}','${price}','${filename}','${discountableitem}')`;
+                   values(${category_id},'${title}','${description}','${price}','/upload/${filename}','${discountableitem}')`;
 
     dbconfig.query(qr, (err, result) => {
         if (err) {

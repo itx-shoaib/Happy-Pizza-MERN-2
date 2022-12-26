@@ -467,7 +467,7 @@ router.post('/updateitemmanagement/:itemid/:categoryid', upload.single("photo"),
     let title = req.body.title
     let Description = req.body.Description
     let Price = req.body.Price
-    const filename = req.file.path;
+    const filename = req.body.photo ? req.body.photo : req.file.path.replace("upload", "");
     let discountableitem = req.body.discountableitem;
     let available = req.body.available;
     let variant = req.body.variant;
@@ -487,7 +487,7 @@ router.post('/updateitemmanagement/:itemid/:categoryid', upload.single("photo"),
     set Title = "${title}"
     , Description = "${Description}"
     , Price = "${Price}",
-    Image = '${filename}',
+    Image = '/upload/${filename}',
     discountableitem = '${discountableitem}',
     available = '${available}',
     variant = '${variant}',
