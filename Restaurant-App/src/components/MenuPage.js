@@ -17,6 +17,7 @@ function MenuPage() {
   const [openclose, setopenclose] = useState([])
   const [phone, setphone] = useState([])
   const [resturant, setresturant] = useState([])
+  const [description, setdescription] = useState([])
   const [address, setaddress] = useState([])
   const getstatus = localStorage.getItem('status');
   const [navbar, setNavbar] = useState(false);
@@ -87,6 +88,7 @@ function MenuPage() {
         ).data;
 
         setresturant(result.data[0])
+        setdescription(result.data[0]['description'])
         setphone(data.data[0]['phone'])
         setaddress(data.data[0]['address'])
 
@@ -2471,7 +2473,7 @@ function MenuPage() {
                 <div class="card-img-overlay textOnImg text-start ms-5">
                   {/* <h2 class="card-title">Rupyal Spice</h2> */}
                   {/* <p class="card-text">Opens Wed 16:00 | 11 Wendover Rd, Messingham, Scunthorpe DN17 3SN | 01724 487373 | | More Info</p> */}
-                  {openclose.online === "true" ? <h2 class="card-text">{resturant.description}</h2> : (<h2>{openclose.statement}</h2>)}
+                  {openclose.online === "true" ? <h2 class="card-text">{description}</h2> : (<h2>{openclose.statement}</h2>)}
                   {/* <p class="card-text"><small>Here are details</small></p> */}
                   {/* <span class="placeholder col-6 bg-danger  card-text">Resturant is closed.</span> */}
                   <p class="card-text">{address} | {phone}</p>
